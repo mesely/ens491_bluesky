@@ -1,25 +1,26 @@
 """
 PHASE 5 — Paper-Quality Visualizations
-Produces all figures used in the research paper + interactive supplements.
-Style: IEEE/Nature compatible (vector PDF + raster PNG at 300 DPI).
+All figures saved as PNG (300 DPI) only — no PDFs, no HTML.
 
 Figures produced:
-  G1  — Party account & post counts (bar)
-  G2  — Weekly post volume time series (line, per party)
-  G3  — Sentiment heatmap (party x sentiment, normalised)
-  G4  — Hate speech rate dot-plot with Wilson 95% CI
-  G5  — Cross-party sentiment matrix (heatmap)
-  G6  — Interactive network graph (PyVis HTML)
-  G7  — Top-20 most active accounts (bar)
-  G8  — Per-party word clouds (grid)
-  G9  — Party interaction Sankey (Plotly HTML + PNG)
-  G_LDA  — LDA topic similarity dendrogram+heatmap
-  G_NET  — PageRank x Betweenness scatter (bubble chart)
+  G1        — Party account & post counts (dual bar)
+  G2        — Weekly post volume time series (line, per party)
+  G3        — Sentiment heatmap (party × sentiment, normalised)
+  G4        — Hate speech rate dot-plot with Wilson 95% CI
+  G5        — Cross-party sentiment matrix (heatmap)
+  G6        — Party-level interaction network (spring layout, PNG)
+  G7        — Party posting activity: total posts & avg per account
+  G8        — Per-party word clouds (grid)
+  G9        — Party interaction chord bar (PNG)
+  G_LDA     — LDA topic similarity dendrogram + heatmap
+  G_NET     — PageRank × Betweenness scatter (log scale, bubble chart)
+  G_TEMPORAL— Bluesky-wide 7-day temporal trend from weekly search
 """
 
 import os
 import sys
 import json
+import glob
 import warnings
 from collections import defaultdict
 from pathlib import Path
@@ -33,10 +34,12 @@ import matplotlib.ticker as ticker
 import seaborn as sns
 import pandas as pd
 import numpy as np
+import networkx as nx
 
 warnings.filterwarnings("ignore")
 
-# Global Style (IEEE/Nature compatible)
+# ─── Global Style ─────────────────────────────────────────────────────────────
+
 STYLE: dict = {
     "figure.dpi":          150,
     "figure.facecolor":    "white",
@@ -59,7 +62,21 @@ STYLE: dict = {
 plt.rcParams.update(STYLE)
 sns.set_theme(style="white", rc=STYLE)
 
-# Party Palette (consistent across all figures)
+# ─── Party Palette ────────────────────────────────────────────────────────────
+
+# Only the parties that appear in the data as primary parties.
+# Everything else → "Diğer"
+MAIN_PARTIES: set[str] = {
+    "Cumhuriyet Halk Partisi",
+    "Adalet ve Kalkınma Partisi",
+    "Milliyetçi Hareket Partisi",
+    "Halkların Eşitlik ve Demokrasi Partisi",
+    "İYİ Parti",
+    "Yeni Yol",
+    "Yeniden Refah Partisi",
+    "Bağımsız",
+}
+
 PARTY_COLORS: dict[str, str] = {
     "Cumhuriyet Halk Partisi":                "#C0392B",
     "Adalet ve Kalkınma Partisi":             "#E67E22",
@@ -71,43 +88,65 @@ PARTY_COLORS: dict[str, str] = {
     "Bağımsız":                               "#95A5A6",
     "Diğer":                                  "#BDC3C7",
 }
+
+PARTY_SHORT: dict[str, str] = {
+    "Cumhuriyet Halk Partisi":                "CHP",
+    "Adalet ve Kalkınma Partisi":             "AKP",
+    "Milliyetçi Hareket Partisi":             "MHP",
+    "Halkların Eşitlik ve Demokrasi Partisi": "DEM",
+    "İYİ Parti":                              "İYİ",
+    "Yeni Yol":                               "YY",
+    "Yeniden Refah Partisi":                  "YRP",
+    "Bağımsız":                               "BAĞ",
+    "Diğer":                                  "Diğer",
+}
+
 DEFAULT_COLOR = "#BDC3C7"
 
-# Keywords for detecting party mentions in post text
+# Keywords used to detect which party a post is mentioning
 PARTY_MENTION_KEYWORDS: dict[str, list[str]] = {
-    "CHP":  ["chp", "cumhuriyet halk", "ozgur ozel", "chp'li", "chp'nin", "kilicdaroglu"],
+    "CHP":  ["chp", "cumhuriyet halk", "ozgur ozel", "chp'li", "kilicdaroglu"],
     "AKP":  ["akp", "ak parti", "erdogan", "adalet ve kalkinma", "akp'li"],
     "MHP":  ["mhp", "devlet bahceli", "ulku ocak", "bozkurt", "bahceli"],
-    "DEM":  ["dem parti", "hdp", "demokratik halk", "es genel baskan", "demirtas"],
+    "DEM":  ["dem parti", "hdp", "demokratik halk", "demirtas"],
     "IYI":  ["iyi parti", "aksener", "iyi'li"],
 }
 
-# Paths
-FIGURES_DIR   = "outputs/figures"
-SENTIMENT_CSV = "outputs/sentiment_results.csv"
-POSTS_JSONL   = "outputs/all_posts_raw.jsonl"
-KEYWORDS_JSON = "outputs/political_keywords.json"
-EDGES_CSV     = "outputs/network_edges.csv"
-STATS_JSON    = "outputs/weekly_distribution_stats.json"
-METRICS_JSON  = "outputs/network_metrics.json"
-NODE_CSV      = "outputs/network_node_metrics.csv"
-SIM_CSV       = "outputs/party_topic_similarity.csv"
-STAT_JSON     = "outputs/statistical_test_results.json"
+# ─── Paths ────────────────────────────────────────────────────────────────────
+
+FIGURES_DIR    = "outputs/figures"
+SENTIMENT_CSV  = "outputs/sentiment_results.csv"
+POSTS_JSONL    = "outputs/all_posts_raw.jsonl"
+KEYWORDS_JSON  = "outputs/political_keywords.json"
+EDGES_CSV      = "outputs/network_edges.csv"
+STATS_JSON     = "outputs/weekly_distribution_stats.json"
+METRICS_JSON   = "outputs/network_metrics.json"
+NODE_CSV       = "outputs/network_node_metrics.csv"
+SIM_CSV        = "outputs/party_topic_similarity.csv"
+STAT_JSON      = "outputs/statistical_test_results.json"
+TEMPORAL_JSON  = "outputs/temporal_analysis.json"
 
 
-# --- Helpers ------------------------------------------------------------------
+# ─── Helpers ──────────────────────────────────────────────────────────────────
 
 def pcolor(party: str) -> str:
     return PARTY_COLORS.get(str(party), DEFAULT_COLOR)
 
 
+def group_party(party) -> str:
+    """Map minor / unknown parties → 'Diğer'. Empty → ''."""
+    p = str(party).strip()
+    if not p or p in ("nan", "None", ""):
+        return ""
+    return p if p in MAIN_PARTIES else "Diğer"
+
+
 def save_fig(fig: plt.Figure, name: str) -> None:
-    """Save PNG (300 DPI) and PDF (vector) to outputs/figures/."""
-    for ext in ("png", "pdf"):
-        path = os.path.join(FIGURES_DIR, f"{name}.{ext}")
-        fig.savefig(path, dpi=300, bbox_inches="tight")
+    """Save PNG only (300 DPI). No PDFs."""
+    path = os.path.join(FIGURES_DIR, f"{name}.png")
+    fig.savefig(path, dpi=300, bbox_inches="tight")
     plt.close(fig)
-    print(f"  Saved: {name}.png / .pdf")
+    print(f"  Saved: {name}.png")
 
 
 def load_posts_jsonl(path: str) -> list[dict]:
@@ -123,30 +162,46 @@ def load_posts_jsonl(path: str) -> list[dict]:
     return posts
 
 
-# --- G1: Account & Post Count -------------------------------------------------
+# ─── G1: Party Post & Account Counts ─────────────────────────────────────────
 
 def g1_party_post_counts() -> None:
     posts = load_posts_jsonl(POSTS_JSONL)
-    posts_by_party: dict[str, int]  = defaultdict(int)
+
+    posts_by_party:  dict[str, int] = defaultdict(int)
     actors_by_party: dict[str, set] = defaultdict(set)
     for rec in posts:
-        p = rec.get("party") or "Unknown"
+        p = group_party(rec.get("party") or "")
+        if not p:
+            continue
         posts_by_party[p] += 1
         actors_by_party[p].add(rec.get("author_handle", ""))
 
-    parties = sorted(posts_by_party, key=posts_by_party.get, reverse=True)[:8]
-    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+    # Sort main parties by post count; put "Diğer" last
+    parties = sorted(
+        [p for p in posts_by_party if p != "Diğer"],
+        key=posts_by_party.get, reverse=True,
+    )
+    if "Diğer" in posts_by_party:
+        parties.append("Diğer")
+
+    fig, axes = plt.subplots(1, 2, figsize=(14, max(5, len(parties) * 0.6 + 1)))
 
     for ax, vals, title, xlabel in [
-        (axes[0], [posts_by_party[p] for p in parties], "Total Posts by Party",    "Post Count"),
-        (axes[1], [len(actors_by_party[p]) for p in parties], "Verified Accounts", "Account Count"),
+        (axes[0],
+         [posts_by_party[p] for p in parties],
+         "Total Posts by Party", "Post Count"),
+        (axes[1],
+         [len(actors_by_party[p]) for p in parties],
+         "Verified Accounts by Party", "Account Count"),
     ]:
         colors = [pcolor(p) for p in parties]
         bars   = ax.barh(parties[::-1], vals[::-1], color=colors[::-1], edgecolor="white")
         for bar, val in zip(bars, vals[::-1]):
-            ax.text(bar.get_width() + max(vals) * 0.01,
-                    bar.get_y() + bar.get_height() / 2,
-                    f"{val:,}", va="center", fontsize=8)
+            ax.text(
+                bar.get_width() + max(vals) * 0.01,
+                bar.get_y() + bar.get_height() / 2,
+                f"{val:,}", va="center", fontsize=8,
+            )
         ax.set_xlabel(xlabel)
         ax.set_title(title, pad=8)
         ax.spines[["top", "right"]].set_visible(False)
@@ -155,33 +210,43 @@ def g1_party_post_counts() -> None:
     save_fig(fig, "G1_party_post_counts")
 
 
-# --- G2: Weekly Post Volume Time Series ----------------------------------------
+# ─── G2: Weekly Post Volume ────────────────────────────────────────────────────
 
 def g2_weekly_post_volume() -> None:
     posts = load_posts_jsonl(POSTS_JSONL)
     day_party: dict[tuple, int] = defaultdict(int)
     for rec in posts:
-        party = rec.get("party") or "Unknown"
+        party = group_party(rec.get("party") or "")
         day   = str(rec.get("created_at", ""))[:10]
-        if len(day) == 10:
+        if party and len(day) == 10:
             day_party[(day, party)] += 1
 
     if not day_party:
         print("  G2: no data.")
         return
 
-    df = pd.DataFrame([{"day": k[0], "party": k[1], "count": v}
-                       for k, v in day_party.items()])
-    df["day"]  = pd.to_datetime(df["day"])
-    top_parties = df.groupby("party")["count"].sum().nlargest(6).index.tolist()
-    df_top      = df[df["party"].isin(top_parties)]
+    df = pd.DataFrame(
+        [{"day": k[0], "party": k[1], "count": v} for k, v in day_party.items()]
+    )
+    df["day"] = pd.to_datetime(df["day"])
+
+    # Top 6 parties by total post count (excluding "Diğer" unless dominant)
+    party_totals = df.groupby("party")["count"].sum()
+    top_parties  = (
+        party_totals[party_totals.index != "Diğer"]
+        .nlargest(6).index.tolist()
+    )
 
     fig, ax = plt.subplots(figsize=(13, 5))
     for party in top_parties:
-        sub    = df_top[df_top["party"] == party].sort_values("day")
+        sub    = df[df["party"] == party].sort_values("day")
         smooth = sub.set_index("day")["count"].rolling(3, min_periods=1).mean()
-        ax.plot(smooth.index, smooth.values, label=party,
-                color=pcolor(party), linewidth=1.8, marker="o", markersize=3)
+        ax.plot(
+            smooth.index, smooth.values,
+            label=party, color=pcolor(party),
+            linewidth=1.8, marker="o", markersize=3,
+        )
+        ax.fill_between(smooth.index, 0, smooth.values, color=pcolor(party), alpha=0.06)
 
     ax.set_xlabel("Date")
     ax.set_ylabel("Daily Post Count (3-day rolling avg)")
@@ -191,12 +256,14 @@ def g2_weekly_post_volume() -> None:
     save_fig(fig, "G2_weekly_post_volume")
 
 
-# --- G3: Sentiment Heatmap -----------------------------------------------------
+# ─── G3: Sentiment Heatmap ────────────────────────────────────────────────────
 
 def g3_sentiment_heatmap() -> None:
     df = pd.read_csv(SENTIMENT_CSV, encoding="utf-8-sig")
     df = df[(df["party"].notna()) & (df["party"].str.strip() != "")]
     df = df[df["source"] == "actor_post"]
+    df["party"] = df["party"].apply(group_party)
+    df = df[df["party"] != ""]
 
     pivot = df.groupby(["party", "sentiment"]).size().unstack(fill_value=0)
     for col in ["negative", "neutral", "positive"]:
@@ -208,7 +275,7 @@ def g3_sentiment_heatmap() -> None:
     ratios.columns = ["Negative", "Neutral", "Positive"]
     ratios = ratios.sort_values("Positive", ascending=False)
 
-    fig, ax = plt.subplots(figsize=(7, max(4, len(ratios) * 0.55)))
+    fig, ax = plt.subplots(figsize=(7, max(4, len(ratios) * 0.6)))
     sns.heatmap(ratios, annot=True, fmt=".2f", cmap="RdYlGn",
                 vmin=0, vmax=1, linewidths=0.5, ax=ax,
                 cbar_kws={"shrink": 0.8, "label": "Ratio"})
@@ -218,13 +285,14 @@ def g3_sentiment_heatmap() -> None:
     save_fig(fig, "G3_sentiment_heatmap")
 
 
-# --- G4: Hate Speech Dot-Plot with CI -----------------------------------------
+# ─── G4: Hate Speech Dot-Plot with CI ─────────────────────────────────────────
 
 def g4_hate_speech_rate() -> None:
     df = pd.read_csv(SENTIMENT_CSV, encoding="utf-8-sig")
     df = df[df["party"].notna() & (df["party"].str.strip() != "")]
+    df["party"] = df["party"].apply(group_party)
+    df = df[df["party"] != ""]
 
-    # Use pre-computed Wilson CIs when available
     ci_data: dict[str, dict] = {}
     if os.path.exists(STAT_JSON):
         with open(STAT_JSON, "r", encoding="utf-8") as f:
@@ -238,8 +306,10 @@ def g4_hate_speech_rate() -> None:
                     continue
                 n_h = (g["hate_speech"] == "Yes").sum()
                 lo, hi = proportion_confint(n_h, len(g), alpha=0.05, method="wilson")
-                ci_data[str(party)] = {"hate_rate": n_h / len(g), "n": len(g),
-                                       "ci_95_low": float(lo), "ci_95_high": float(hi)}
+                ci_data[str(party)] = {
+                    "hate_rate": n_h / len(g), "n": len(g),
+                    "ci_95_low": float(lo), "ci_95_high": float(hi),
+                }
         except ImportError:
             pass
 
@@ -248,15 +318,18 @@ def g4_hate_speech_rate() -> None:
         return
 
     df_ci = pd.DataFrame(ci_data).T.sort_values("hate_rate", ascending=True)
-    fig, ax = plt.subplots(figsize=(9, max(5, len(df_ci) * 0.55)))
+    fig, ax = plt.subplots(figsize=(9, max(5, len(df_ci) * 0.6)))
 
     for i, (party, row) in enumerate(df_ci.iterrows()):
         c    = pcolor(str(party))
-        rate, lo, hi = row["hate_rate"], row["ci_95_low"], row["ci_95_high"]
+        rate = row["hate_rate"]
+        lo   = row["ci_95_low"]
+        hi   = row["ci_95_high"]
         ax.scatter(rate, i, color=c, s=100, zorder=3)
         ax.errorbar(rate, i, xerr=[[rate - lo], [hi - rate]],
                     fmt="none", ecolor=c, capsize=4, linewidth=1.2)
-        ax.text(hi + 0.002, i, f"n={int(row['n'])}", va="center", fontsize=7, color="gray")
+        ax.text(hi + 0.003, i, f"n={int(row['n'])}", va="center",
+                fontsize=7, color="gray")
 
     ax.set_yticks(range(len(df_ci)))
     ax.set_yticklabels(df_ci.index, fontsize=8)
@@ -266,11 +339,13 @@ def g4_hate_speech_rate() -> None:
     save_fig(fig, "G4_hate_speech_rate")
 
 
-# --- G5: Cross-Party Sentiment Matrix ------------------------------------------
+# ─── G5: Cross-Party Sentiment Matrix ─────────────────────────────────────────
 
 def g5_cross_party_sentiment() -> None:
     df = pd.read_csv(SENTIMENT_CSV, encoding="utf-8-sig")
     df = df[df["party"].notna() & (df["party"].str.strip() != "")]
+    df["party"] = df["party"].apply(group_party)
+    df = df[df["party"] != ""]
 
     def pos_score(s: str) -> float:
         try:
@@ -281,7 +356,6 @@ def g5_cross_party_sentiment() -> None:
 
     df["pos_prob"] = df["sentiment_scores"].apply(pos_score)
 
-    # Build full-text lookup from JSONL for more accurate mention detection
     full_texts: dict[str, str] = {}
     if os.path.exists(POSTS_JSONL):
         for rec in load_posts_jsonl(POSTS_JSONL):
@@ -294,9 +368,11 @@ def g5_cross_party_sentiment() -> None:
 
     for _, row in df.iterrows():
         speaker = str(row["party"])
-        text    = full_texts.get(str(row.get("uri", "")),
-                                 str(row.get("text_preview", ""))).lower()
-        score   = row["pos_prob"]
+        text    = full_texts.get(
+            str(row.get("uri", "")),
+            str(row.get("text_preview", "")),
+        ).lower()
+        score = row["pos_prob"]
         for target, keywords in PARTY_MENTION_KEYWORDS.items():
             if any(kw in text for kw in keywords):
                 heat[(speaker, target)].append(score)
@@ -312,12 +388,12 @@ def g5_cross_party_sentiment() -> None:
         print("  G5: insufficient cross-party mention data.")
         return
 
-    fig, ax = plt.subplots(figsize=(9, max(5, len(matrix) * 0.65)))
+    fig, ax = plt.subplots(figsize=(9, max(5, len(matrix) * 0.7)))
     sns.heatmap(matrix.astype(float), annot=True, fmt=".2f",
                 cmap="RdYlGn", center=0.5, vmin=0, vmax=1,
                 linewidths=0.5, ax=ax,
                 cbar_kws={"shrink": 0.8, "label": "Mean Positivity"})
-    ax.set_title("Cross-Party Sentiment (Speaker -> Target)", pad=8)
+    ax.set_title("Cross-Party Sentiment  (Speaker → Target)", pad=8)
     ax.set_xlabel("Mentioned Party")
     ax.set_ylabel("Speaking Party")
     ax.tick_params(axis="x", rotation=30, labelsize=8)
@@ -325,83 +401,171 @@ def g5_cross_party_sentiment() -> None:
     save_fig(fig, "G5_cross_party_sentiment")
 
 
-# --- G6: Interactive Network (PyVis) -------------------------------------------
+# ─── G6: Party-Level Interaction Network (PNG, spring layout) ─────────────────
 
-def g6_network_graph() -> None:
-    try:
-        from pyvis.network import Network as PvNet
-    except ImportError:
-        print("  G6: pyvis not installed — skipping.")
-        return
-
+def g6_party_interaction_network() -> None:
+    """
+    Party-level interaction network.
+    Nodes = parties (size ∝ total outgoing weight).
+    Edges = total reply+quote volume between parties.
+    Spring layout: heavily interacting parties drawn closer ("spray" effect).
+    """
     edges_df = pd.read_csv(EDGES_CSV, encoding="utf-8-sig")
     if edges_df.empty:
         print("  G6: empty edge list.")
         return
 
-    top_edges = edges_df.nlargest(400, "weight")
-    in_deg: dict[str, int] = defaultdict(int)
-    for _, row in top_edges.iterrows():
-        in_deg[row["target_handle"]] += row["weight"]
+    # Group small parties and filter unknowns
+    df = edges_df.copy()
+    for col in ("source_party", "target_party"):
+        df[col] = df[col].fillna("").apply(group_party)
+    df = df[(df["source_party"] != "") & (df["target_party"] != "")]
 
-    net = PvNet(height="750px", width="100%", directed=True,
-                bgcolor="#1a1a2e", font_color="white")
-    net.barnes_hut(gravity=-6000, spring_length=120)
+    # Aggregate both directions → symmetric weight (total interactions between pair)
+    pair_weights: dict[tuple, int] = defaultdict(int)
+    node_total:   dict[str, int]   = defaultdict(int)
+    for _, row in df.iterrows():
+        src, tgt, w = row["source_party"], row["target_party"], int(row["weight"])
+        node_total[src] += w
+        node_total[tgt] += w
+        if src != tgt:
+            key = tuple(sorted([src, tgt]))
+            pair_weights[key] += w
 
-    added: set[str] = set()
-    for _, row in top_edges.iterrows():
-        for handle, party in [(row["source_handle"], row["source_party"]),
-                               (row["target_handle"], row["target_party"])]:
-            if handle not in added:
-                size = max(10, min(55, 10 + in_deg.get(handle, 0) * 0.5))
-                net.add_node(handle, label=handle, title=f"{handle}\n{party}",
-                             size=size, color=pcolor(str(party)))
-                added.add(handle)
-        net.add_edge(row["source_handle"], row["target_handle"],
-                     value=max(1, min(10, row["weight"])),
-                     title=f"{row['edge_type']} (x{row['weight']})",
-                     color={"color": "#aaaaaa", "opacity": 0.55})
+    if not pair_weights:
+        print("  G6: no cross-party edges found.")
+        return
 
-    out = os.path.join(FIGURES_DIR, "G6_network_interactive.html")
-    net.write_html(out)
-    print(f"  Saved: {out}")
+    # Build undirected weighted graph
+    G = nx.Graph()
+    for (p1, p2), w in pair_weights.items():
+        G.add_edge(p1, p2, weight=w)
+
+    nodes = list(G.nodes())
+    max_total = max(node_total.values(), default=1)
+    max_edge  = max(d["weight"] for _, _, d in G.edges(data=True))
+
+    # Spring layout: weight parameter attracts heavily interacting parties
+    pos = nx.spring_layout(G, weight="weight", seed=42, k=1.8, iterations=150)
+
+    fig, ax = plt.subplots(figsize=(12, 10))
+    ax.set_aspect("equal")
+    ax.axis("off")
+
+    # Draw edges with width and alpha proportional to interaction count
+    for u, v, data in G.edges(data=True):
+        w     = data["weight"]
+        width = 0.8 + (w / max_edge) * 10
+        alpha = 0.25 + (w / max_edge) * 0.65
+        nx.draw_networkx_edges(
+            G, pos, ax=ax, edgelist=[(u, v)],
+            width=width, alpha=alpha, edge_color="#888888",
+        )
+        # Print edge count near midpoint
+        if w >= max_edge * 0.15:   # label only prominent edges
+            mid_x = (pos[u][0] + pos[v][0]) / 2
+            mid_y = (pos[u][1] + pos[v][1]) / 2
+            ax.text(mid_x, mid_y, str(w), fontsize=7, ha="center",
+                    va="center", color="#555555",
+                    bbox=dict(facecolor="white", alpha=0.6, edgecolor="none", pad=1))
+
+    # Draw nodes
+    node_sizes  = [max(600, node_total.get(n, 0) / max_total * 5000) for n in nodes]
+    node_colors = [pcolor(n) for n in nodes]
+    nx.draw_networkx_nodes(
+        G, pos, ax=ax, nodelist=nodes,
+        node_color=node_colors, node_size=node_sizes,
+        alpha=0.92, edgecolors="white", linewidths=2,
+    )
+
+    # Party abbreviation labels
+    labels = {n: PARTY_SHORT.get(n, n[:4]) for n in nodes}
+    nx.draw_networkx_labels(
+        G, pos, ax=ax, labels=labels,
+        font_size=10, font_weight="bold", font_color="white",
+    )
+
+    # Legend
+    legend_handles = [
+        mpatches.Patch(color=pcolor(p), label=f"{PARTY_SHORT.get(p, p)} — {p}")
+        for p in nodes if p in PARTY_COLORS
+    ]
+    ax.legend(handles=legend_handles, loc="lower left", fontsize=8,
+              frameon=True, framealpha=0.85, edgecolor="gray")
+
+    ax.set_title(
+        "Party-Level Interaction Network  (reply + quote)\n"
+        "Node size = total interactions · Edge width = interaction count · "
+        "Proximity = interaction strength",
+        fontsize=11, pad=15,
+    )
+    save_fig(fig, "G6_party_interaction_network")
 
 
-# --- G7: Top-20 Active Accounts ------------------------------------------------
+# ─── G7: Party Posting Activity ───────────────────────────────────────────────
 
-def g7_top_active_accounts() -> None:
-    posts  = load_posts_jsonl(POSTS_JSONL)
-    counts: dict[str, dict] = defaultdict(lambda: {"count": 0, "party": ""})
+def g7_party_activity() -> None:
+    """
+    Dual panel:
+      Left  — total posts per party
+      Right — avg posts per tracked account per party (posting intensity)
+    """
+    posts = load_posts_jsonl(POSTS_JSONL)
+
+    party_posts:  dict[str, int] = defaultdict(int)
+    party_actors: dict[str, set] = defaultdict(set)
     for rec in posts:
-        h = rec.get("author_handle", "")
-        counts[h]["count"] += 1
-        counts[h]["party"] = rec.get("party", "") or ""
+        p = group_party(rec.get("party") or "")
+        if not p:
+            continue
+        party_posts[p] += 1
+        party_actors[p].add(rec.get("author_handle", ""))
 
-    top20  = sorted(counts.items(), key=lambda t: t[1]["count"], reverse=True)[:20]
-    labels = [h for h, _ in top20]
-    values = [d["count"] for _, d in top20]
-    colors = [pcolor(d["party"]) for _, d in top20]
+    # Order: main parties by post count, "Diğer" last
+    parties = sorted(
+        [p for p in party_posts if p != "Diğer"],
+        key=party_posts.get, reverse=True,
+    )
+    if "Diğer" in party_posts:
+        parties.append("Diğer")
 
-    fig, ax = plt.subplots(figsize=(11, 7))
-    bars = ax.barh(labels[::-1], values[::-1], color=colors[::-1], edgecolor="white")
-    for bar, val in zip(bars, values[::-1]):
-        ax.text(bar.get_width() + max(values) * 0.01,
-                bar.get_y() + bar.get_height() / 2,
-                f"{val:,}", va="center", fontsize=8)
-    ax.set_xlabel("Post Count")
-    ax.set_title("Top 20 Most Active Accounts", pad=8)
+    total_posts    = [party_posts[p] for p in parties]
+    avg_per_actor  = [party_posts[p] / max(1, len(party_actors[p])) for p in parties]
+    n_actors       = [len(party_actors[p]) for p in parties]
+    colors         = [pcolor(p) for p in parties]
 
-    legend_handles, seen = [], set()
-    for _, d in top20:
-        p = d["party"]
-        if p and p not in seen:
-            seen.add(p)
-            legend_handles.append(mpatches.Patch(color=pcolor(p), label=p))
-    ax.legend(handles=legend_handles, loc="lower right", fontsize=7)
-    save_fig(fig, "G7_top_active_accounts")
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, max(5, len(parties) * 0.65 + 1)))
+
+    # Left: total posts
+    bars1 = ax1.barh(parties[::-1], total_posts[::-1], color=colors[::-1], edgecolor="white")
+    for bar, val, n in zip(bars1, total_posts[::-1], n_actors[::-1]):
+        ax1.text(
+            bar.get_width() + max(total_posts) * 0.01,
+            bar.get_y() + bar.get_height() / 2,
+            f"{val:,}  ({n} accts)", va="center", fontsize=7.5,
+        )
+    ax1.set_xlabel("Total Post Count")
+    ax1.set_title("Total Posts by Party", pad=8)
+    ax1.spines[["top", "right"]].set_visible(False)
+
+    # Right: avg posts per account (posting intensity)
+    bars2 = ax2.barh(parties[::-1], avg_per_actor[::-1], color=colors[::-1], edgecolor="white")
+    for bar, val in zip(bars2, avg_per_actor[::-1]):
+        ax2.text(
+            bar.get_width() + max(avg_per_actor) * 0.01,
+            bar.get_y() + bar.get_height() / 2,
+            f"{val:.1f}", va="center", fontsize=8,
+        )
+    ax2.set_xlabel("Avg Posts per Account")
+    ax2.set_title("Posting Intensity by Party", pad=8)
+    ax2.spines[["top", "right"]].set_visible(False)
+
+    fig.suptitle("Party Posting Activity — BlueSky Turkish Political Accounts",
+                 fontsize=12, y=1.02)
+    save_fig(fig, "G7_party_activity")
 
 
-# --- G8: Per-Party WordClouds --------------------------------------------------
+# ─── G8: Per-Party WordClouds ─────────────────────────────────────────────────
 
 def g8_wordclouds() -> None:
     try:
@@ -416,7 +580,11 @@ def g8_wordclouds() -> None:
     if not by_party:
         return
 
-    parties   = list(by_party.keys())[:6]
+    # Show main parties only (skip minor ones)
+    parties = [p for p in by_party if p in MAIN_PARTIES][:6]
+    if not parties:
+        parties = list(by_party.keys())[:6]
+
     rows_n    = (len(parties) + 1) // 2
     fig, axes = plt.subplots(rows_n, 2, figsize=(14, rows_n * 4))
     axes      = np.array(axes).flatten()
@@ -437,8 +605,10 @@ def g8_wordclouds() -> None:
             f = random.uniform(0.6, 1.25)
             return f"rgb({min(255,int(r*f))},{min(255,int(g*f))},{min(255,int(b*f))})"
 
-        wc = WordCloud(width=700, height=320, background_color="white",
-                       max_words=60, color_func=color_func, prefer_horizontal=0.8)
+        wc = WordCloud(
+            width=700, height=320, background_color="white",
+            max_words=60, color_func=color_func, prefer_horizontal=0.8,
+        )
         wc.generate_from_frequencies(freq)
         axes[i].imshow(wc, interpolation="bilinear")
         axes[i].axis("off")
@@ -451,54 +621,78 @@ def g8_wordclouds() -> None:
     save_fig(fig, "G8_wordclouds")
 
 
-# --- G9: Party Interaction Sankey ----------------------------------------------
+# ─── G9: Party Interaction — Chord Bar (PNG) ──────────────────────────────────
 
 def g9_party_sankey() -> None:
-    try:
-        import plotly.graph_objects as go
-    except ImportError:
-        print("  G9: plotly not installed — skipping.")
-        return
-
+    """
+    Grouped bar chart showing how many times each source party interacted
+    with each target party.  PNG only (no HTML).
+    Falls back to matplotlib if plotly/kaleido are unavailable.
+    """
     edges_df = pd.read_csv(EDGES_CSV, encoding="utf-8-sig")
     if edges_df.empty:
         return
 
-    flow = (
-        edges_df[edges_df["source_party"].notna() & edges_df["target_party"].notna()]
-        .groupby(["source_party", "target_party"])["weight"]
-        .sum().reset_index()
-    )
+    df = edges_df.copy()
+    for col in ("source_party", "target_party"):
+        df[col] = df[col].fillna("").apply(group_party)
+    df = df[(df["source_party"] != "") & (df["target_party"] != "")
+            & (df["source_party"] != df["target_party"])]
+
+    flow = df.groupby(["source_party", "target_party"])["weight"].sum().reset_index()
     flow = flow[flow["weight"] >= 2]
     if flow.empty:
         return
 
-    parties     = sorted(set(flow["source_party"]) | set(flow["target_party"]))
-    idx         = {p: i for i, p in enumerate(parties)}
-    node_colors = [pcolor(p) for p in parties]
-
-    fig = go.Figure(go.Sankey(
-        node=dict(pad=15, thickness=18,
-                  line=dict(color="black", width=0.5),
-                  label=parties, color=node_colors),
-        link=dict(
-            source=[idx[r["source_party"]] for _, r in flow.iterrows()],
-            target=[idx[r["target_party"]] for _, r in flow.iterrows()],
-            value=flow["weight"].tolist(),
-        ),
-    ))
-    fig.update_layout(title_text="Party Interaction Flow (reply + quote)",
-                      font_size=11, height=600)
-    html_out = os.path.join(FIGURES_DIR, "G9_party_interaction_sankey.html")
-    fig.write_html(html_out)
-    print(f"  Saved: {html_out}")
+    # Try Plotly PNG via kaleido
     try:
-        fig.write_image(os.path.join(FIGURES_DIR, "G9_party_interaction_sankey.png"), scale=2)
+        import plotly.graph_objects as go
+        parties     = sorted(set(flow["source_party"]) | set(flow["target_party"]))
+        idx         = {p: i for i, p in enumerate(parties)}
+        node_colors = [pcolor(p) for p in parties]
+        fig_px = go.Figure(go.Sankey(
+            node=dict(
+                pad=15, thickness=18,
+                line=dict(color="black", width=0.5),
+                label=parties, color=node_colors,
+            ),
+            link=dict(
+                source=[idx[r["source_party"]] for _, r in flow.iterrows()],
+                target=[idx[r["target_party"]] for _, r in flow.iterrows()],
+                value=flow["weight"].tolist(),
+            ),
+        ))
+        fig_px.update_layout(
+            title_text="Party Interaction Flow  (reply + quote)",
+            font_size=11, height=600,
+        )
+        png_out = os.path.join(FIGURES_DIR, "G9_party_interaction_sankey.png")
+        fig_px.write_image(png_out, scale=2)
+        print(f"  Saved: G9_party_interaction_sankey.png")
+        return
     except Exception:
-        pass
+        pass  # fall through to matplotlib
+
+    # Matplotlib fallback: grouped bar chart of cross-party interaction counts
+    pivot = flow.pivot(index="source_party", columns="target_party", values="weight").fillna(0)
+    fig, ax = plt.subplots(figsize=(12, max(5, len(pivot) * 0.8)))
+    bottom = np.zeros(len(pivot))
+    for col in pivot.columns:
+        vals   = pivot[col].values
+        bars   = ax.bar(pivot.index, vals, bottom=bottom, label=col,
+                        color=pcolor(col), edgecolor="white", width=0.65)
+        bottom += vals
+
+    ax.set_xlabel("Source Party (sender)")
+    ax.set_ylabel("Total Interactions (reply + quote)")
+    ax.set_title("Cross-Party Interaction Volume", pad=8)
+    ax.legend(title="Target Party", loc="upper right", fontsize=7)
+    ax.spines[["top", "right"]].set_visible(False)
+    plt.xticks(rotation=35, ha="right", fontsize=8)
+    save_fig(fig, "G9_party_interaction_sankey")
 
 
-# --- G_LDA: Topic Similarity Heatmap + Dendrogram ------------------------------
+# ─── G_LDA: Topic Similarity Heatmap + Dendrogram ─────────────────────────────
 
 def g_lda_topic_similarity() -> None:
     sim_df = pd.read_csv(SIM_CSV, index_col=0, encoding="utf-8-sig")
@@ -516,10 +710,14 @@ def g_lda_topic_similarity() -> None:
         1, 2, figsize=(13, 5),
         gridspec_kw={"width_ratios": [3, 1]},
     )
-    sns.heatmap(sim_df.astype(float), annot=True, fmt=".3f",
-                cmap="YlOrRd", ax=ax_heat, square=True,
-                linewidths=0.3, cbar_kws={"label": "Jensen-Shannon Divergence"})
-    ax_heat.set_title("Party Discourse Similarity\n(lower JSD = more similar)", fontsize=11)
+    sns.heatmap(
+        sim_df.astype(float), annot=True, fmt=".3f",
+        cmap="YlOrRd", ax=ax_heat, square=True,
+        linewidths=0.3, cbar_kws={"label": "Jensen-Shannon Divergence"},
+    )
+    ax_heat.set_title(
+        "Party Discourse Similarity\n(lower JSD = more similar topics)", fontsize=11,
+    )
     ax_heat.set_xticklabels(ax_heat.get_xticklabels(), rotation=40, ha="right", fontsize=8)
     ax_heat.set_yticklabels(ax_heat.get_yticklabels(), rotation=0, fontsize=8)
 
@@ -537,71 +735,176 @@ def g_lda_topic_similarity() -> None:
     save_fig(fig, "G_LDA_topic_similarity")
 
 
-# --- G_NET: PageRank x Betweenness Scatter ------------------------------------
+# ─── G_NET: PageRank × Betweenness Scatter ────────────────────────────────────
 
 def g_network_scatter() -> None:
     df = pd.read_csv(NODE_CSV, encoding="utf-8-sig")
     if df.empty or "pagerank" not in df.columns:
+        print("  G_NET: empty node metrics.")
         return
 
-    fig, ax = plt.subplots(figsize=(9, 6))
+    df = df[df["betweenness"].notna() & df["pagerank"].notna()].copy()
+    if len(df) < 2:
+        print("  G_NET: not enough nodes for scatter.")
+        return
+
+    # Log-transform betweenness to spread the mass of near-zero values
+    df["btwn_log"]  = np.log1p(df["betweenness"] * 1e5)
+    df["pr_scaled"] = df["pagerank"] * 1000    # scale up for readability
+    df["bubble"]    = np.clip(df["in_degree"], 1, 200) * 1.5 + 20
+
+    fig, ax = plt.subplots(figsize=(11, 8))
+
+    plotted_parties: set[str] = set()
     for party, grp in df.groupby("party"):
+        party_label = group_party(str(party))
+        plotted_parties.add(party_label)
         ax.scatter(
-            grp["betweenness"], grp["pagerank"],
-            s=grp["in_degree"].clip(upper=500) * 0.4 + 15,
-            color=pcolor(str(party)), alpha=0.75,
-            label=str(party), edgecolors="white", linewidths=0.3,
+            grp["btwn_log"], grp["pr_scaled"],
+            s=grp["bubble"],
+            color=pcolor(party_label),
+            alpha=0.72, edgecolors="white", linewidths=0.4,
+            zorder=2,
         )
 
-    top5 = df.nlargest(5, "pagerank")
+    # Label top 12 accounts by PageRank
+    top12 = df.nlargest(12, "pagerank")
     try:
         from adjustText import adjust_text
-        texts = [ax.text(row["betweenness"], row["pagerank"], row["handle"], fontsize=7)
-                 for _, row in top5.iterrows()]
+        texts = [
+            ax.text(row["btwn_log"], row["pr_scaled"], row["handle"], fontsize=7)
+            for _, row in top12.iterrows()
+        ]
         adjust_text(texts, arrowprops=dict(arrowstyle="->", color="gray", lw=0.5))
     except ImportError:
-        for _, row in top5.iterrows():
-            ax.annotate(row["handle"], (row["betweenness"], row["pagerank"]),
-                        fontsize=7, xytext=(3, 3), textcoords="offset points")
+        for _, row in top12.iterrows():
+            ax.annotate(
+                row["handle"], (row["btwn_log"], row["pr_scaled"]),
+                fontsize=7, xytext=(4, 4), textcoords="offset points", color="#333333",
+            )
 
-    ax.set_xlabel("Betweenness Centrality")
-    ax.set_ylabel("PageRank (alpha=0.85)")
-    ax.set_title("Network Influence Map: PageRank x Betweenness\n"
-                 "(bubble size = weighted in-degree)", pad=8)
-    ax.legend(loc="upper right", fontsize=7, ncol=2, markerscale=0.7)
+    # Party legend
+    legend_handles = [
+        mpatches.Patch(color=pcolor(p), label=p)
+        for p in PARTY_COLORS if p in plotted_parties
+    ]
+    ax.legend(handles=legend_handles, loc="upper right", fontsize=7, ncol=2,
+              title="Party", title_fontsize=8)
+
+    ax.set_xlabel("Betweenness Centrality  (log₁₀ scale)", fontsize=10)
+    ax.set_ylabel("PageRank × 1000", fontsize=10)
+    ax.set_title(
+        "Network Influence Map: PageRank × Betweenness\n"
+        "(bubble size = weighted in-degree; top-12 labeled)",
+        pad=8,
+    )
+    ax.spines[["top", "right"]].set_visible(False)
     save_fig(fig, "G_network_scatter")
 
 
-# --- Dispatch Table -----------------------------------------------------------
+# ─── G_TEMPORAL: 7-Day Temporal Trend ────────────────────────────────────────
+
+def g_temporal_trend() -> None:
+    """
+    Bluesky-wide 7-day posting trend from weekly search results.
+    Uses the 3-day rolling averages stored in temporal_analysis.json.
+    """
+    with open(TEMPORAL_JSON, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    smooth = data.get("daily_smooth_by_party", {})
+    if not smooth:
+        print("  G_TEMPORAL: no smooth data in temporal_analysis.json.")
+        return
+
+    # Pick top 6 parties by total smoothed post count
+    party_totals = {p: sum(v.values()) for p, v in smooth.items()}
+    top_parties  = sorted(party_totals, key=party_totals.get, reverse=True)[:6]
+
+    fig, ax = plt.subplots(figsize=(13, 5))
+
+    for party in top_parties:
+        dates  = sorted(smooth[party].keys())
+        values = [smooth[party][d] for d in dates]
+        xs     = pd.to_datetime(dates)
+        label  = PARTY_SHORT.get(group_party(party), party[:8])
+        color  = pcolor(group_party(party))
+        ax.plot(xs, values, label=label, color=color,
+                linewidth=2, marker="o", markersize=4)
+        ax.fill_between(xs, 0, values, color=color, alpha=0.07)
+
+    # Annotate named political events if any
+    events = data.get("political_events", {})
+    for date_str, ev_label in events.items():
+        try:
+            xv = pd.to_datetime(date_str)
+            ax.axvline(xv, color="gray", linestyle="--", linewidth=0.8, alpha=0.7)
+            ax.text(xv, ax.get_ylim()[1] * 0.92, ev_label,
+                    fontsize=7, rotation=45, ha="right", color="#555555")
+        except Exception:
+            pass
+
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Post Count  (3-day rolling avg)")
+    ax.set_title(
+        "Bluesky-wide Political Activity — 7-Day Temporal Trend\n"
+        "(keyword-matched posts, grouped by author party)",
+        pad=8,
+    )
+    ax.legend(loc="upper left", fontsize=8, ncol=2)
+    fig.autofmt_xdate()
+    save_fig(fig, "G_TEMPORAL_trend")
+
+
+# ─── Dispatch Table ────────────────────────────────────────────────────────────
 
 FIGURE_FUNCS = [
-    ("G1",    g1_party_post_counts,     [POSTS_JSONL]),
-    ("G2",    g2_weekly_post_volume,    [POSTS_JSONL]),
-    ("G3",    g3_sentiment_heatmap,     [SENTIMENT_CSV]),
-    ("G4",    g4_hate_speech_rate,      [SENTIMENT_CSV]),
-    ("G5",    g5_cross_party_sentiment, [SENTIMENT_CSV]),
-    ("G6",    g6_network_graph,         [EDGES_CSV]),
-    ("G7",    g7_top_active_accounts,   [POSTS_JSONL]),
-    ("G8",    g8_wordclouds,            [KEYWORDS_JSON]),
-    ("G9",    g9_party_sankey,          [EDGES_CSV]),
-    ("G_LDA", g_lda_topic_similarity,   [SIM_CSV]),
-    ("G_NET", g_network_scatter,        [NODE_CSV]),
+    ("G1",         g1_party_post_counts,          [POSTS_JSONL]),
+    ("G2",         g2_weekly_post_volume,          [POSTS_JSONL]),
+    ("G3",         g3_sentiment_heatmap,           [SENTIMENT_CSV]),
+    ("G4",         g4_hate_speech_rate,            [SENTIMENT_CSV]),
+    ("G5",         g5_cross_party_sentiment,       [SENTIMENT_CSV]),
+    ("G6",         g6_party_interaction_network,   [EDGES_CSV]),
+    ("G7",         g7_party_activity,              [POSTS_JSONL]),
+    ("G8",         g8_wordclouds,                  [KEYWORDS_JSON]),
+    ("G9",         g9_party_sankey,                [EDGES_CSV]),
+    ("G_LDA",      g_lda_topic_similarity,         [SIM_CSV]),
+    ("G_NET",      g_network_scatter,              [NODE_CSV]),
+    ("G_TEMPORAL", g_temporal_trend,               [TEMPORAL_JSON]),
 ]
+
+
+def _clean_old_files() -> None:
+    """Delete leftover PDFs and HTML files from earlier runs."""
+    removed = 0
+    for pattern in ("*.pdf", "G6_network_interactive.html",
+                    "G9_party_interaction_sankey.html"):
+        for path in glob.glob(os.path.join(FIGURES_DIR, pattern)):
+            try:
+                os.remove(path)
+                removed += 1
+            except OSError:
+                pass
+    if removed:
+        print(f"  Cleaned up {removed} old PDF/HTML file(s) from {FIGURES_DIR}/")
 
 
 def main():
     os.makedirs(FIGURES_DIR, exist_ok=True)
+    _clean_old_files()
+
     for label, func, required in FIGURE_FUNCS:
         missing = [f for f in required if not os.path.exists(f)]
         if missing:
-            print(f"[{label}] Skipping — missing files: {missing}")
+            print(f"[{label}] Skipping — missing: {missing}")
             continue
-        print(f"[{label}] Generating ...")
+        print(f"[{label}] Generating …")
         try:
             func()
         except Exception as e:
             print(f"  ERROR in {label}: {e}")
-    print(f"\nAll figures -> {FIGURES_DIR}/")
+
+    print(f"\nAll figures → {FIGURES_DIR}/")
 
 
 if __name__ == "__main__":

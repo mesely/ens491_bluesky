@@ -228,12 +228,13 @@ def main() -> None:
     check_data_file()
     has_bert = check_turkishbertweet()
     if not has_bert:
-        info("Steps 05 / 05c will be skipped if TurkishBERTweet is absent.")
+        info("TurkishBERTweet not found. Clone it or steps 05/05c will fail.")
+        info("  git clone https://github.com/ViralLab/TurkishBERTweet.git")
 
     # Determine which steps to run
     skip_ids: set[str] = set(args.skip_steps.split(",")) - {""} if args.skip_steps else set()
-    if not has_bert:
-        skip_ids.update({"05", "05c"})
+    # NOTE: 05 and 05c are NOT auto-skipped even without TurkishBERTweet.
+    # They are marked optional=True so the pipeline won't abort on failure.
 
     steps_to_run = STEPS
 
