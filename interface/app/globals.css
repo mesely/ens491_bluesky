@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/* ─── Design tokens (light) ────────────────────────────────────── */
+:root {
+  --bg:       #ffffff;
+  --surface:  #f8f9fa;
+  --border:   #e9ecef;
+  --border-l: #dee2e6;
+  --text:     #111111;
+  --dim:      #495057;
+  --muted:    #6c757d;
+  --accent:   #a0712a;
+  --accent-d: #7a5217;
+  --red:      #dc3545;
+  --sans: var(--font-sans), 'IBM Plex Sans', sans-serif;
+  --mono: var(--font-mono), 'IBM Plex Mono', monospace;
+  --card-bg:     #ffffff;
+  --card-border: #e2e8f0;
+  --input-bg:    #f1f5f9;
+}
+
+/* ─── Dark theme ────────────────────────────────────────────────── */
+.dark {
+  --bg:       #0f1116;
+  --surface:  #1a1d27;
+  --border:   #2a2d3a;
+  --border-l: #363a4a;
+  --text:     #e8eaf0;
+  --dim:      #b0b8cc;
+  --muted:    #6b7280;
+  --accent:   #c49a45;
+  --accent-d: #d4aa55;
+  --red:      #f87171;
+  --card-bg:    #16192a;
+  --card-border: #2a2d3a;
+  --input-bg:   #1e2130;
+}
+
+/* ─── Base ──────────────────────────────────────────────────────── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 400;
+  transition: background 0.2s, color 0.2s;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-l); border-radius: 4px; }
+
+#prog {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--accent); z-index: 200; width: 0%; transition: width 0.08s;
+}
+
+/* ─── Sunum Tab ─────────────────────────────────────────────────── */
+.pg { min-height: 100vh; border-bottom: 1px solid var(--border); scroll-margin-top: 48px; }
+.c-eye { font-family: var(--mono); font-size: 15px; font-weight: 500; letter-spacing: 0.18em; color: var(--accent); text-transform: uppercase; margin-bottom: 28px; }
+.c-h1  { font-size: clamp(36px, 5.5vw, 76px); font-weight: 600; color: var(--text); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 16px; }
+.c-h1 em { color: var(--accent); font-style: normal; }
+.c-desc{ font-size: 18px; color: var(--dim); max-width: 650px; line-height: 1.7; margin-bottom: 52px; }
+.c-rule{ width: 60px; height: 2px; background: var(--accent); margin-bottom: 36px; }
+.c-item{ font-family: var(--mono); font-size: 16px; color: var(--text); letter-spacing: 0.03em; font-weight: 500; margin-bottom: 8px; }
+.c-item span { color: var(--muted); font-weight: 400; }
+.tc   { display: grid; grid-template-columns: 58fr 42fr; min-height: 100vh; }
+.fp-l { border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 72px 48px 64px; background: var(--surface); }
+.fp-r { display: flex; flex-direction: column; padding: 72px 48px 64px; }
+.slbl { font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: 0.15em; color: var(--accent-d); text-transform: uppercase; margin-bottom: 12px; }
+.stit { font-size: 26px; font-weight: 600; color: var(--text); line-height: 1.3; margin-bottom: 8px; }
+.ssub { font-size: 16px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
+.fw   { flex: 1; border: 1px solid var(--border); background: var(--surface); display: flex; align-items: center; justify-content: center; min-height: 360px; border-radius: 4px; overflow: hidden; padding: 16px; }
+.fw img { width: 100%; height: 100%; max-height: 72vh; object-fit: contain; display: block; cursor: zoom-in; }
+.fcap { margin-top: 14px; font-family: var(--mono); font-size: 12px; color: var(--muted); line-height: 1.7; text-align: center; }
+.finds { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+.find  { padding: 18px 0; border-bottom: 1px solid var(--border); }
+.find:last-child { border-bottom: none; }
+.ftit  { font-size: 13px; font-weight: 600; color: var(--text); letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 8px; }
+.fbdy  { font-size: 16px; color: var(--dim); line-height: 1.7; }
+.fbdy strong { color: var(--text); font-weight: 600; }
+.n    { font-family: var(--mono); font-weight: 600; color: var(--accent-d); }
+.nr   { font-family: var(--mono); font-weight: 600; color: var(--red); }
+.meth { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 18px 22px; margin-top: 24px; }
+.mtag { font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.15em; color: var(--accent-d); text-transform: uppercase; margin-bottom: 10px; }
+.mbdy { font-size: 14px; color: var(--dim); line-height: 1.7; }
+.mbdy strong { color: var(--text); font-weight: 600; }
+.fm   { display: block; font-family: var(--mono); font-size: 13px; color: var(--accent-d); background: var(--border); padding: 8px 12px; margin: 10px 0; border-left: 2px solid var(--border-l); border-radius: 2px; }
+code.i { font-family: var(--mono); font-size: 13px; background: var(--surface); border: 1px solid var(--border); padding: 2px 5px; color: var(--accent-d); border-radius: 3px; }
+.pipe { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--border); margin-top: 32px; }
+.pc   { padding: 22px 16px; border-right: 1px solid var(--border); background: var(--surface); }
+.pc:last-child { border-right: none; }
+.pn   { font-family: var(--mono); font-size: 24px; font-weight: 500; color: var(--border-l); display: block; margin-bottom: 10px; }
+.pt   { font-size: 12px; font-weight: 600; color: var(--text); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.pb   { font-size: 13px; color: var(--dim); line-height: 1.6; }
+table.dt { width: 100%; border-collapse: collapse; margin-top: 40px; font-size: 13px; background: var(--surface); border: 1px solid var(--border); }
+table.dt th { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; color: var(--accent-d); text-transform: uppercase; text-align: left; padding: 12px 16px; border-bottom: 2px solid var(--border); font-weight: 600; }
+table.dt td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--dim); font-size: 13px; }
+table.dt tr:last-child td { border-bottom: none; }
+table.dt td:first-child { font-weight: 500; color: var(--text); font-family: var(--mono); font-size: 12px; }
+
+/* ─── Lightbox overlay ──────────────────────────────────────────── */
+.lightbox {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.88); z-index: 1000;
+  display: flex; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out;
+}
+.lightbox img { max-width: 95vw; max-height: 95vh; object-fit: contain; border-radius: 4px; }
