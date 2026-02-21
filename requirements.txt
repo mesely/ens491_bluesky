@@ -1,0 +1,53 @@
+# ============================================================
+# BlueSky Turkish Political Feed Analysis — Requirements
+# Python 3.12.9
+# ============================================================
+
+# --- Core data & I/O --------------------------------------------------------
+pandas>=2.2.0
+numpy>=1.26.4
+openpyxl>=3.1.2             # read .xlsx data files
+python-dotenv>=1.0.0        # load .env credentials
+
+# --- HTTP & AT Protocol -----------------------------------------------------
+requests>=2.31.0
+atproto>=0.0.55             # AT Protocol client (optional auth)
+
+# --- Progress ---------------------------------------------------------------
+tqdm>=4.66.4
+
+# --- NLP & Machine Learning -------------------------------------------------
+scikit-learn>=1.4.2
+scipy>=1.13.0
+statsmodels>=0.14.2         # Wilson CI, Durbin-Watson, FDR correction
+
+# Topic modeling (for 03_keyword_extraction.py LDA)
+gensim>=4.3.2
+pyLDAvis>=3.4.1
+
+# --- Deep Learning ----------------------------------------------------------
+# CPU-only baseline — override for CUDA:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu118
+torch>=2.2.0
+transformers>=4.40.0
+peft>=0.10.0                # LoRA adapter loading
+
+# --- Visualization ----------------------------------------------------------
+matplotlib>=3.8.4
+seaborn>=0.13.2
+plotly>=5.22.0
+kaleido>=0.2.1              # Plotly static PNG/PDF export
+pyvis>=0.3.2                # interactive network graphs
+wordcloud>=1.9.3
+adjustText>=1.2.0           # non-overlapping scatter labels
+
+# --- Network Analysis -------------------------------------------------------
+networkx>=3.3
+
+# Louvain community detection (optional but recommended over greedy fallback):
+#   If install fails, networkx's built-in greedy algorithm is used instead.
+python-louvain>=0.16
+
+# --- Notebook ---------------------------------------------------------------
+jupyter>=1.0.0
+ipykernel>=6.29.3
