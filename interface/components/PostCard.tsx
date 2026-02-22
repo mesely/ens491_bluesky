@@ -7,6 +7,8 @@ export interface Post {
   author_handle: string;
   party: string;
   party_normalized: string;
+  party_affinity: string;       // inferred for non-tracked actors
+  affinity_label: string;       // e.g. "CHP'ye yakın"
   alliance: string;
   political_stance: string;
   isMilletvekili: boolean;
@@ -19,7 +21,9 @@ export interface Post {
   sentiment_scores: string;
   hate_speech: string;
   hs_score: number;
-  source: string;
+  source: string;               // "dataset" | "keyword" | "protest"
+  keyword: string;
+  is_tracked_actor: boolean;
 }
 
 /* ─── Party colors ─────────────────────────────────────────────── */
@@ -102,10 +106,19 @@ export default function PostCard({ post }: { post: Post }) {
   const truncated = post.text.length > MAX && !expanded;
   const displayText = truncated ? post.text.slice(0, MAX) + "…" : post.text;
 
-  const pColor = partyColor(post.party);
-  const pShort = partyShort(post.party);
+  // Effective party: tracked actors use real party, others use affinity
+  const effectiveParty = post.is_tracked_actor ? post.party : (post.party || post.party_affinity);
+  const pColor  = partyColor(effectiveParty);
+  const pShort  = partyShort(effectiveParty);
   const initial = post.author_handle[0]?.toUpperCase() || "?";
   const sentColor = SENT_DOT[post.sentiment] || "#95a5a6";
+
+  // Source badge config
+  const SOURCE_CFG: Record<string, { label: string; bg: string; color: string }> = {
+    keyword:  { label: "Anahtar Kelime", bg: "#2980b920", color: "#2980b9" },
+    protest:  { label: "Protesto", bg: "#e67e2220", color: "#e67e22" },
+    dataset:  { label: "", bg: "", color: "" },  // no badge for dataset
+  };
 
   const handleLike = () => {
     setLiked((l) => !l);
@@ -151,16 +164,29 @@ export default function PostCard({ post }: { post: Post }) {
           <span style={{ fontSize: 14, color: "var(--bsky-dim)" }}>·</span>
           <span style={{ fontSize: 14, color: "var(--bsky-dim)" }}>{relTime(post.created_at)}</span>
 
-          {/* Party badge */}
-          <span style={{
-            marginLeft: 4,
-            fontSize: 11, fontWeight: 600, fontFamily: "var(--font-mono, monospace)",
-            background: pColor + "20", color: pColor,
-            border: `1px solid ${pColor}40`,
-            padding: "0px 6px", borderRadius: 4, lineHeight: "18px",
-          }}>
-            {pShort}
-          </span>
+          {/* Party badge (tracked actors) or affinity label (non-tracked) */}
+          {post.is_tracked_actor && pShort && pShort !== "—" && (
+            <span style={{
+              marginLeft: 4,
+              fontSize: 11, fontWeight: 600, fontFamily: "var(--font-mono, monospace)",
+              background: pColor + "20", color: pColor,
+              border: `1px solid ${pColor}40`,
+              padding: "0px 6px", borderRadius: 4, lineHeight: "18px",
+            }}>
+              {pShort}
+            </span>
+          )}
+          {!post.is_tracked_actor && post.affinity_label && (
+            <span style={{
+              marginLeft: 4,
+              fontSize: 11, fontWeight: 500, fontFamily: "var(--font-mono, monospace)",
+              background: pColor + "14", color: pColor,
+              border: `1px dashed ${pColor}50`,
+              padding: "0px 6px", borderRadius: 4, lineHeight: "18px",
+            }}>
+              {post.affinity_label}
+            </span>
+          )}
 
           {/* Milletvekili */}
           {post.isMilletvekili && (
@@ -171,6 +197,19 @@ export default function PostCard({ post }: { post: Post }) {
               padding: "0px 6px", borderRadius: 4, lineHeight: "18px",
             }}>
               MV
+            </span>
+          )}
+
+          {/* Source badge (keyword / protest) */}
+          {SOURCE_CFG[post.source]?.label && (
+            <span style={{
+              fontSize: 10, fontWeight: 600, fontFamily: "var(--font-mono, monospace)",
+              background: SOURCE_CFG[post.source].bg,
+              color: SOURCE_CFG[post.source].color,
+              border: `1px solid ${SOURCE_CFG[post.source].color}40`,
+              padding: "0px 6px", borderRadius: 4, lineHeight: "18px",
+            }}>
+              {SOURCE_CFG[post.source].label}
             </span>
           )}
 
@@ -201,17 +240,32 @@ export default function PostCard({ post }: { post: Post }) {
           )}
         </div>
 
-        {/* Sentiment indicator (subtle dot line) */}
-        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
-          <span style={{ width: 8, height: 8, borderRadius: "50%", background: sentColor, display: "inline-block", flexShrink: 0 }} />
-          <span style={{ fontSize: 12, color: "var(--bsky-dim)", fontFamily: "var(--font-mono, monospace)" }}>
-            {SENT_TR[post.sentiment] || post.sentiment}
-            {post.sentiment_scores && (
-              <span style={{ marginLeft: 4, opacity: 0.7 }}>
-                ({Math.round(parseFloat(post.sentiment_scores.split("|")[post.sentiment === "negative" ? 0 : post.sentiment === "neutral" ? 1 : 2] || "0") * 100)}%)
+        {/* Sentiment indicator (subtle dot line) — only for dataset posts */}
+        <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6, flexWrap: "wrap" }}>
+          {post.sentiment ? (
+            <>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: sentColor, display: "inline-block", flexShrink: 0 }} />
+              <span style={{ fontSize: 12, color: "var(--bsky-dim)", fontFamily: "var(--font-mono, monospace)" }}>
+                {SENT_TR[post.sentiment] || post.sentiment}
+                {post.sentiment_scores && (
+                  <span style={{ marginLeft: 4, opacity: 0.7 }}>
+                    ({Math.round(parseFloat(post.sentiment_scores.split("|")[post.sentiment === "negative" ? 0 : post.sentiment === "neutral" ? 1 : 2] || "0") * 100)}%)
+                  </span>
+                )}
               </span>
-            )}
-          </span>
+            </>
+          ) : null}
+
+          {/* Keyword pill for non-dataset posts */}
+          {post.keyword && (
+            <span style={{
+              fontSize: 11, fontFamily: "var(--font-mono, monospace)",
+              background: "var(--bsky-border)", color: "var(--bsky-dim)",
+              padding: "0px 7px", borderRadius: 4, lineHeight: "18px",
+            }}>
+              #{post.keyword}
+            </span>
+          )}
         </div>
 
         {/* Action row — Bluesky style */}

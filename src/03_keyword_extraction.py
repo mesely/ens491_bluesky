@@ -92,6 +92,13 @@ SEED_POLITICAL_KEYWORDS = [
     # Key political figures
     "erdoğan", "özel", "kılıçdaroğlu", "akşener", "bahçeli", "demirtaş",
     "imamoğlu", "yavaş", "şimşek", "kurum", "yerlikaya",
+    # İmamoğlu protestoları (2025-03)
+    "ekrem imamoğlu", "diploma iptali", "saraçhane", "kent uzlaşısı",
+    "marmara üniversitesi", "istanbul üniversitesi protesto", "boğaziçi protesto",
+    "cumhurbaşkanı adayı", "31 mart", "ibb", "istanbul büyükşehir belediyesi",
+    "polis müdahalesi", "biber gazı", "tazyikli su", "siyasi operasyon",
+    "yargı bağımsızlığı", "hukuk dışı", "siyasi yargı", "tahliye",
+    "venedik komisyonu", "ab demokrasi",
 ]
 
 

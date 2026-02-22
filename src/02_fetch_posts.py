@@ -21,6 +21,35 @@ SLEEP_NORMAL      = 0.3   # seconds between requests
 SLEEP_RATE_LIMIT  = 30    # seconds on 429
 CHECKPOINT_EVERY  = 500   # flush file every N posts
 
+# Minimum ratio of political posts to flag an account as likely valid
+POLITICAL_CONTENT_THRESHOLD = 0.05   # 5% of posts must mention politics
+
+# Keywords that indicate a post is political
+POLITICAL_SIGNAL_WORDS = {
+    "akp", "chp", "mhp", "hdp", "dem", "iyi parti", "yeni yol",
+    "meclis", "tbmm", "milletvekili", "seçim", "oy", "iktidar",
+    "muhalefet", "hükümet", "cumhurbaşkan", "erdoğan", "özel",
+    "kılıçdaroğlu", "akşener", "bahçeli", "demirtaş", "imamoğlu",
+    "yavaş", "siyasi", "parti", "muhalif", "iktidar", "anayasa",
+    "protesto", "eylem", "gözaltı", "tutuklama",
+}
+
+
+def political_score(posts: list[dict]) -> float:
+    """
+    Returns the fraction of posts that contain at least one political keyword.
+    A low score (< POLITICAL_CONTENT_THRESHOLD) suggests the account may be
+    incorrectly matched and warrants manual review.
+    """
+    if not posts:
+        return 0.0
+    political_count = 0
+    for post in posts:
+        text = (post.get("text") or "").lower()
+        if any(kw in text for kw in POLITICAL_SIGNAL_WORDS):
+            political_count += 1
+    return political_count / len(posts)
+
 
 def fetch_author_feed(actor: str) -> list[dict]:
     """
@@ -166,7 +195,16 @@ def main():
         if total_new % CHECKPOINT_EVERY < len(batch):
             out_file.flush()
 
-        tqdm.write(f"  {handle}: {len(batch)} new posts (total so far: {total_new})")
+        # Political content quality check
+        score = political_score(batch) if batch else 0.0
+        flag  = " ⚠ LOW POLITICAL CONTENT — manual review recommended" if (
+            score < POLITICAL_CONTENT_THRESHOLD and len(batch) >= 10
+        ) else ""
+        tqdm.write(
+            f"  {handle}: {len(batch)} new posts | "
+            f"political_score={score:.1%}{flag}"
+            f" (total so far: {total_new})"
+        )
 
     out_file.close()
     print(f"\nDone. Total new posts saved: {total_new}")

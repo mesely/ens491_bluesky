@@ -371,6 +371,12 @@ const HS_OPTS = [
   { label: "⚠ Nefret Var", value: "Yes" },
   { label: "✓ Temiz", value: "No" },
 ];
+const FEED_OPTS = [
+  { label: "Tüm Kaynaklar", value: "all" },
+  { label: "Veri Seti", value: "dataset" },
+  { label: "Anahtar Kelime", value: "keyword" },
+  { label: "Protesto", value: "protest" },
+];
 
 function PillSelect({ value, onChange, options }: {
   value: string;
@@ -397,6 +403,7 @@ function PillSelect({ value, onChange, options }: {
 function CenterFeed({
   activeTab, setActiveTab, days, setDays, party, setParty,
   sentiment, setSentiment, hateSpeech, setHateSpeech,
+  feed, setFeed,
   search, setSearch, posts, total, offset, loading, error, loadMore,
 }: {
   activeTab: string; setActiveTab: (t: string) => void;
@@ -404,34 +411,45 @@ function CenterFeed({
   party: string; setParty: (v: string) => void;
   sentiment: string; setSentiment: (v: string) => void;
   hateSpeech: string; setHateSpeech: (v: string) => void;
+  feed: string; setFeed: (v: string) => void;
   search: string; setSearch: (v: string) => void;
   posts: Post[]; total: number; offset: number;
   loading: boolean; error: string; loadMore: () => void;
 }) {
+  const TABS = ["Tüm Gönderiler", "Politika", "İmamoğlu Protestoları"];
+
   return (
     <main style={{
       flex: 1, minWidth: 0, maxWidth: 600,
       borderLeft: "1px solid var(--bsky-border)",
       borderRight: "1px solid var(--bsky-border)",
     }}>
-      {/* Tabs: Discover / Following style */}
+      {/* Tabs */}
       <div style={{
         position: "sticky", top: 48, zIndex: 10,
         background: "var(--bsky-bg)", borderBottom: "1px solid var(--bsky-border)",
         display: "flex",
         backdropFilter: "blur(8px)",
+        overflowX: "auto",
       }}>
-        {["Tüm Gönderiler", "Politika"].map((tab) => (
+        {TABS.map((tab) => (
           <button key={tab} onClick={() => setActiveTab(tab)}
             style={{
-              flex: 1, padding: "16px 0",
+              flex: tab === "İmamoğlu Protestoları" ? "0 0 auto" : 1,
+              padding: "16px 12px",
               background: "none", border: "none", cursor: "pointer",
-              fontSize: 16, fontWeight: activeTab === tab ? 700 : 400,
-              color: activeTab === tab ? "var(--bsky-text)" : "var(--bsky-dim)",
-              borderBottom: activeTab === tab ? "2px solid var(--bsky-blue)" : "2px solid transparent",
+              fontSize: tab === "İmamoğlu Protestoları" ? 13 : 16,
+              fontWeight: activeTab === tab ? 700 : 400,
+              color: activeTab === tab
+                ? (tab === "İmamoğlu Protestoları" ? "#e67e22" : "var(--bsky-text)")
+                : "var(--bsky-dim)",
+              borderBottom: activeTab === tab
+                ? `2px solid ${tab === "İmamoğlu Protestoları" ? "#e67e22" : "var(--bsky-blue)"}`
+                : "2px solid transparent",
               transition: "all 0.15s",
+              whiteSpace: "nowrap",
             }}>
-            {tab}
+            {tab === "İmamoğlu Protestoları" ? "🔥 İmamoğlu Protestoları" : tab}
           </button>
         ))}
       </div>
@@ -460,10 +478,11 @@ function CenterFeed({
         <PillSelect value={party} onChange={setParty} options={PARTY_OPTS} />
         <PillSelect value={sentiment} onChange={setSentiment} options={SENT_OPTS} />
         <PillSelect value={hateSpeech} onChange={setHateSpeech} options={HS_OPTS} />
+        <PillSelect value={feed} onChange={setFeed} options={FEED_OPTS} />
 
         {/* Clear filters */}
-        {(party || sentiment || hateSpeech || search || days !== "0") && (
-          <button onClick={() => { setDays("0"); setParty(""); setSentiment(""); setHateSpeech(""); setSearch(""); }}
+        {(party || sentiment || hateSpeech || search || days !== "0" || feed !== "all") && (
+          <button onClick={() => { setDays("0"); setParty(""); setSentiment(""); setHateSpeech(""); setSearch(""); setFeed("all"); }}
             style={{
               fontSize: 12, padding: "5px 12px", borderRadius: 20,
               border: "1px solid var(--bsky-border)",
@@ -485,6 +504,20 @@ function CenterFeed({
             &ldquo;{search}&rdquo;
             <button onClick={() => setSearch("")} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--bsky-blue)", fontSize: 13, padding: 0 }}>✕</button>
           </span>
+        )}
+
+        {/* Protest mode banner */}
+        {activeTab === "İmamoğlu Protestoları" && (
+          <div style={{
+            width: "100%", marginTop: 4,
+            padding: "8px 12px", borderRadius: 8,
+            background: "#e67e2210", border: "1px solid #e67e2240",
+            fontSize: 12, color: "#e67e22", lineHeight: 1.5,
+          }}>
+            <b>Araştırma sorusu:</b> Sosyal medyada üretilen toksisite ve duygu kutuplaşması,
+            fiziksel dünya güvenlik olaylarıyla (gözaltı, tutuklama, polis müdahalesi) zamansal
+            olarak nasıl bir etkileşim içindedir? — 18 Mart 2025 sonrası veriler
+          </div>
         )}
       </div>
 
@@ -572,6 +605,7 @@ export default function FeedTab() {
   const [party, setParty] = useState("");
   const [sentiment, setSentiment] = useState("");
   const [hateSpeech, setHateSpeech] = useState("");
+  const [feed, setFeed] = useState("all");  // data source filter
   const [search, setSearch] = useState("");
 
   // Data
@@ -593,8 +627,9 @@ export default function FeedTab() {
     if (sentiment) p.set("sentiment", sentiment);
     if (hateSpeech) p.set("hate_speech", hateSpeech);
     if (search) p.set("search", search);
+    if (feed && feed !== "all") p.set("feed", feed);
     return p;
-  }, [days, party, sentiment, hateSpeech, search]);
+  }, [days, party, sentiment, hateSpeech, search, feed]);
 
   const fetchPosts = useCallback(async (off: number, append: boolean) => {
     if (abortRef.current) abortRef.current.abort();
@@ -640,15 +675,25 @@ export default function FeedTab() {
     fetchPosts(0, false);
     fetchStats();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [days, party, sentiment, hateSpeech, search, activeTab]);
+  }, [days, party, sentiment, hateSpeech, search, feed, activeTab]);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
-    // "Politika" preset: show negative sentiment political posts
     if (tab === "Politika") {
       setSentiment("negative");
-    } else {
+      setFeed("all");
+    } else if (tab === "İmamoğlu Protestoları") {
+      // Protest feed: use protest data source, clear other filters
       setSentiment("");
+      setFeed("protest");
+      setDays("0");
+      setParty("");
+      setHateSpeech("");
+      setSearch("");
+    } else {
+      // "Tüm Gönderiler"
+      setSentiment("");
+      setFeed("all");
     }
   };
 
@@ -671,6 +716,7 @@ export default function FeedTab() {
         party={party} setParty={setParty}
         sentiment={sentiment} setSentiment={setSentiment}
         hateSpeech={hateSpeech} setHateSpeech={setHateSpeech}
+        feed={feed} setFeed={setFeed}
         search={search} setSearch={setSearch}
         posts={posts} total={total} offset={offset}
         loading={loading} error={error}

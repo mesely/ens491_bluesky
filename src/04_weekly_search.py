@@ -45,11 +45,26 @@ TOP_KEYWORDS    = 50
 SLEEP_NORMAL    = 0.5
 SLEEP_429       = 30
 
-# Notable political events for annotation (update with real dates before analysis)
+# Notable political events for annotation
 POLITICAL_EVENTS: dict[str, str] = {
-    # "2025-01-15": "Meclis oturumu X",
-    # "2025-01-20": "Seçim açıklaması",
+    "2025-03-18": "Ekrem İmamoğlu gözaltına alındı; diploma iptali açıklandı",
+    "2025-03-19": "İstanbul Saraçhane'de büyük protesto gösterisi başladı",
+    "2025-03-20": "Üniversite öğrencileri kampüslerde yürüyüş; çok sayıda gözaltı",
+    "2025-03-21": "İmamoğlu tutukluluğuna itiraz reddedildi",
+    "2025-03-22": "CHP Saraçhane mitingi: 100.000+ katılımcı",
+    "2025-03-23": "İddianame tamamlandı; terör ve yolsuzluk suçlamaları",
+    "2025-03-25": "Marmara Üniversitesi öğrencileri ders boykotu ilan etti",
+    "2025-03-26": "Çeşitli illerde polis müdahalesi; 200+ gözaltı",
+    "2025-03-31": "31 Mart seçim yıldönümü anma mitingleri",
 }
+
+# Extra keywords to append to the weekly search (protest + İmamoğlu wave)
+PROTEST_EXTRA_KEYWORDS = [
+    "ekrem imamoğlu", "imamoğlu", "saraçhane", "protesto", "diploma",
+    "marmara üniversitesi", "istanbul üniversitesi", "kent uzlaşısı",
+    "cumhurbaşkanı adayı", "31 mart", "ibb", "polis müdahalesi",
+    "tahliye", "yargı bağımsızlığı", "siyasi operasyon",
+]
 
 
 # ─── Search ───────────────────────────────────────────────────────────────────
@@ -99,6 +114,9 @@ def extract_search_record(post: dict, keyword: str, handle_to_actor: dict) -> di
     handle = author.get("handle", "")
     actor  = handle_to_actor.get(handle, {})
 
+    protest_kws = set(PROTEST_EXTRA_KEYWORDS)
+    feed_cat = "protest" if keyword in protest_kws else "keyword"
+
     return {
         "uri":              post.get("uri", ""),
         "text":             record.get("text", ""),
@@ -110,9 +128,11 @@ def extract_search_record(post: dict, keyword: str, handle_to_actor: dict) -> di
         "reply_count":      post.get("replyCount", 0),
         "repost_count":     post.get("repostCount", 0),
         "keyword":          keyword,
+        "feed_category":    feed_cat,
         "party":            actor.get("party", ""),
         "alliance":         actor.get("alliance", ""),
         "political_stance": actor.get("political_stance", ""),
+        "isMilletvekili":   actor.get("isMilletvekili", False),
         "is_tracked_actor": bool(actor),
     }
 
@@ -247,7 +267,13 @@ def main():
     with open(KEYWORDS_PATH, "r", encoding="utf-8") as f:
         kw_data = json.load(f)
     keywords = kw_data["keywords"][:TOP_KEYWORDS]
-    print(f"Using {len(keywords)} keywords for search.")
+    # Merge protest extra keywords (deduplicated)
+    kw_set = set(keywords)
+    for pk in PROTEST_EXTRA_KEYWORDS:
+        if pk not in kw_set:
+            keywords.append(pk)
+            kw_set.add(pk)
+    print(f"Using {len(keywords)} keywords for search (incl. {len(PROTEST_EXTRA_KEYWORDS)} protest extras).")
 
     import pandas as _pd
     accounts_df     = _pd.read_csv(ACCOUNTS_PATH, encoding="utf-8-sig")
