@@ -25,44 +25,109 @@ function normalizeParty(p: string): string {
   return MAIN_PARTIES.has(p) ? p : "Diğer";
 }
 
+// Protest/İmamoğlu keywords → strong CHP signal by context
+const PROTEST_KWS = new Set([
+  "imamoğlu", "ekrem imamoğlu", "saraçhane", "kent uzlaşısı", "diploma",
+  "diploma iptali", "marmara üniversitesi", "istanbul üniversitesi protesto",
+  "protesto", "cumhurbaşkanı adayı", "31 mart", "polis müdahalesi",
+  "siyasi operasyon", "yargı bağımsızlığı", "hukuk dışı", "siyasi yargı",
+  "tahliye", "siyasi tutuklama", "belediye başkanı tutuklandı",
+]);
+
 /**
- * For posts by non-tracked actors, infer party affinity from text + keyword.
- * Returns a full party name (same as main parties) or "" if unknown.
+ * Score-based party affinity for non-tracked actors.
+ * Always returns a party name or "Diğer" — never empty.
  */
 function inferPartyAffinity(text: string, keyword: string): string {
   const t = (text || "").toLowerCase();
   const kw = (keyword || "").toLowerCase();
 
-  // CHP / İmamoğlu / protest signals
-  if (
-    t.includes("chp") || t.includes("cumhuriyet halk") ||
-    t.includes("imamoğlu") || t.includes("imamoglu") ||
-    t.includes("kılıçdaroğlu") || t.includes("özgür özel") ||
-    t.includes("yavaş") || t.includes("saraçhane") ||
-    kw.includes("imamoğlu") || kw.includes("saraçhane") || kw.includes("kent uzlaşısı")
-  ) return "Cumhuriyet Halk Partisi";
+  const scores: Record<string, number> = {
+    "Cumhuriyet Halk Partisi": 0,
+    "Adalet ve Kalkınma Partisi": 0,
+    "Milliyetçi Hareket Partisi": 0,
+    "Halkların Eşitlik ve Demokrasi Partisi": 0,
+    "İYİ Parti": 0,
+    "Yeni Yol": 0,
+    "Bağımsız": 0,
+  };
+
+  // Keyword context: protest keywords → strong CHP signal
+  if (PROTEST_KWS.has(kw)) scores["Cumhuriyet Halk Partisi"] += 4;
+
+  // CHP signals
+  for (const s of ["chp", "cumhuriyet halk", "kılıçdaroğlu", "özgür özel", "imamoğlu",
+    "imamoglu", "yavaş", "saraçhane", "chp'li", "chp'nin", "chp'ye",
+    "ana muhalefet", "millet ittifakı", "istanbul büyükşehir",
+    "ibb başkanı", "kent uzlaşısı", "diploma iptali",
+    "yargı bağımsızlığı", "siyasi operasyon", "hukuk dışı", "siyasi tutuklama"]) {
+    if (t.includes(s)) scores["Cumhuriyet Halk Partisi"] += 2;
+  }
 
   // AKP signals
-  if (
-    t.includes("akp") || t.includes("ak parti") || t.includes("adalet ve kalkınma") ||
-    t.includes("erdoğan") || t.includes("cumhur ittifakı")
-  ) return "Adalet ve Kalkınma Partisi";
+  for (const s of ["akp", "ak parti", "adalet ve kalkınma", "erdoğan", "cumhur ittifakı",
+    "iktidar", "akp'li", "akp'nin", "ak parti'nin", "tayyip"]) {
+    if (t.includes(s)) scores["Adalet ve Kalkınma Partisi"] += 2;
+  }
 
-  // MHP
-  if (t.includes("mhp") || t.includes("bahçeli") || t.includes("milliyetçi hareket"))
-    return "Milliyetçi Hareket Partisi";
+  // MHP signals
+  for (const s of ["mhp", "bahçeli", "milliyetçi hareket", "ülkücü", "bozkurt",
+    "mhp'li", "mhp'nin"]) {
+    if (t.includes(s)) scores["Milliyetçi Hareket Partisi"] += 2;
+  }
 
-  // DEM/HDP
-  if (
-    t.includes("dem parti") || t.includes("hdp") || t.includes("demirtaş") ||
-    t.includes("halkların eşitlik")
-  ) return "Halkların Eşitlik ve Demokrasi Partisi";
+  // DEM/HDP signals
+  for (const s of ["dem parti", "hdp", "demirtaş", "halkların eşitlik",
+    "yeşil sol", "dem'li", "hdp'li", "kürt siyaseti"]) {
+    if (t.includes(s)) scores["Halkların Eşitlik ve Demokrasi Partisi"] += 2;
+  }
 
-  // İYİ
-  if (t.includes("iyi parti") || t.includes("akşener"))
-    return "İYİ Parti";
+  // İYİ signals
+  for (const s of ["iyi parti", "akşener", "iyi parti'nin", "iyili"]) {
+    if (t.includes(s)) scores["İYİ Parti"] += 2;
+  }
 
-  return "";
+  // Yeni Yol signals
+  for (const s of ["yeni yol", "yeni yol partisi", "yyp"]) {
+    if (t.includes(s)) scores["Yeni Yol"] += 2;
+  }
+
+  // Pick highest score
+  let best = ""; let bestScore = 0;
+  for (const [party, score] of Object.entries(scores)) {
+    if (score > bestScore) { bestScore = score; best = party; }
+  }
+  return best || "Diğer";  // always return something
+}
+
+// Human-readable affinity label (Turkish grammar)
+const AFFINITY_LABEL: Record<string, string> = {
+  "Cumhuriyet Halk Partisi":                "CHP'ye yakın",
+  "Adalet ve Kalkınma Partisi":             "AKP'ye yakın",
+  "Milliyetçi Hareket Partisi":             "MHP'ye yakın",
+  "Halkların Eşitlik ve Demokrasi Partisi": "DEM'e yakın",
+  "İYİ Parti":                              "İYİ'ye yakın",
+  "Yeni Yol":                               "YY'ye yakın",
+  "Bağımsız":                               "Bağımsız",
+  "Diğer":                                  "Diğer",
+};
+
+function makeAffinityLabel(affinity: string, isTracked: boolean): string {
+  if (isTracked) return "";
+  return AFFINITY_LABEL[affinity] || "Diğer";
+}
+
+/**
+ * Returns true if text is likely Turkish.
+ * ş, ğ, ı (undotted-i) are unique to Turkish and a few other languages.
+ */
+function isTurkish(text: string): boolean {
+  if (!text || text.length < 10) return true;
+  if (/[şğı]/.test(text)) return true;
+  if (/[İ]/.test(text)) return true;  // capital dotted I
+  if (/\b(türkiye|türk|istanbul|ankara|cumhurbaşkan|milletvekili|meclis|belediye|protesto|gözaltı|tutuklama|seçim|hükümet|muhalefet)\b/i.test(text)) return true;
+  if (/[çöü]/i.test(text) && /\b(bir|bu|ve|ile|de|da|ki|için|olan|var|daha)\b/i.test(text)) return true;
+  return false;
 }
 
 // ─── CSV parser ───────────────────────────────────────────────────────────────
@@ -176,12 +241,6 @@ const PARTY_SHORT_MAP: Record<string, string> = {
   "Bağımsız": "Bağ.",
 };
 
-function makeAffinityLabel(affinity: string, isTracked: boolean): string {
-  if (isTracked || !affinity) return "";
-  const short = PARTY_SHORT_MAP[affinity];
-  return short ? `${short}'ye yakın` : "";
-}
-
 // ─── Load dataset posts (from CSV + raw JSONL) ───────────────────────────────
 
 async function loadDatasetPosts(fullTexts: Map<string, string>): Promise<UnifiedPost[]> {
@@ -247,14 +306,18 @@ function jsonlRecordsToUnifiedPosts(
     const keyword     = (r.keyword as string) || "";
     const isTracked   = Boolean(r.is_tracked_actor);
     const party       = (r.party as string) || "";
-    const affinity    = isTracked ? "" : inferPartyAffinity(text, keyword);
+
+    // Skip non-Turkish posts
+    if (!isTurkish(text)) continue;
+
+    const affinity    = isTracked ? (party || "Diğer") : inferPartyAffinity(text, keyword);
     const affinityLabel = makeAffinityLabel(affinity, isTracked);
 
     posts.push({
       uri,
       author_handle:    (r.author_handle as string) || "",
       party:            party,
-      party_normalized: party ? normalizeParty(party) : (affinity ? normalizeParty(affinity) : "Diğer"),
+      party_normalized: party ? normalizeParty(party) : normalizeParty(affinity),
       party_affinity:   affinity,
       affinity_label:   affinityLabel,
       alliance:         (r.alliance as string) || "",

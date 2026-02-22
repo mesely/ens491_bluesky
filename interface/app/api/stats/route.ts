@@ -38,25 +38,62 @@ function normalizeParty(p: string): string {
   return MAIN_PARTIES.has(p) ? p : "Diğer";
 }
 
+const PROTEST_KWS_STATS = new Set([
+  "imamoğlu", "ekrem imamoğlu", "saraçhane", "kent uzlaşısı", "diploma",
+  "diploma iptali", "protesto", "cumhurbaşkanı adayı", "31 mart",
+  "polis müdahalesi", "siyasi operasyon", "yargı bağımsızlığı",
+  "tahliye", "siyasi tutuklama",
+]);
+
 function inferPartyAffinity(text: string, keyword: string): string {
   const t = (text || "").toLowerCase();
   const kw = (keyword || "").toLowerCase();
-  if (
-    t.includes("chp") || t.includes("cumhuriyet halk") ||
-    t.includes("imamoğlu") || t.includes("imamoglu") ||
-    t.includes("kılıçdaroğlu") || t.includes("özgür özel") ||
-    t.includes("yavaş") || t.includes("saraçhane") ||
-    kw.includes("imamoğlu") || kw.includes("saraçhane")
-  ) return "Cumhuriyet Halk Partisi";
-  if (t.includes("akp") || t.includes("ak parti") || t.includes("erdoğan"))
-    return "Adalet ve Kalkınma Partisi";
-  if (t.includes("mhp") || t.includes("bahçeli"))
-    return "Milliyetçi Hareket Partisi";
-  if (t.includes("dem parti") || t.includes("hdp") || t.includes("demirtaş"))
-    return "Halkların Eşitlik ve Demokrasi Partisi";
-  if (t.includes("iyi parti") || t.includes("akşener"))
-    return "İYİ Parti";
-  return "";
+
+  const scores: Record<string, number> = {
+    "Cumhuriyet Halk Partisi": 0,
+    "Adalet ve Kalkınma Partisi": 0,
+    "Milliyetçi Hareket Partisi": 0,
+    "Halkların Eşitlik ve Demokrasi Partisi": 0,
+    "İYİ Parti": 0,
+    "Yeni Yol": 0,
+  };
+
+  if (PROTEST_KWS_STATS.has(kw)) scores["Cumhuriyet Halk Partisi"] += 4;
+
+  for (const s of ["chp", "cumhuriyet halk", "kılıçdaroğlu", "özgür özel",
+    "imamoğlu", "yavaş", "saraçhane", "millet ittifakı",
+    "kent uzlaşısı", "diploma iptali", "yargı bağımsızlığı", "siyasi operasyon"])
+    if (t.includes(s)) scores["Cumhuriyet Halk Partisi"] += 2;
+
+  for (const s of ["akp", "ak parti", "adalet ve kalkınma", "erdoğan", "cumhur ittifakı", "iktidar"])
+    if (t.includes(s)) scores["Adalet ve Kalkınma Partisi"] += 2;
+
+  for (const s of ["mhp", "bahçeli", "milliyetçi hareket", "ülkücü"])
+    if (t.includes(s)) scores["Milliyetçi Hareket Partisi"] += 2;
+
+  for (const s of ["dem parti", "hdp", "demirtaş", "halkların eşitlik", "yeşil sol"])
+    if (t.includes(s)) scores["Halkların Eşitlik ve Demokrasi Partisi"] += 2;
+
+  for (const s of ["iyi parti", "akşener"])
+    if (t.includes(s)) scores["İYİ Parti"] += 2;
+
+  for (const s of ["yeni yol"])
+    if (t.includes(s)) scores["Yeni Yol"] += 2;
+
+  let best = ""; let bestScore = 0;
+  for (const [party, score] of Object.entries(scores)) {
+    if (score > bestScore) { bestScore = score; best = party; }
+  }
+  return best || "Diğer";
+}
+
+function isTurkish(text: string): boolean {
+  if (!text || text.length < 10) return true;
+  if (/[şğı]/.test(text)) return true;
+  if (/[İ]/.test(text)) return true;
+  if (/\b(türkiye|türk|istanbul|ankara|cumhurbaşkan|milletvekili|meclis|belediye|protesto|gözaltı|tutuklama|seçim|hükümet|muhalefet)\b/i.test(text)) return true;
+  if (/[çöü]/i.test(text) && /\b(bir|bu|ve|ile|de|da|ki|için|olan|var|daha)\b/i.test(text)) return true;
+  return false;
 }
 
 async function loadJSONLStats(
@@ -92,8 +129,14 @@ async function loadJSONLStats(
       const keyword = (r.keyword as string) || "";
       const rawParty = (r.party as string) || "";
       const isTracked = Boolean(r.is_tracked_actor);
-      const effectiveParty = isTracked ? rawParty : (rawParty || inferPartyAffinity(text, keyword));
-      const norm = effectiveParty ? normalizeParty(effectiveParty) : "Diğer";
+
+      // Skip non-Turkish posts
+      if (!isTurkish(text)) continue;
+
+      const effectiveParty = isTracked
+        ? (rawParty || "Diğer")
+        : inferPartyAffinity(text, keyword);  // always non-empty
+      const norm = normalizeParty(effectiveParty);
 
       if (party) {
         if (party !== "Diğer" && effectiveParty !== party) continue;

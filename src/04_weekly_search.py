@@ -98,7 +98,7 @@ def search_posts(keyword: str, since: str, until: str, headers: dict) -> list[di
     cursor: str | None = None
 
     while len(all_results) < MAX_PER_KEYWORD:
-        params: dict = {"q": keyword, "limit": 100, "since": since, "until": until}
+        params: dict = {"q": keyword, "limit": 100, "since": since, "until": until, "lang": "tr"}
         if cursor:
             params["cursor"] = cursor
 
