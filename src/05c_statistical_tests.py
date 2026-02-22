@@ -56,7 +56,7 @@ def kruskal_wallis_test(groups: list[np.ndarray]) -> dict:
     return {
         "statistic": round(float(stat), 4),
         "p_value":   round(float(p), 6),
-        "significant": p < ALPHA,
+        "significant": bool(p < ALPHA),
         "interpretation": (
             "Parties differ significantly in sentiment (p<0.05)"
             if p < ALPHA else
@@ -117,7 +117,7 @@ def chi2_hatespeech(df: pd.DataFrame) -> dict:
         "cramers_v":  round(cramers_v, 4),
         "n":          n,
         "interpretation": f"Cramér's V={cramers_v:.3f} → {strength} effect size",
-        "significant": p < ALPHA,
+        "significant": bool(p < ALPHA),
     }
 
 
@@ -147,7 +147,7 @@ def pearson_likes_hate(df: pd.DataFrame) -> dict:
     return {
         "pearson_r": round(float(r), 4),
         "p_value":   round(float(p), 6),
-        "significant": p < ALPHA,
+         "significant": bool(p < ALPHA),
     }
 
 

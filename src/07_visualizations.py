@@ -1,5 +1,5 @@
 """
-PHASE 5 — Paper-Quality Visualizations
+PHASE 5 —  Visualizations
 All figures saved as PNG (300 DPI) only — no PDFs, no HTML.
 
 Figures produced:

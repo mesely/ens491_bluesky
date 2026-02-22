@@ -1,0 +1,485 @@
+{
+  "kruskal_wallis_sentiment": {
+    "statistic": 420.9836,
+    "p_value": 0.0,
+    "significant": true,
+    "interpretation": "Parties differ significantly in sentiment (p<0.05)"
+  },
+  "pairwise_mannwhitney": [
+    {
+      "party_a": "Bağımsız",
+      "party_b": "Yeni Yol",
+      "u_stat": 715700.5,
+      "p_raw": 0.0,
+      "effect_size_r": -0.3025,
+      "n_a": 1885,
+      "n_b": 583,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Bağımsız",
+      "party_b": "Adalet ve Kalkınma Partisi",
+      "u_stat": 1221636.5,
+      "p_raw": 0.0,
+      "effect_size_r": -0.2683,
+      "n_a": 1885,
+      "n_b": 1022,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "İYİ Parti",
+      "party_b": "Yeni Yol",
+      "u_stat": 265715.5,
+      "p_raw": 0.0,
+      "effect_size_r": -0.247,
+      "n_a": 731,
+      "n_b": 583,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Cumhuriyet Halk Partisi",
+      "party_b": "Yeni Yol",
+      "u_stat": 1875646.5,
+      "p_raw": 0.0,
+      "effect_size_r": -0.2448,
+      "n_a": 5169,
+      "n_b": 583,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Yeni Yol",
+      "party_b": "Demokrasi ve Atılım Partisi",
+      "u_stat": 6964.5,
+      "p_raw": 0.012453,
+      "effect_size_r": 0.2293,
+      "n_a": 583,
+      "n_b": 31,
+      "p_adjusted_fdr": 0.026086,
+      "significant": true
+    },
+    {
+      "party_a": "Bağımsız",
+      "party_b": "Milliyetçi Hareket Partisi",
+      "u_stat": 431337.0,
+      "p_raw": 0.0,
+      "effect_size_r": -0.2172,
+      "n_a": 1885,
+      "n_b": 376,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Adalet ve Kalkınma Partisi",
+      "party_b": "İYİ Parti",
+      "u_stat": 293947.0,
+      "p_raw": 0.0,
+      "effect_size_r": 0.2131,
+      "n_a": 1022,
+      "n_b": 731,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Cumhuriyet Halk Partisi",
+      "party_b": "Adalet ve Kalkınma Partisi",
+      "u_stat": 3187451.5,
+      "p_raw": 0.0,
+      "effect_size_r": -0.2067,
+      "n_a": 5169,
+      "n_b": 1022,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Bağımsız",
+      "party_b": "Liberal Demokrat Parti",
+      "u_stat": 48676.5,
+      "p_raw": 0.013043,
+      "effect_size_r": -0.2011,
+      "n_a": 1885,
+      "n_b": 43,
+      "p_adjusted_fdr": 0.026086,
+      "significant": true
+    },
+    {
+      "party_a": "Adalet ve Kalkınma Partisi",
+      "party_b": "Demokrasi ve Atılım Partisi",
+      "u_stat": 12739.0,
+      "p_raw": 0.027392,
+      "effect_size_r": 0.1958,
+      "n_a": 1022,
+      "n_b": 31,
+      "p_adjusted_fdr": 0.051901,
+      "significant": false
+    },
+    {
+      "party_a": "Halkların Eşitlik ve Demokrasi Partisi",
+      "party_b": "Bağımsız",
+      "u_stat": 1666407.5,
+      "p_raw": 0.0,
+      "effect_size_r": 0.1856,
+      "n_a": 2171,
+      "n_b": 1885,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Halkların Eşitlik ve Demokrasi Partisi",
+      "party_b": "Yeni Yol",
+      "u_stat": 745071.5,
+      "p_raw": 0.0,
+      "effect_size_r": -0.1773,
+      "n_a": 2171,
+      "n_b": 583,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "İYİ Parti",
+      "party_b": "Milliyetçi Hareket Partisi",
+      "u_stat": 160688.0,
+      "p_raw": 1e-06,
+      "effect_size_r": -0.1693,
+      "n_a": 731,
+      "n_b": 376,
+      "p_adjusted_fdr": 2e-06,
+      "significant": true
+    },
+    {
+      "party_a": "Cumhuriyet Halk Partisi",
+      "party_b": "Milliyetçi Hareket Partisi",
+      "u_stat": 1128931.0,
+      "p_raw": 0.0,
+      "effect_size_r": -0.1617,
+      "n_a": 5169,
+      "n_b": 376,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Milliyetçi Hareket Partisi",
+      "party_b": "Demokrasi ve Atılım Partisi",
+      "u_stat": 4928.0,
+      "p_raw": 0.124154,
+      "effect_size_r": 0.1544,
+      "n_a": 376,
+      "n_b": 31,
+      "p_adjusted_fdr": 0.165539,
+      "significant": false
+    },
+    {
+      "party_a": "İYİ Parti",
+      "party_b": "Liberal Demokrat Parti",
+      "u_stat": 18006.0,
+      "p_raw": 0.08213,
+      "effect_size_r": -0.1457,
+      "n_a": 731,
+      "n_b": 43,
+      "p_adjusted_fdr": 0.124708,
+      "significant": false
+    },
+    {
+      "party_a": "Yeni Yol",
+      "party_b": "Liberal Demokrat Parti",
+      "u_stat": 10859.5,
+      "p_raw": 0.085042,
+      "effect_size_r": 0.1336,
+      "n_a": 583,
+      "n_b": 43,
+      "p_adjusted_fdr": 0.124708,
+      "significant": false
+    },
+    {
+      "party_a": "Halkların Eşitlik ve Demokrasi Partisi",
+      "party_b": "Adalet ve Kalkınma Partisi",
+      "u_stat": 1254603.5,
+      "p_raw": 0.0,
+      "effect_size_r": -0.1309,
+      "n_a": 2171,
+      "n_b": 1022,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Cumhuriyet Halk Partisi",
+      "party_b": "Liberal Demokrat Parti",
+      "u_stat": 125637.5,
+      "p_raw": 0.090067,
+      "effect_size_r": -0.1305,
+      "n_a": 5169,
+      "n_b": 43,
+      "p_adjusted_fdr": 0.124708,
+      "significant": false
+    },
+    {
+      "party_a": "Liberal Demokrat Parti",
+      "party_b": "Demokrasi ve Atılım Partisi",
+      "u_stat": 580.5,
+      "p_raw": 0.282517,
+      "effect_size_r": 0.129,
+      "n_a": 43,
+      "n_b": 31,
+      "p_adjusted_fdr": 0.33902,
+      "significant": false
+    },
+    {
+      "party_a": "Halkların Eşitlik ve Demokrasi Partisi",
+      "party_b": "İYİ Parti",
+      "u_stat": 692733.0,
+      "p_raw": 0.0,
+      "effect_size_r": 0.127,
+      "n_a": 2171,
+      "n_b": 731,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Halkların Eşitlik ve Demokrasi Partisi",
+      "party_b": "Demokrasi ve Atılım Partisi",
+      "u_stat": 29960.5,
+      "p_raw": 0.071685,
+      "effect_size_r": 0.1097,
+      "n_a": 2171,
+      "n_b": 31,
+      "p_adjusted_fdr": 0.122889,
+      "significant": false
+    },
+    {
+      "party_a": "Cumhuriyet Halk Partisi",
+      "party_b": "Halkların Eşitlik ve Demokrasi Partisi",
+      "u_stat": 6213834.5,
+      "p_raw": 0.0,
+      "effect_size_r": -0.1074,
+      "n_a": 5169,
+      "n_b": 2171,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Halkların Eşitlik ve Demokrasi Partisi",
+      "party_b": "Milliyetçi Hareket Partisi",
+      "u_stat": 445543.0,
+      "p_raw": 2.6e-05,
+      "effect_size_r": -0.0916,
+      "n_a": 2171,
+      "n_b": 376,
+      "p_adjusted_fdr": 5.8e-05,
+      "significant": true
+    },
+    {
+      "party_a": "Adalet ve Kalkınma Partisi",
+      "party_b": "Liberal Demokrat Parti",
+      "u_stat": 19996.5,
+      "p_raw": 0.231183,
+      "effect_size_r": 0.09,
+      "n_a": 1022,
+      "n_b": 43,
+      "p_adjusted_fdr": 0.286986,
+      "significant": false
+    },
+    {
+      "party_a": "Cumhuriyet Halk Partisi",
+      "party_b": "Bağımsız",
+      "u_stat": 4516481.5,
+      "p_raw": 0.0,
+      "effect_size_r": 0.0729,
+      "n_a": 5169,
+      "n_b": 1885,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Yeni Yol",
+      "party_b": "Milliyetçi Hareket Partisi",
+      "u_stat": 103230.0,
+      "p_raw": 0.087839,
+      "effect_size_r": 0.0582,
+      "n_a": 583,
+      "n_b": 376,
+      "p_adjusted_fdr": 0.124708,
+      "significant": false
+    },
+    {
+      "party_a": "Milliyetçi Hareket Partisi",
+      "party_b": "Liberal Demokrat Parti",
+      "u_stat": 7621.0,
+      "p_raw": 0.504462,
+      "effect_size_r": 0.0573,
+      "n_a": 376,
+      "n_b": 43,
+      "p_adjusted_fdr": 0.550322,
+      "significant": false
+    },
+    {
+      "party_a": "Bağımsız",
+      "party_b": "Demokrasi ve Atılım Partisi",
+      "u_stat": 30763.5,
+      "p_raw": 0.578685,
+      "effect_size_r": -0.0529,
+      "n_a": 1885,
+      "n_b": 31,
+      "p_adjusted_fdr": 0.612725,
+      "significant": false
+    },
+    {
+      "party_a": "Adalet ve Kalkınma Partisi",
+      "party_b": "Yeni Yol",
+      "u_stat": 310710.0,
+      "p_raw": 0.089528,
+      "effect_size_r": -0.043,
+      "n_a": 1022,
+      "n_b": 583,
+      "p_adjusted_fdr": 0.124708,
+      "significant": false
+    },
+    {
+      "party_a": "Bağımsız",
+      "party_b": "İYİ Parti",
+      "u_stat": 717807.0,
+      "p_raw": 0.069237,
+      "effect_size_r": -0.0419,
+      "n_a": 1885,
+      "n_b": 731,
+      "p_adjusted_fdr": 0.122889,
+      "significant": false
+    },
+    {
+      "party_a": "Halkların Eşitlik ve Demokrasi Partisi",
+      "party_b": "Liberal Demokrat Parti",
+      "u_stat": 48351.5,
+      "p_raw": 0.483115,
+      "effect_size_r": -0.0359,
+      "n_a": 2171,
+      "n_b": 43,
+      "p_adjusted_fdr": 0.550322,
+      "significant": false
+    },
+    {
+      "party_a": "Cumhuriyet Halk Partisi",
+      "party_b": "İYİ Parti",
+      "u_stat": 1840776.0,
+      "p_raw": 0.201865,
+      "effect_size_r": 0.0257,
+      "n_a": 5169,
+      "n_b": 731,
+      "p_adjusted_fdr": 0.259541,
+      "significant": false
+    },
+    {
+      "party_a": "Adalet ve Kalkınma Partisi",
+      "party_b": "Milliyetçi Hareket Partisi",
+      "u_stat": 188152.0,
+      "p_raw": 0.49495,
+      "effect_size_r": 0.0207,
+      "n_a": 1022,
+      "n_b": 376,
+      "p_adjusted_fdr": 0.550322,
+      "significant": false
+    },
+    {
+      "party_a": "Cumhuriyet Halk Partisi",
+      "party_b": "Demokrasi ve Atılım Partisi",
+      "u_stat": 79121.5,
+      "p_raw": 0.890816,
+      "effect_size_r": 0.0125,
+      "n_a": 5169,
+      "n_b": 31,
+      "p_adjusted_fdr": 0.907373,
+      "significant": false
+    },
+    {
+      "party_a": "İYİ Parti",
+      "party_b": "Demokrasi ve Atılım Partisi",
+      "u_stat": 11460.5,
+      "p_raw": 0.907373,
+      "effect_size_r": -0.0115,
+      "n_a": 731,
+      "n_b": 31,
+      "p_adjusted_fdr": 0.907373,
+      "significant": false
+    }
+  ],
+  "chi2_hatespeech_party": {
+    "chi2": 183.1472,
+    "p_value": 0.0,
+    "dof": 8,
+    "cramers_v": 0.1235,
+    "n": 12011,
+    "interpretation": "Cramér's V=0.123 → moderate effect size",
+    "significant": true
+  },
+  "hate_speech_confidence_intervals": {
+    "Adalet ve Kalkınma Partisi": {
+      "n": 1022,
+      "hate_count": 15,
+      "hate_rate": 0.0147,
+      "ci_95_low": 0.0089,
+      "ci_95_high": 0.0241
+    },
+    "Bağımsız": {
+      "n": 1885,
+      "hate_count": 11,
+      "hate_rate": 0.0058,
+      "ci_95_low": 0.0033,
+      "ci_95_high": 0.0104
+    },
+    "Cumhuriyet Halk Partisi": {
+      "n": 5169,
+      "hate_count": 18,
+      "hate_rate": 0.0035,
+      "ci_95_low": 0.0022,
+      "ci_95_high": 0.0055
+    },
+    "Demokrasi ve Atılım Partisi": {
+      "n": 31,
+      "hate_count": 0,
+      "hate_rate": 0.0,
+      "ci_95_low": 0.0,
+      "ci_95_high": 0.1103
+    },
+    "Halkların Eşitlik ve Demokrasi Partisi": {
+      "n": 2171,
+      "hate_count": 0,
+      "hate_rate": 0.0,
+      "ci_95_low": 0.0,
+      "ci_95_high": 0.0018
+    },
+    "Liberal Demokrat Parti": {
+      "n": 43,
+      "hate_count": 1,
+      "hate_rate": 0.0233,
+      "ci_95_low": 0.0041,
+      "ci_95_high": 0.1206
+    },
+    "Milliyetçi Hareket Partisi": {
+      "n": 376,
+      "hate_count": 21,
+      "hate_rate": 0.0559,
+      "ci_95_low": 0.0368,
+      "ci_95_high": 0.0839
+    },
+    "Yeni Yol": {
+      "n": 583,
+      "hate_count": 4,
+      "hate_rate": 0.0069,
+      "ci_95_low": 0.0027,
+      "ci_95_high": 0.0175
+    },
+    "İYİ Parti": {
+      "n": 731,
+      "hate_count": 5,
+      "hate_rate": 0.0068,
+      "ci_95_low": 0.0029,
+      "ci_95_high": 0.0159
+    }
+  },
+  "correlation_likes_hate": {
+    "pearson_r": -0.0018,
+    "p_value": 0.846496,
+    "significant": false
+  }
+}

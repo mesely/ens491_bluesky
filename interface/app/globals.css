@@ -19,9 +19,9 @@
 
   /* ── Bluesky Feed — light mode ─────────────────────────────────── */
   --bsky-blue:         #0085ff;
-  --bsky-bg:           #f1f3f5;
+  --bsky-bg:           #ffffff;
   --bsky-card:         #ffffff;
-  --bsky-border:       #dde1e7;
+  --bsky-border:       #ffffff;
   --bsky-text:         #0f1419;
   --bsky-dim:          #687076;
   --bsky-input:        #eaecf0;
@@ -33,9 +33,9 @@
 
 /* ── Bluesky Feed — dark mode ─────────────────────────────────────── */
 .dark {
-  --bg:       #0f1116;
-  --surface:  #1a1d27;
-  --border:   #2a2d3a;
+  --bg:       #151d28;
+  --surface:  #151d28;
+  --border:   #151d28;
   --border-l: #363a4a;
   --text:     #e8eaf0;
   --dim:      #b0b8cc;
@@ -45,9 +45,9 @@
   --red:      #f87171;
 
   --bsky-blue:         #1d9bf0;
-  --bsky-bg:           #0f1116;
+  --bsky-bg:           #151d28;
   --bsky-card:         #16192a;
-  --bsky-border:       #2a2d3a;
+  --bsky-border:       #151d28;
   --bsky-text:         #e7e9ea;
   --bsky-dim:          #71767b;
   --bsky-input:        #202327;

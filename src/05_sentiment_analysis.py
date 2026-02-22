@@ -43,8 +43,14 @@ OUTPUT_STATS       = "outputs/sentiment_stats.json"
 SA_MODEL = "VRLLab/TurkishBERTweet-Lora-SA"
 HS_MODEL = "VRLLab/TurkishBERTweet-Lora-HS"
 
-DEVICE     = "cuda" if torch.cuda.is_available() else "cpu"
-BATCH_SIZE = 32 if DEVICE == "cuda" else 8
+if torch.backends.mps.is_available():
+    DEVICE = "mps"
+elif torch.cuda.is_available():
+    DEVICE = "cuda"
+else:
+    DEVICE = "cpu"
+
+BATCH_SIZE = 16 if DEVICE == "mps" else 32 if DEVICE == "cuda" else 8
 MAX_LEN    = 128  # TurkishBERTweet max token length
 
 

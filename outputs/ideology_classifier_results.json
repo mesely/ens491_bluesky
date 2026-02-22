@@ -1,0 +1,221 @@
+{
+  "Logistic Regression": {
+    "macro_f1": 0.5332,
+    "mcc": 0.6207,
+    "per_class": {
+      "Adalet ve Kalkınma Partisi": {
+        "precision": 0.5032679738562091,
+        "recall": 0.6518518518518519,
+        "f1-score": 0.5680036883356385,
+        "support": 945.0
+      },
+      "Bağımsız": {
+        "precision": 0.6009995835068721,
+        "recall": 0.7696,
+        "f1-score": 0.6749298409728719,
+        "support": 1875.0
+      },
+      "Cumhuriyet Halk Partisi": {
+        "precision": 0.85717988595127,
+        "recall": 0.6539450266956693,
+        "f1-score": 0.7418956814357824,
+        "support": 5057.0
+      },
+      "Demokrasi ve Atılım Partisi": {
+        "precision": 0.21428571428571427,
+        "recall": 0.0967741935483871,
+        "f1-score": 0.13333333333333333,
+        "support": 31.0
+      },
+      "Halkların Eşitlik ve Demokrasi Partisi": {
+        "precision": 0.9572649572649573,
+        "recall": 0.8440885539331136,
+        "f1-score": 0.8971214017521902,
+        "support": 2123.0
+      },
+      "Liberal Demokrat Parti": {
+        "precision": 0.5384615384615384,
+        "recall": 0.175,
+        "f1-score": 0.2641509433962264,
+        "support": 40.0
+      },
+      "Milliyetçi Hareket Partisi": {
+        "precision": 0.36313868613138683,
+        "recall": 0.5574229691876751,
+        "f1-score": 0.4397790055248619,
+        "support": 357.0
+      },
+      "Yeni Yol": {
+        "precision": 0.4626038781163435,
+        "recall": 0.5932504440497336,
+        "f1-score": 0.5198443579766537,
+        "support": 563.0
+      },
+      "İYİ Parti": {
+        "precision": 0.4696394686907021,
+        "recall": 0.6923076923076923,
+        "f1-score": 0.5596382136800452,
+        "support": 715.0
+      },
+      "accuracy": 0.7001537672988212,
+      "macro avg": {
+        "precision": 0.5518712984738882,
+        "recall": 0.5593600812860138,
+        "f1-score": 0.5331884962675115,
+        "support": 11706.0
+      },
+      "weighted avg": {
+        "precision": 0.7452207991647153,
+        "recall": 0.7001537672988212,
+        "f1-score": 0.7110136943965155,
+        "support": 11706.0
+      }
+    }
+  },
+  "Linear SVM": {
+    "macro_f1": 0.5564,
+    "mcc": 0.6477,
+    "per_class": {
+      "Adalet ve Kalkınma Partisi": {
+        "precision": 0.565752128666036,
+        "recall": 0.6328042328042328,
+        "f1-score": 0.5974025974025974,
+        "support": 945.0
+      },
+      "Bağımsız": {
+        "precision": 0.6613939693524469,
+        "recall": 0.7136,
+        "f1-score": 0.6865059004617753,
+        "support": 1875.0
+      },
+      "Cumhuriyet Halk Partisi": {
+        "precision": 0.8051839464882943,
+        "recall": 0.7617164326675895,
+        "f1-score": 0.7828472716187379,
+        "support": 5057.0
+      },
+      "Demokrasi ve Atılım Partisi": {
+        "precision": 0.5,
+        "recall": 0.0967741935483871,
+        "f1-score": 0.16216216216216217,
+        "support": 31.0
+      },
+      "Halkların Eşitlik ve Demokrasi Partisi": {
+        "precision": 0.9430156328794755,
+        "recall": 0.8808290155440415,
+        "f1-score": 0.910862152946907,
+        "support": 2123.0
+      },
+      "Liberal Demokrat Parti": {
+        "precision": 0.875,
+        "recall": 0.175,
+        "f1-score": 0.2916666666666667,
+        "support": 40.0
+      },
+      "Milliyetçi Hareket Partisi": {
+        "precision": 0.411214953271028,
+        "recall": 0.49299719887955185,
+        "f1-score": 0.4484076433121019,
+        "support": 357.0
+      },
+      "Yeni Yol": {
+        "precision": 0.5080906148867314,
+        "recall": 0.5577264653641207,
+        "f1-score": 0.5317527519051651,
+        "support": 563.0
+      },
+      "İYİ Parti": {
+        "precision": 0.5644555694618273,
+        "recall": 0.6307692307692307,
+        "f1-score": 0.5957727873183619,
+        "support": 715.0
+      },
+      "accuracy": 0.7354348197505552,
+      "macro avg": {
+        "precision": 0.6482340905562043,
+        "recall": 0.5491351966196838,
+        "f1-score": 0.5563755481993862,
+        "support": 11706.0
+      },
+      "weighted avg": {
+        "precision": 0.7462439216456402,
+        "recall": 0.7354348197505552,
+        "f1-score": 0.7386376717755745,
+        "support": 11706.0
+      }
+    }
+  },
+  "Random Forest": {
+    "macro_f1": 0.3926,
+    "mcc": 0.5334,
+    "per_class": {
+      "Adalet ve Kalkınma Partisi": {
+        "precision": 0.7938931297709924,
+        "recall": 0.33015873015873015,
+        "f1-score": 0.4663677130044843,
+        "support": 945.0
+      },
+      "Bağımsız": {
+        "precision": 0.7546432062561095,
+        "recall": 0.41173333333333334,
+        "f1-score": 0.5327812284334024,
+        "support": 1875.0
+      },
+      "Cumhuriyet Halk Partisi": {
+        "precision": 0.5841057965640836,
+        "recall": 0.9345461736207238,
+        "f1-score": 0.718892607240645,
+        "support": 5057.0
+      },
+      "Demokrasi ve Atılım Partisi": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 31.0
+      },
+      "Halkların Eşitlik ve Demokrasi Partisi": {
+        "precision": 0.9908312958435208,
+        "recall": 0.7635421573245408,
+        "f1-score": 0.862463421122639,
+        "support": 2123.0
+      },
+      "Liberal Demokrat Parti": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 40.0
+      },
+      "Milliyetçi Hareket Partisi": {
+        "precision": 0.48854961832061067,
+        "recall": 0.1792717086834734,
+        "f1-score": 0.26229508196721313,
+        "support": 357.0
+      },
+      "Yeni Yol": {
+        "precision": 0.5461254612546126,
+        "recall": 0.26287744227353466,
+        "f1-score": 0.354916067146283,
+        "support": 563.0
+      },
+      "İYİ Parti": {
+        "precision": 0.9130434782608695,
+        "recall": 0.2055944055944056,
+        "f1-score": 0.3356164383561644,
+        "support": 715.0
+      },
+      "accuracy": 0.6654706987869469,
+      "macro avg": {
+        "precision": 0.563465776252311,
+        "recall": 0.34308043899874907,
+        "f1-score": 0.3925925063634257,
+        "support": 11706.0
+      },
+      "weighted avg": {
+        "precision": 0.7139287381725171,
+        "recall": 0.6654706987869469,
+        "f1-score": 0.6355334779985887,
+        "support": 11706.0
+      }
+    }
+  }
+}
