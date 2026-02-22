@@ -20,6 +20,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 # ─── Prerequisites ────────────────────────────────────────────────────────────
@@ -39,11 +42,31 @@ RESULTS_PATH    = "outputs/weekly_search_results.jsonl"
 STATS_PATH      = "outputs/weekly_distribution_stats.json"
 TEMPORAL_PATH   = "outputs/temporal_analysis.json"
 
-SEARCH_URL      = "https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts"
+AUTH_URL        = "https://bsky.social/xrpc/com.atproto.server.createSession"
+SEARCH_URL      = "https://bsky.social/xrpc/app.bsky.feed.searchPosts"
 MAX_PER_KEYWORD = 500
 TOP_KEYWORDS    = 50
 SLEEP_NORMAL    = 0.5
 SLEEP_429       = 30
+
+
+# ─── Authentication ───────────────────────────────────────────────────────────
+
+def get_access_token() -> str:
+    """Authenticate with Bluesky and return a JWT access token."""
+    identifier = os.getenv("BSKY_IDENTIFIER", "")
+    password   = os.getenv("BSKY_PASSWORD", "")
+    if not identifier or not password:
+        print("[ERROR] BSKY_IDENTIFIER and BSKY_PASSWORD must be set in .env")
+        sys.exit(1)
+    resp = requests.post(AUTH_URL, json={"identifier": identifier, "password": password}, timeout=15)
+    resp.raise_for_status()
+    token = resp.json().get("accessJwt", "")
+    if not token:
+        print("[ERROR] Authentication failed — no accessJwt in response")
+        sys.exit(1)
+    print(f"  Authenticated as: {resp.json().get('handle', identifier)}")
+    return token
 
 # Notable political events for annotation
 POLITICAL_EVENTS: dict[str, str] = {
@@ -69,7 +92,7 @@ PROTEST_EXTRA_KEYWORDS = [
 
 # ─── Search ───────────────────────────────────────────────────────────────────
 
-def search_posts(keyword: str, since: str, until: str) -> list[dict]:
+def search_posts(keyword: str, since: str, until: str, headers: dict) -> list[dict]:
     """Paginate AT Protocol search for one keyword within the time window."""
     all_results: list[dict] = []
     cursor: str | None = None
@@ -81,7 +104,7 @@ def search_posts(keyword: str, since: str, until: str) -> list[dict]:
 
         for attempt in range(3):
             try:
-                resp = requests.get(SEARCH_URL, params=params, timeout=15)
+                resp = requests.get(SEARCH_URL, params=params, headers=headers, timeout=15)
                 if resp.status_code == 429:
                     print(f"  [429] sleeping {SLEEP_429} s …")
                     time.sleep(SLEEP_429)
@@ -275,6 +298,10 @@ def main():
             kw_set.add(pk)
     print(f"Using {len(keywords)} keywords for search (incl. {len(PROTEST_EXTRA_KEYWORDS)} protest extras).")
 
+    # Authenticate
+    token   = get_access_token()
+    headers = {"Authorization": f"Bearer {token}"}
+
     import pandas as _pd
     accounts_df     = _pd.read_csv(ACCOUNTS_PATH, encoding="utf-8-sig")
     handle_to_actor = {
@@ -315,7 +342,7 @@ def main():
                 continue
 
             print(f"  [{i}/{len(keywords)}] Searching: '{kw}' …")
-            posts = search_posts(kw, since, until)
+            posts = search_posts(kw, since, until, headers)
 
             new_count = 0
             for post in posts:
