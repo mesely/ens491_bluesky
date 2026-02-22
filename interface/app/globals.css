@@ -27,6 +27,8 @@
   --bsky-input:        #eaecf0;
   --bsky-hover:        rgba(0,0,0,0.04);
   --bsky-hover-strong: rgba(0,0,0,0.07);
+  /* Logo: light mode → make it dark/black */
+  --bsky-logo-filter:  brightness(0) saturate(100%);
 }
 
 /* ── Bluesky Feed — dark mode ─────────────────────────────────────── */
@@ -51,6 +53,8 @@
   --bsky-input:        #202327;
   --bsky-hover:        rgba(255,255,255,0.03);
   --bsky-hover-strong: rgba(255,255,255,0.06);
+  /* Logo: dark mode → invert to white */
+  --bsky-logo-filter:  brightness(0) saturate(100%) invert(1);
 }
 
 /* ══════════════════════════════════════════════════════════════════

@@ -38,12 +38,20 @@ function PlusIcon() {
   return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>;
 }
 function BskyLogo() {
-  // Simplified butterfly/bird shape approximating Bluesky logo
+  // bluesky.webp from /public — invert in dark mode via CSS filter
   return (
-    <svg width="34" height="30" viewBox="0 0 360 320" fill="var(--bsky-blue)">
-      <path d="M180 141.964C163.699 110.262 119.304 49.2281 74.553 28.9986C29.806 8.77151 0 41.0082 0 70.0088C0 99.0095 15.6592 122.007 39.3296 129.504C0 130.499 0 160.5 0 160.5C0 160.5 0 174 20 174C40 174 104 156 180 156C256 156 320 174 340 174C360 174 360 160.5 360 160.5C360 160.5 360 130.499 320.67 129.504C344.341 122.007 360 99.0095 360 70.0088C360 41.0082 330.194 8.77151 285.447 28.9986C240.696 49.2281 196.301 110.262 180 141.964Z"/>
-      <path d="M180 141.964C163.699 110.262 119.304 49.2281 74.553 28.9986C29.806 8.77151 0 41.0082 0 70.0088C0 99.0095 15.6592 122.007 39.3296 129.504C0 130.499 0 160.5 0 160.5C0 160.5 0 174 20 174C40 174 104 156 180 156C256 156 320 174 340 174C360 174 360 160.5 360 160.5C360 160.5 360 130.499 320.67 129.504C344.341 122.007 360 99.0095 360 70.0088C360 41.0082 330.194 8.77151 285.447 28.9986C240.696 49.2281 196.301 110.262 180 141.964Z" opacity="0.5" transform="translate(0 140) scaleY(-1) scaleX(0.9) translateX(18)"/>
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/bluesky.webp"
+      alt="Bluesky"
+      width={34}
+      height={34}
+      style={{
+        objectFit: "contain",
+        // light mode = keep original colours; dark mode = invert to white
+        filter: "var(--bsky-logo-filter)",
+      }}
+    />
   );
 }
 
