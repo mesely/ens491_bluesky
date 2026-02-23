@@ -440,7 +440,7 @@ function CenterFeed({
         overflowX: "auto",
       }}>
         {TABS.map((tab) => (
-          <button key={tab} onClick={() => handleTabChange(tab)}
+          <button key={tab} onClick={() => setActiveTab(tab)}
             style={{
               flex: 1,
               padding: "16px 12px",

@@ -404,12 +404,12 @@ export async function GET(req: NextRequest) {
     (feed === "all" || feed === "protest") ? getProtestRecords() : Promise.resolve([]),
   ]);
 
-  // Build unified post arrays
+  // Build unified post arrays — use concat to avoid call stack overflow on large arrays
   let allPosts: UnifiedPost[] = [];
 
   if (feed === "all" || feed === "dataset") {
     const datasetPosts = await loadDatasetPosts(fullTexts);
-    allPosts.push(...datasetPosts);
+    allPosts = allPosts.concat(datasetPosts);
   }
 
   if (feed === "all" || feed === "keyword") {
@@ -419,17 +419,17 @@ export async function GET(req: NextRequest) {
       const cat = (r.feed_category as string) || "";
       return cat !== "protest" && !protestUris.has(r.uri as string);
     });
-    allPosts.push(...jsonlRecordsToUnifiedPosts(weeklyOnly, "keyword"));
+    allPosts = allPosts.concat(jsonlRecordsToUnifiedPosts(weeklyOnly, "keyword"));
   }
 
   if (feed === "all" || feed === "protest") {
-    allPosts.push(...jsonlRecordsToUnifiedPosts(protestRecords, "protest"));
+    allPosts = allPosts.concat(jsonlRecordsToUnifiedPosts(protestRecords, "protest"));
     // Also include protest-tagged records from weekly search
     if (feed === "all") {
       const protestFromWeekly = weeklyRecords.filter((r) => (r.feed_category as string) === "protest");
       const protestUris = new Set(protestRecords.map((r) => r.uri as string));
       const extras = protestFromWeekly.filter((r) => !protestUris.has(r.uri as string));
-      allPosts.push(...jsonlRecordsToUnifiedPosts(extras as Record<string, unknown>[], "protest"));
+      allPosts = allPosts.concat(jsonlRecordsToUnifiedPosts(extras as Record<string, unknown>[], "protest"));
     }
   }
 
