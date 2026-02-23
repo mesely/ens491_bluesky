@@ -86,6 +86,7 @@ const NAV_LINKS = [
   { href: "#s9", label: "Power User" },
   { href: "#s10", label: "Kelime Bulutu" },
   { href: "#s11", label: "İdeoloji" },
+  { href: "#s12", label: "CatBoost" },
 ];
 
 /* ─── Main Component ───────────────────────────────────────────── */
@@ -148,7 +149,7 @@ export default function SunumTab() {
             <div className="c-item">NLP Modeli &mdash; <span>VRLLab / TurkishBERTweet (LoRA adaptasyonu)</span></div>
             <div className="c-item">Konu Modellemesi &mdash; <span>LDA + Jensen-Shannon Divergence</span></div>
             <div className="c-item">İstatistiksel Testler &mdash; <span>Kruskal-Wallis H · Mann-Whitney U · FDR-BH · Wilson CI · Ki-kare</span></div>
-            <div className="c-item">Sınıflandırma &mdash; <span>Linear SVM · Logistic Regression · Random Forest · Complement NB</span></div>
+            <div className="c-item">Sınıflandırma &mdash; <span>CatBoost (Macro-F1: %73.7) · Linear SVM · Logistic Regression · Random Forest</span></div>
           </div>
         </div>
       </section>
@@ -167,7 +168,7 @@ export default function SunumTab() {
               { n: "02", t: "Gönderi Toplama", b: <>İmleç tabanlı sayfalama ile doğrulanmış hesapların tüm gönderi geçmişi <code className="i">getAuthorFeed</code> üzerinden çekildi. Yanıt ve alıntı bağlantıları ağ analizi için ayrıştırıldı.</> },
               { n: "03", t: "NLP Analizi", b: "TF-IDF ile anahtar kelime çıkarımı, LDA konu modellemesi (gensim, C_V tutarlılığı) uygulandı. TurkishBERTweet-LoRA ile duygu ve nefret söylemi etiketlemesi yapıldı." },
               { n: "04", t: "İstatistiksel Test", b: "Kruskal-Wallis H, Mann-Whitney U + FDR-BH düzeltmesi, Ki-kare + Cramer's V, Wilson %95 CI ve Pearson r korelasyon testleri uygulandı." },
-              { n: "05", t: "İdeoloji Sınıflandırma", b: "Kelime ve Karakter TF-IDF, SelectKBest (ki-kare), 5-katlı Stratified CV. Macro-F1 ve MCC metrikleriyle değerlendirme. RandomOverSampler ile veri dengesi." },
+              { n: "05", t: "İdeoloji Sınıflandırma", b: "CatBoost şampiyon model (Macro-F1: %73.7, depth=7, iter=600) + LinearSVC baseline. Metin + 10 meta-özellik (engagement, uzunluk, sosyal metrikler). SHAP yorumlanabilirlik analizi. 5-katlı Stratified CV." },
             ].map((pc) => (
               <div key={pc.n} className="pc">
                 <span className="pn">{pc.n}</span>
@@ -476,8 +477,9 @@ export default function SunumTab() {
         left={<>
           <div className="slbl">Bölüm 11 &mdash; İdeoloji Sınıflandırması</div>
           <div className="stit">Makine Öğrenmesi ile Siyasi Söylem Ayrımı</div>
-          <div className="ssub">Linear SVM Modeli Karmaşıklık Matrisi (Normalize Edilmiş)</div>
+          <div className="ssub">Linear SVM Baseline Modeli Karmaşıklık Matrisi (Normalize Edilmiş)</div>
           <Fig file="ideology_confusion_matrix.png" caption="Diyagonal: Modelin doğru tahmin oranları. Diyagonal Dışı: Karıştırılan söylemler. 5-katlı StratifiedKFold çapraz geçerleme." />
+          <Fig file="04_cm_linearsvc.png" caption="LinearSVC Baseline — Kelime+Karakter TF-IDF (1-3 gram), SelectKBest χ²." />
         </>}
         right={<>
           <div className="slbl">Öne Çıkan Bulgular</div>
@@ -496,6 +498,40 @@ export default function SunumTab() {
             <strong>Özellik Mühendisliği:</strong> Kelime (1-3 gram) + karakter (2-5 gram) TF-IDF birleşimi, <code className="i">SelectKBest</code> ile özellik seçimi.<br /><br />
             <strong>Model:</strong> Seyrek, yüksek boyutlu metin verilerinde başarılı <strong>Linear SVM</strong>. Dengesiz veri: RandomOverSampler.<br /><br />
             <strong>Değerlendirme:</strong> Accuracy yerine Macro-F1 ve MCC kullanılmıştır.
+          </Meth>
+        </>}
+      />
+
+      {/* ─── S12 CatBoost ──────────────────────────────────────────── */}
+      <Section id="s12"
+        left={<>
+          <div className="slbl">Bölüm 12 &mdash; CatBoost Şampiyon Model</div>
+          <div className="stit">Gradient Boosting ile İdeoloji Sınıflandırması</div>
+          <div className="ssub">CatBoost (depth=7, iter=600, Macro-F1: %73.7) — LinearSVC Baseline ile Karşılaştırma</div>
+          <Fig file="05_cm_catboost.png" caption="CatBoost Şampiyon Model — Karmaşıklık Matrisi. Metin + 10 meta-özellik (engagement, uzunluk, hashtag, mention vb.) ile eğitilmiştir." />
+          <Fig file="06_catboost_feature_importance.png" caption="CatBoost Özellik Önemi — En kritik 15 özelliğin karara katkısı." />
+        </>}
+        right={<>
+          <div className="slbl">Öne Çıkan Bulgular</div>
+          <div className="finds">
+            <Find title="CatBoost vs LinearSVC: +5 Puan Artış">
+              CatBoost şampiyon modeli <strong><span className="n">Macro-F1: %73.7</span></strong> elde etmiştir. LinearSVC baseline&apos;ına kıyasla ~5 puanlık artış, metin+meta özellik kombinasyonunun gücünü göstermektedir.
+            </Find>
+            <Find title="Engagement Metrikleri Söylemi Yansıtıyor">
+              SHAP analizi göre AKP için <code className="i">log_repost</code> ve <code className="i">log_like</code> en belirleyici özelliklerdir (<strong><span className="n">SHAP ≈ 1.64 / 1.58</span></strong>). İktidar partisi gönderileri ölçülebilir şekilde farklı etkileşim örüntüsü sergilemektedir.
+            </Find>
+            <Find title="Bağımsız Hesaplarda Metin Egemenliği">
+              Bağımsız aktörler için <code className="i">text_clean</code> (<strong><span className="n">SHAP: 0.69</span></strong>) tüm meta özelliklerinden açık ara önde gelmektedir. Bağımsız söylem, engagement değil içerik odaklıdır.
+            </Find>
+            <Find title="DEM Parti: Boyut Değil, İçerik Tanımlar">
+              DEM Parti için en belirleyici özellik <code className="i">text_clean</code> ve <code className="i">word_count</code> kombinasyonudur. Partinin özgün terminolojisi (Gergerlioğlu, cezaevi, barış) diğer hiçbir partiyle çakışmamaktadır.
+            </Find>
+          </div>
+          <Meth title="CatBoost Çok Modlu Özellik Mimarisi">
+            <strong>Metin Sütunu:</strong> CatBoost&apos;un yerleşik metin işleme motoru (bag-of-words tarzı dahili tokenizasyon) doğrudan <code className="i">text_clean</code> sütununu işlemektedir.<br /><br />
+            <strong>10 Meta-Özellik:</strong> log_like, log_reply, log_repost, word_count, hashtag_count, mention_count, has_url, uppercase_ratio, punct_ratio, digit_ratio.<br /><br />
+            <strong>SHAP Yorumlanabilirlik:</strong> Her sınıf için Shapley değerleri hesaplanarak hangi özelliğin kararı en çok etkilediği belirlendi.<br /><br />
+            <strong>Sınıf Dengeleme:</strong> Azınlık partilerinin ezilmemesi için ters-frekans ağırlıklandırma (class_weights) kullanılmıştır.
           </Meth>
         </>}
       />

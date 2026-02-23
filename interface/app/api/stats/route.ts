@@ -7,6 +7,7 @@ const OUTPUTS      = path.join(process.cwd(), "..", "outputs");
 const CSV_PATH     = path.join(OUTPUTS, "sentiment_results.csv");
 const WEEKLY_PATH  = path.join(OUTPUTS, "weekly_search_results.jsonl");
 const PROTEST_PATH = path.join(OUTPUTS, "protest_posts.jsonl");
+const EXCLUDED_HANDLES = new Set(["omercelik.com"]);
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -32,6 +33,9 @@ const MAIN_PARTIES = new Set([
   "İYİ Parti",
   "Yeni Yol",
   "Bağımsız",
+  "Muhalif",
+  "İktidar Yanlısı",
+  "Tarafsız/Haber",
 ]);
 
 function normalizeParty(p: string): string {
@@ -44,6 +48,35 @@ const PROTEST_KWS_STATS = new Set([
   "polis müdahalesi", "siyasi operasyon", "yargı bağımsızlığı",
   "tahliye", "siyasi tutuklama",
 ]);
+
+const PARTY_TERMS_STATS: Record<string, string[]> = {
+  "Cumhuriyet Halk Partisi": ["chp", "cumhuriyet halk", "özgür özel", "kılıçdaroğlu", "imamoğlu", "yavaş", "saraçhane"],
+  "Adalet ve Kalkınma Partisi": ["akp", "ak parti", "adalet ve kalkınma", "erdoğan", "tayyip", "cumhur ittifakı"],
+  "Milliyetçi Hareket Partisi": ["mhp", "bahçeli", "milliyetçi hareket", "ülkücü"],
+  "Halkların Eşitlik ve Demokrasi Partisi": ["dem parti", "hdp", "demirtaş", "halkların eşitlik", "yeşil sol"],
+  "İYİ Parti": ["iyi parti", "akşener", "müsavat dervişoğlu"],
+  "Yeni Yol": ["yeni yol", "deva", "gelecek partisi", "saadet partisi"],
+};
+const NEGATIVE_WORDS_STATS = ["faşist", "fascist", "yıkılacak", "istifa", "rezalet", "yolsuz", "hırsız", "diktatör", "otoriter", "hukuksuz"];
+const POSITIVE_WORDS_STATS = ["destek", "tebrik", "başarı", "helal", "yanındayız", "güveniyoruz"];
+const NEWS_WORDS_STATS = ["haber", "son dakika", "ajans", "canlı yayın", "açıklama", "duyurdu"];
+
+function localContextScoreStats(text: string, term: string): number {
+  let score = 0;
+  let idx = text.indexOf(term);
+  while (idx >= 0) {
+    const start = Math.max(0, idx - 36);
+    const end = Math.min(text.length, idx + term.length + 36);
+    const ctx = text.slice(start, end);
+    const hasNeg = NEGATIVE_WORDS_STATS.some((w) => ctx.includes(w));
+    const hasPos = POSITIVE_WORDS_STATS.some((w) => ctx.includes(w));
+    if (hasNeg && !hasPos) score -= 2;
+    else if (hasPos && !hasNeg) score += 2;
+    else score += 1;
+    idx = text.indexOf(term, idx + term.length);
+  }
+  return score;
+}
 
 function inferPartyAffinity(text: string, keyword: string): string {
   const t = (text || "").toLowerCase();
@@ -59,32 +92,24 @@ function inferPartyAffinity(text: string, keyword: string): string {
   };
 
   if (PROTEST_KWS_STATS.has(kw)) scores["Cumhuriyet Halk Partisi"] += 4;
-
-  for (const s of ["chp", "cumhuriyet halk", "kılıçdaroğlu", "özgür özel",
-    "imamoğlu", "yavaş", "saraçhane", "millet ittifakı",
-    "kent uzlaşısı", "diploma iptali", "yargı bağımsızlığı", "siyasi operasyon"])
-    if (t.includes(s)) scores["Cumhuriyet Halk Partisi"] += 2;
-
-  for (const s of ["akp", "ak parti", "adalet ve kalkınma", "erdoğan", "cumhur ittifakı", "iktidar"])
-    if (t.includes(s)) scores["Adalet ve Kalkınma Partisi"] += 2;
-
-  for (const s of ["mhp", "bahçeli", "milliyetçi hareket", "ülkücü"])
-    if (t.includes(s)) scores["Milliyetçi Hareket Partisi"] += 2;
-
-  for (const s of ["dem parti", "hdp", "demirtaş", "halkların eşitlik", "yeşil sol"])
-    if (t.includes(s)) scores["Halkların Eşitlik ve Demokrasi Partisi"] += 2;
-
-  for (const s of ["iyi parti", "akşener"])
-    if (t.includes(s)) scores["İYİ Parti"] += 2;
-
-  for (const s of ["yeni yol"])
-    if (t.includes(s)) scores["Yeni Yol"] += 2;
+  for (const [party, terms] of Object.entries(PARTY_TERMS_STATS)) {
+    for (const term of terms) {
+      if (!t.includes(term)) continue;
+      scores[party] += localContextScoreStats(t, term);
+    }
+  }
 
   let best = ""; let bestScore = 0;
   for (const [party, score] of Object.entries(scores)) {
     if (score > bestScore) { bestScore = score; best = party; }
   }
-  return best || "Diğer";
+  if (best && bestScore >= 2) return best;
+  const antiGov = /(\bakp\b|\bak parti\b|erdoğan|tayyip|cumhur ittifakı).*(faşist|fascist|istifa|yıkılacak|yikilacak|diktatör|otoriter|yolsuz|hırsız)|(faşist|fascist|istifa|yıkılacak|yikilacak|diktatör|otoriter|yolsuz|hırsız).*(\bakp\b|\bak parti\b|erdoğan|tayyip|cumhur ittifakı)/i.test(t);
+  const proGov = /(\bakp\b|\bak parti\b|erdoğan|tayyip|cumhur ittifakı).*(destek|tebrik|başarı|helal|yanındayız|güveniyoruz)|(destek|tebrik|başarı|helal|yanındayız|güveniyoruz).*(\bakp\b|\bak parti\b|erdoğan|tayyip|cumhur ittifakı)/i.test(t);
+  if (NEWS_WORDS_STATS.some((w) => t.includes(w))) return "Tarafsız/Haber";
+  if (proGov) return "İktidar Yanlısı";
+  if (antiGov) return "Muhalif";
+  return "Diğer";
 }
 
 function isTurkish(text: string): boolean {
@@ -94,6 +119,11 @@ function isTurkish(text: string): boolean {
   if (/\b(türkiye|türk|istanbul|ankara|cumhurbaşkan|milletvekili|meclis|belediye|protesto|gözaltı|tutuklama|seçim|hükümet|muhalefet)\b/i.test(text)) return true;
   if (/[çöü]/i.test(text) && /\b(bir|bu|ve|ile|de|da|ki|için|olan|var|daha)\b/i.test(text)) return true;
   return false;
+}
+
+function isPoliticalLikely(text: string): boolean {
+  if (!text) return false;
+  return /\b(akp|ak parti|chp|mhp|dem parti|iyi parti|yeni yol|tbmm|meclis|milletvekili|seçim|sandık|iktidar|muhalefet|hükümet|cumhurbaşkan|parti|protesto|gözaltı|tutuklama|anayasa|anayasa değişikliği|yargı|mahkeme|belediye|ibb|imamoğlu|imamoglu|çözüm süreci|terörsüz türkiye|terörle mücadele|kayyum|akın gürlek|can atalay|ekonomi|enflasyon|asgari ücret|emekli maaşı|merkez bankası|faiz|ab|nato|gazze|israil|filistin|dış politika)\b/i.test(text);
 }
 
 async function loadJSONLStats(
@@ -119,6 +149,8 @@ async function loadJSONLStats(
       const uri = r.uri as string;
       if (!uri || seen.has(uri)) continue;
       seen.add(uri);
+      const authorHandle = ((r.author_handle as string) || "").toLowerCase();
+      if (EXCLUDED_HANDLES.has(authorHandle)) continue;
 
       if (cutoff > 0) {
         const ts = new Date(r.created_at as string).getTime();
@@ -132,6 +164,7 @@ async function loadJSONLStats(
 
       // Skip non-Turkish posts
       if (!isTurkish(text)) continue;
+      if (!isPoliticalLikely(text)) continue;
 
       const effectiveParty = isTracked
         ? (rawParty || "Diğer")
@@ -182,6 +215,7 @@ export async function GET(req: NextRequest) {
         if (row.length < headers.length) continue;
         const obj: Record<string, string> = {};
         headers.forEach((h, idx) => { obj[h] = (row[idx] || "").trim(); });
+        if (EXCLUDED_HANDLES.has((obj.author_handle || "").toLowerCase())) continue;
 
         if (cutoff > 0) {
           const ts = new Date(obj.created_at).getTime();
@@ -193,10 +227,11 @@ export async function GET(req: NextRequest) {
         if (sentiment && obj.sentiment !== sentiment) continue;
         if (hate_speech && obj.hate_speech !== hate_speech) continue;
         if (search && !(obj.text_preview || "").toLowerCase().includes(search)) continue;
+        if (!isPoliticalLikely(obj.text_preview || "")) continue;
 
         byParty[pNorm] = (byParty[pNorm] || 0) + 1;
-        if (obj.sentiment in bySentiment) bySentiment[obj.sentiment]++;
-        if (obj.hate_speech in byHateSpeech) byHateSpeech[obj.hate_speech]++;
+        if (obj.sentiment in bySentiment) bySentiment[obj.sentiment as keyof typeof bySentiment]++;
+        if (obj.hate_speech in byHateSpeech) byHateSpeech[obj.hate_speech as keyof typeof byHateSpeech]++;
         total++;
       }
     }

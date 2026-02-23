@@ -66,6 +66,9 @@ const PARTY_ORDER = [
   "İYİ Parti",
   "Yeni Yol",
   "Bağımsız",
+  "Muhalif",
+  "İktidar Yanlısı",
+  "Tarafsız/Haber",
   "Diğer",
 ];
 
@@ -172,12 +175,13 @@ function LeftSidebar({
 
 /* ─── Right Sidebar ─────────────────────────────────────────────── */
 function RightSidebar({
-  stats, keywords, filterParams, onSearch,
+  stats, keywords, filterParams, onSearch, postsTotal,
 }: {
   stats: Stats | null;
   keywords: Keyword[];
   filterParams: Record<string, string>;
   onSearch: (q: string) => void;
+  postsTotal: number;
 }) {
   const [searchVal, setSearchVal] = useState(filterParams.search || "");
 
@@ -233,7 +237,7 @@ function RightSidebar({
             Filtre İstatistikleri
           </div>
           <div style={{ fontSize: 13, color: "var(--bsky-dim)", fontFamily: "var(--font-mono, monospace)", marginBottom: 12 }}>
-            {stats.total.toLocaleString("tr-TR")} gönderi
+            {postsTotal.toLocaleString("tr-TR")} gönderi
           </div>
 
           {/* Party breakdown */}
@@ -241,7 +245,7 @@ function RightSidebar({
             <div style={{ fontSize: 13, fontWeight: 600, color: "var(--bsky-dim)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Parti Dağılımı</div>
             {PARTY_ORDER.filter((p) => stats.byParty[p] > 0).map((party) => {
               const count = stats.byParty[party] || 0;
-              const pct = stats.total > 0 ? (count / stats.total) * 100 : 0;
+              const pct = postsTotal > 0 ? (count / postsTotal) * 100 : 0;
               const color = PARTY_COLORS[party] || "#636e72";
               const short = PARTY_SHORT[party] || "?";
               return (
@@ -272,7 +276,8 @@ function RightSidebar({
               { key: "negative", label: "Negatif", color: "#e74c3c" },
             ].map(({ key, label, color }) => {
               const count = stats.bySentiment[key] || 0;
-              const pct = stats.total > 0 ? (count / stats.total) * 100 : 0;
+              const sentTotal = (stats.bySentiment.positive || 0) + (stats.bySentiment.neutral || 0) + (stats.bySentiment.negative || 0);
+              const pct = sentTotal > 0 ? (count / sentTotal) * 100 : 0;
               return (
                 <div key={key} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
                   <span style={{ width: 50, fontSize: 11, color: "var(--bsky-dim)", flexShrink: 0 }}>{label}</span>
@@ -292,14 +297,14 @@ function RightSidebar({
             <div style={{ marginTop: 10, padding: "8px 12px", background: "#e74c3c10", borderRadius: 8, border: "1px solid #e74c3c25" }}>
               <span style={{ fontSize: 12, color: "#e74c3c", fontFamily: "var(--font-mono, monospace)" }}>
                 ⚠ Nefret söylemi: {stats.byHateSpeech.Yes.toLocaleString("tr-TR")} gönderi
-                ({stats.total > 0 ? ((stats.byHateSpeech.Yes / stats.total) * 100).toFixed(1) : "0"}%)
+                ({postsTotal > 0 ? ((stats.byHateSpeech.Yes / postsTotal) * 100).toFixed(1) : "0"}%)
               </span>
             </div>
           )}
         </section>
       )}
 
-      {/* Trending keywords — Gündem */}
+      {/* Keyword list */}
       {keywords.length > 0 && (
         <section style={{
           background: "var(--bsky-card)", borderRadius: 16,
@@ -307,7 +312,7 @@ function RightSidebar({
           border: "1px solid var(--bsky-border)",
         }}>
           <div style={{ fontWeight: 700, fontSize: 20, color: "var(--bsky-text)", marginBottom: 14 }}>
-            Gündem
+            Kullanılan Anahtar Kelimeler
           </div>
           {keywords.map((kw) => (
             <div key={kw.keyword} style={{
@@ -358,6 +363,9 @@ const PARTY_OPTS = [
   { label: "İYİ", value: "İYİ Parti" },
   { label: "YY", value: "Yeni Yol" },
   { label: "Bağ.", value: "Bağımsız" },
+  { label: "Muhalif", value: "Muhalif" },
+  { label: "İktidar Y.", value: "İktidar Yanlısı" },
+  { label: "Tarafsız", value: "Tarafsız/Haber" },
   { label: "Diğer", value: "Diğer" },
 ];
 const SENT_OPTS = [
@@ -373,7 +381,6 @@ const HS_OPTS = [
 ];
 const FEED_OPTS = [
   { label: "Tüm Kaynaklar", value: "all" },
-  { label: "Veri Seti", value: "dataset" },
   { label: "Anahtar Kelime", value: "keyword" },
   { label: "Protesto", value: "protest" },
 ];
@@ -416,7 +423,7 @@ function CenterFeed({
   posts: Post[]; total: number; offset: number;
   loading: boolean; error: string; loadMore: () => void;
 }) {
-  const TABS = ["Tüm Gönderiler", "Politika", "İmamoğlu Protestoları"];
+  const TABS = ["Tüm Siyasi Gönderiler", "İmamoğlu Protestoları"];
 
   return (
     <main style={{
@@ -433,12 +440,12 @@ function CenterFeed({
         overflowX: "auto",
       }}>
         {TABS.map((tab) => (
-          <button key={tab} onClick={() => setActiveTab(tab)}
+          <button key={tab} onClick={() => handleTabChange(tab)}
             style={{
-              flex: tab === "İmamoğlu Protestoları" ? "0 0 auto" : 1,
+              flex: 1,
               padding: "16px 12px",
               background: "none", border: "none", cursor: "pointer",
-              fontSize: tab === "İmamoğlu Protestoları" ? 13 : 16,
+              fontSize: 15,
               fontWeight: activeTab === tab ? 700 : 400,
               color: activeTab === tab
                 ? (tab === "İmamoğlu Protestoları" ? "#e67e22" : "var(--bsky-text)")
@@ -449,7 +456,7 @@ function CenterFeed({
               transition: "all 0.15s",
               whiteSpace: "nowrap",
             }}>
-            {tab === "İmamoğlu Protestoları" ? "🔥 İmamoğlu Protestoları" : tab}
+            {tab}
           </button>
         ))}
       </div>
@@ -600,7 +607,7 @@ function CenterFeed({
 /* ─── FeedTab (root) ─────────────────────────────────────────────── */
 export default function FeedTab() {
   // Filters
-  const [activeTab, setActiveTab] = useState("Tüm Gönderiler");
+  const [activeTab, setActiveTab] = useState("Tüm Siyasi Gönderiler");
   const [days, setDays] = useState("0");
   const [party, setParty] = useState("");
   const [sentiment, setSentiment] = useState("");
@@ -661,13 +668,13 @@ export default function FeedTab() {
     } catch { /* silent */ }
   }, [filterQuery]);
 
-  // Keywords (load once)
+  // Keywords (based on feed)
   useEffect(() => {
-    fetch("/api/keywords")
+    fetch(`/api/keywords?feed=${encodeURIComponent(feed)}`)
       .then((r) => r.json())
       .then((d) => setKeywords(d.keywords || []))
       .catch(() => { /* silent */ });
-  }, []);
+  }, [feed]);
 
   // Re-fetch when filters change
   useEffect(() => {
@@ -679,10 +686,7 @@ export default function FeedTab() {
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
-    if (tab === "Politika") {
-      setSentiment("negative");
-      setFeed("all");
-    } else if (tab === "İmamoğlu Protestoları") {
+    if (tab === "İmamoğlu Protestoları") {
       // Protest feed: use protest data source, clear other filters
       setSentiment("");
       setFeed("protest");
@@ -691,7 +695,7 @@ export default function FeedTab() {
       setHateSpeech("");
       setSearch("");
     } else {
-      // "Tüm Gönderiler"
+      // "Tüm Siyasi Gönderiler"
       setSentiment("");
       setFeed("all");
     }
@@ -727,6 +731,7 @@ export default function FeedTab() {
         keywords={keywords}
         filterParams={{ days, party, sentiment, hate_speech: hateSpeech, search }}
         onSearch={handleSearchFromSidebar}
+        postsTotal={total}
       />
     </div>
   );
