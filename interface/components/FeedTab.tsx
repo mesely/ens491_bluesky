@@ -251,17 +251,43 @@ function RightSidebar({
               const classifiedParties = PARTY_ORDER.filter((p) => p !== "Diğer" && (stats.byParty[p] || 0) > 0);
               return (
                 <>
-                  {/* Classified summary */}
-                  <div style={{
-                    display: "flex", alignItems: "center", justifyContent: "space-between",
-                    marginBottom: 10, padding: "6px 10px",
-                    background: "var(--bsky-border)", borderRadius: 8,
-                    fontSize: 12, color: "var(--bsky-dim)", fontFamily: "var(--font-mono, monospace)",
-                  }}>
-                    <span>Sınıflandırılan</span>
-                    <span style={{ fontWeight: 700, color: "var(--bsky-text)" }}>
-                      {classifiedPct.toFixed(1)}% · {classifiedCount.toLocaleString("tr-TR")} gönderi
-                    </span>
+                  {/* Sınıflandırma histogram */}
+                  <div style={{ marginBottom: 10 }}>
+                    <div style={{ fontSize: 11, color: "var(--bsky-dim)", marginBottom: 5, fontFamily: "var(--font-mono, monospace)", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                      Sınıflandırma Oranı
+                    </div>
+                    {/* Stacked bar */}
+                    <div style={{ display: "flex", height: 18, borderRadius: 6, overflow: "hidden", marginBottom: 5 }}>
+                      <div style={{
+                        width: `${Math.max(classifiedPct, 2)}%`,
+                        background: "var(--bsky-blue)",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: 10, color: "#fff", fontWeight: 700,
+                        fontFamily: "var(--font-mono, monospace)",
+                        transition: "width 0.4s",
+                      }}>
+                        {classifiedPct > 12 ? `${Math.round(classifiedPct)}%` : ""}
+                      </div>
+                      <div style={{
+                        flex: 1,
+                        background: "var(--bsky-border)",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: 10, color: "var(--bsky-dim)", fontWeight: 600,
+                        fontFamily: "var(--font-mono, monospace)",
+                        transition: "width 0.4s",
+                      }}>
+                        {(100 - classifiedPct) > 12 ? `${Math.round(100 - classifiedPct)}%` : ""}
+                      </div>
+                    </div>
+                    {/* Legend */}
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, fontFamily: "var(--font-mono, monospace)" }}>
+                      <span style={{ color: "var(--bsky-blue)" }}>
+                        ✓ {classifiedCount.toLocaleString("tr-TR")} sınıflandırıldı
+                      </span>
+                      <span style={{ color: "var(--bsky-dim)" }}>
+                        {diğerCount.toLocaleString("tr-TR")} Diğer
+                      </span>
+                    </div>
                   </div>
                   {/* Classified party bars */}
                   {classifiedParties.map((party) => {
@@ -697,13 +723,17 @@ function CenterFeed({
 
 /* ─── FeedTab (root) ─────────────────────────────────────────────── */
 export default function FeedTab() {
-  // Filters
-  const [activeTab, setActiveTab] = useState("Tüm Siyasi Gönderiler");
+  // Filters (activeTab + feed persist across refreshes)
+  const [activeTab, setActiveTab] = useState(() => {
+    try { return localStorage.getItem("bsky_tab") || "Tüm Siyasi Gönderiler"; } catch { return "Tüm Siyasi Gönderiler"; }
+  });
   const [days, setDays] = useState("0");
   const [party, setParty] = useState("");
   const [sentiment, setSentiment] = useState("");
   const [hateSpeech, setHateSpeech] = useState("");
-  const [feed, setFeed] = useState("all");  // data source filter
+  const [feed, setFeed] = useState(() => {
+    try { return localStorage.getItem("bsky_feed") || "all"; } catch { return "all"; }
+  });
   const [search, setSearch] = useState("");
 
   // Data
@@ -734,6 +764,7 @@ export default function FeedTab() {
     const ctrl = new AbortController();
     abortRef.current = ctrl;
     setLoading(true);
+    if (!append) setPosts([]);   // clear so loading indicator is visible
     setError("");
     try {
       const p = filterQuery();
@@ -777,18 +808,19 @@ export default function FeedTab() {
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
+    try { localStorage.setItem("bsky_tab", tab); } catch { /* */ }
     if (tab === "İmamoğlu Protestoları") {
-      // Protest feed: use protest data source, clear other filters
       setSentiment("");
       setFeed("protest");
       setDays("0");
       setParty("");
       setHateSpeech("");
       setSearch("");
+      try { localStorage.setItem("bsky_feed", "protest"); } catch { /* */ }
     } else {
-      // "Tüm Siyasi Gönderiler"
       setSentiment("");
       setFeed("all");
+      try { localStorage.setItem("bsky_feed", "all"); } catch { /* */ }
     }
   };
 

@@ -162,9 +162,8 @@ async function loadJSONLStats(
       const rawParty = (r.party as string) || "";
       const isTracked = Boolean(r.is_tracked_actor);
 
-      // Skip non-Turkish posts
+      // Skip non-Turkish posts (JSONL posts were already fetched by political keyword search)
       if (!isTurkish(text)) continue;
-      if (!isPoliticalLikely(text)) continue;
 
       const effectiveParty = isTracked
         ? (rawParty || "Diğer")
@@ -226,8 +225,10 @@ export async function GET(req: NextRequest) {
         if (party === "Diğer" && MAIN_PARTIES.has(obj.party)) continue;
         if (sentiment && obj.sentiment !== sentiment) continue;
         if (hate_speech && obj.hate_speech !== hate_speech) continue;
-        if (search && !(obj.text_preview || "").toLowerCase().includes(search)) continue;
-        if (!isPoliticalLikely(obj.text_preview || "")) continue;
+        // Use text_preview or text column (column name may vary); CSV posts are from
+        // verified political accounts so no isPoliticalLikely gate needed
+        const csvText = obj.text_preview || obj.text || "";
+        if (search && !csvText.toLowerCase().includes(search)) continue;
 
         byParty[pNorm] = (byParty[pNorm] || 0) + 1;
         if (obj.sentiment in bySentiment) bySentiment[obj.sentiment as keyof typeof bySentiment]++;
