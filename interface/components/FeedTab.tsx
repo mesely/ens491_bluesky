@@ -243,28 +243,67 @@ function RightSidebar({
           {/* Party breakdown */}
           <div style={{ marginBottom: 14 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: "var(--bsky-dim)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>Parti Dağılımı</div>
-            {PARTY_ORDER.filter((p) => stats.byParty[p] > 0).map((party) => {
-              const count = stats.byParty[party] || 0;
-              const pct = postsTotal > 0 ? (count / postsTotal) * 100 : 0;
-              const color = PARTY_COLORS[party] || "#636e72";
-              const short = PARTY_SHORT[party] || "?";
+            {(() => {
+              const allPartyTotal = Object.values(stats.byParty).reduce((s, v) => s + v, 0);
+              const diğerCount = stats.byParty["Diğer"] || 0;
+              const classifiedCount = allPartyTotal - diğerCount;
+              const classifiedPct = allPartyTotal > 0 ? (classifiedCount / allPartyTotal) * 100 : 0;
+              const classifiedParties = PARTY_ORDER.filter((p) => p !== "Diğer" && (stats.byParty[p] || 0) > 0);
               return (
-                <div key={party} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                  <span style={{
-                    width: 32, fontSize: 10, fontWeight: 700, fontFamily: "var(--font-mono, monospace)",
-                    color, textAlign: "right", flexShrink: 0,
-                  }}>{short}</span>
+                <>
+                  {/* Classified summary */}
                   <div style={{
-                    flex: 1, height: 8, background: "var(--bsky-border)", borderRadius: 4, overflow: "hidden",
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                    marginBottom: 10, padding: "6px 10px",
+                    background: "var(--bsky-border)", borderRadius: 8,
+                    fontSize: 12, color: "var(--bsky-dim)", fontFamily: "var(--font-mono, monospace)",
                   }}>
-                    <div style={{ width: `${Math.max(pct, 1)}%`, height: "100%", background: color, borderRadius: 4, transition: "width 0.4s" }} />
+                    <span>Sınıflandırılan</span>
+                    <span style={{ fontWeight: 700, color: "var(--bsky-text)" }}>
+                      {classifiedPct.toFixed(1)}% · {classifiedCount.toLocaleString("tr-TR")} gönderi
+                    </span>
                   </div>
-                  <span style={{ fontSize: 12, color: "var(--bsky-dim)", fontFamily: "var(--font-mono, monospace)", width: 40, textAlign: "right" }}>
-                    {count.toLocaleString("tr-TR")}
-                  </span>
-                </div>
+                  {/* Classified party bars */}
+                  {classifiedParties.map((party) => {
+                    const count = stats.byParty[party] || 0;
+                    const pct = classifiedCount > 0 ? (count / classifiedCount) * 100 : 0;
+                    const color = PARTY_COLORS[party] || "#636e72";
+                    const short = PARTY_SHORT[party] || "?";
+                    return (
+                      <div key={party} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                        <span style={{
+                          width: 32, fontSize: 10, fontWeight: 700, fontFamily: "var(--font-mono, monospace)",
+                          color, textAlign: "right", flexShrink: 0,
+                        }}>{short}</span>
+                        <div style={{ flex: 1, height: 8, background: "var(--bsky-border)", borderRadius: 4, overflow: "hidden" }}>
+                          <div style={{ width: `${Math.max(pct, 0.5)}%`, height: "100%", background: color, borderRadius: 4, transition: "width 0.4s" }} />
+                        </div>
+                        <span style={{ fontSize: 12, color: "var(--bsky-dim)", fontFamily: "var(--font-mono, monospace)", width: 40, textAlign: "right" }}>
+                          {Math.round(pct)}%
+                        </span>
+                      </div>
+                    );
+                  })}
+                  {/* Diğer — separated */}
+                  {diğerCount > 0 && (
+                    <div style={{
+                      marginTop: 8, paddingTop: 8,
+                      borderTop: "1px dashed var(--bsky-border)",
+                      display: "flex", alignItems: "center", gap: 8,
+                    }}>
+                      <span style={{
+                        width: 32, fontSize: 10, fontWeight: 700, fontFamily: "var(--font-mono, monospace)",
+                        color: PARTY_COLORS["Diğer"], textAlign: "right", flexShrink: 0,
+                      }}>Diğer</span>
+                      <span style={{ fontSize: 12, color: "var(--bsky-dim)", fontFamily: "var(--font-mono, monospace)" }}>
+                        {diğerCount.toLocaleString("tr-TR")} gönderi
+                        {allPartyTotal > 0 && ` · ${((diğerCount / allPartyTotal) * 100).toFixed(1)}%`}
+                      </span>
+                    </div>
+                  )}
+                </>
               );
-            })}
+            })()}
           </div>
 
           {/* Sentiment */}
@@ -425,6 +464,16 @@ function CenterFeed({
 }) {
   const TABS = ["Tüm Siyasi Gönderiler", "İmamoğlu Protestoları"];
 
+  // Elapsed timer for long-running loads
+  const [elapsed, setElapsed] = useState(0);
+  useEffect(() => {
+    if (loading && posts.length === 0) {
+      setElapsed(0);
+      const t = setInterval(() => setElapsed((s) => s + 1), 1000);
+      return () => clearInterval(t);
+    }
+  }, [loading, posts.length]);
+
   return (
     <main style={{
       flex: 1, minWidth: 0, maxWidth: 600,
@@ -544,13 +593,55 @@ function CenterFeed({
         </div>
       )}
 
-      {/* Loading skeleton */}
+      {/* Loading indicator */}
       {loading && posts.length === 0 && (
         <div>
-          {Array.from({ length: 6 }).map((_, i) => (
+          <style>{`@keyframes bsky-spin { to { transform: rotate(360deg); } }`}</style>
+          {/* Progress panel */}
+          <div style={{
+            padding: "20px 20px 16px",
+            borderBottom: "1px solid var(--bsky-border)",
+            background: "var(--bsky-card)",
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+              <div style={{
+                width: 18, height: 18, borderRadius: "50%",
+                border: "2px solid var(--bsky-border)",
+                borderTopColor: "var(--bsky-blue)",
+                animation: "bsky-spin 0.9s linear infinite",
+                flexShrink: 0,
+              }} />
+              <span style={{ fontSize: 14, fontWeight: 600, color: "var(--bsky-text)" }}>
+                Gönderiler yükleniyor…
+              </span>
+              <span style={{
+                marginLeft: "auto", fontSize: 13, color: "var(--bsky-dim)",
+                fontFamily: "var(--font-mono, monospace)",
+              }}>
+                {elapsed}s
+              </span>
+            </div>
+            {/* Simulated progress bar */}
+            <div style={{ height: 4, background: "var(--bsky-border)", borderRadius: 2, overflow: "hidden" }}>
+              <div style={{
+                height: "100%",
+                width: `${Math.min(96, (elapsed / 35) * 100)}%`,
+                background: "var(--bsky-blue)",
+                borderRadius: 2,
+                transition: "width 0.95s linear",
+              }} />
+            </div>
+            {elapsed >= 5 && (
+              <div style={{ marginTop: 8, fontSize: 12, color: "var(--bsky-dim)" }}>
+                Büyük veri seti (haftalık arama + protesto) işleniyor — yaklaşık 30 saniye sürebilir.
+              </div>
+            )}
+          </div>
+          {/* Skeleton cards */}
+          {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} style={{
               padding: "16px", display: "flex", gap: 12,
-              borderBottom: "1px solid var(--bsky-border)", opacity: 0.4 + i * 0.08,
+              borderBottom: "1px solid var(--bsky-border)", opacity: 0.35 + i * 0.1,
             }}>
               <div style={{ width: 48, height: 48, borderRadius: "50%", background: "var(--bsky-border)", flexShrink: 0 }} />
               <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
