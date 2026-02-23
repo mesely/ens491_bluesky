@@ -204,7 +204,8 @@ export async function GET(req: NextRequest) {
   let total = 0;
 
   // ─── Dataset (CSV) ────────────────────────────────────────────────────────
-  if ((feed === "all" || feed === "dataset") && fs.existsSync(CSV_PATH)) {
+  // Include CSV when: all feeds, dataset-only, or protest (for sentiment stats from tracked actors)
+  if ((feed === "all" || feed === "dataset" || feed === "protest") && fs.existsSync(CSV_PATH)) {
     const csv = fs.readFileSync(CSV_PATH, "utf-8").replace(/^\uFEFF/, "");
     const lines = csv.split("\n").filter((l) => l.trim());
     if (lines.length >= 2) {
@@ -215,6 +216,12 @@ export async function GET(req: NextRequest) {
         const obj: Record<string, string> = {};
         headers.forEach((h, idx) => { obj[h] = (row[idx] || "").trim(); });
         if (EXCLUDED_HANDLES.has((obj.author_handle || "").toLowerCase())) continue;
+
+        // When feed=protest, only count CSV rows that are protest-tagged
+        if (feed === "protest") {
+          const src = (obj.source || "").toLowerCase();
+          if (!src.includes("protest")) continue;
+        }
 
         if (cutoff > 0) {
           const ts = new Date(obj.created_at).getTime();
