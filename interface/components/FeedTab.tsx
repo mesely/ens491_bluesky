@@ -414,10 +414,10 @@ function RightSidebar({
 
 /* ─── Filter pills row ───────────────────────────────────────────── */
 const DAYS_OPTS = [
-  { label: "Tümü", value: "0" },
-  { label: "1 Gün", value: "1" },
-  { label: "7 Gün", value: "7" },
-  { label: "30 Gün", value: "30" },
+  { label: "Tüm Tarihler", value: "0" },
+  { label: "Son 1 Gün", value: "1" },
+  { label: "Son 7 Gün", value: "7" },
+  { label: "Son 30 Gün", value: "30" },
 ];
 const PARTY_OPTS = [
   { label: "Tüm Partiler", value: "" },
@@ -536,26 +536,13 @@ function CenterFeed({
         ))}
       </div>
 
-      {/* Filter row */}
+      {/* Filter row — single line */}
       <div style={{
-        padding: "12px 16px", borderBottom: "1px solid var(--bsky-border)",
-        display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center",
+        padding: "10px 16px", borderBottom: "1px solid var(--bsky-border)",
+        display: "flex", flexWrap: "nowrap", gap: 6, alignItems: "center",
+        overflowX: "auto",
       }}>
-        {/* Time pills */}
-        <div style={{ display: "flex", gap: 4 }}>
-          {DAYS_OPTS.map((o) => (
-            <button key={o.value} onClick={() => setDays(o.value)}
-              style={{
-                fontSize: 13, fontWeight: 500, padding: "5px 12px", borderRadius: 20,
-                border: `1px solid ${days === o.value ? "var(--bsky-blue)" : "var(--bsky-border)"}`,
-                background: days === o.value ? "var(--bsky-blue)" : "var(--bsky-input)",
-                color: days === o.value ? "#fff" : "var(--bsky-dim)",
-                cursor: "pointer", transition: "all 0.12s",
-              }}>
-              {o.label}
-            </button>
-          ))}
-        </div>
+        <PillSelect value={days} onChange={setDays} options={DAYS_OPTS} />
 
         <PillSelect value={party} onChange={setParty} options={PARTY_OPTS} />
         <PillSelect value={sentiment} onChange={setSentiment} options={SENT_OPTS} />
