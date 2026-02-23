@@ -35,6 +35,9 @@ export const PARTY_COLORS: Record<string, string> = {
   "İYİ Parti":                              "#2980b9",
   "Yeni Yol":                               "#8e44ad",
   "Bağımsız":                               "#7f8c8d",
+  "Muhalif":                                "#c0392b",
+  "İktidar Yanlısı":                        "#d68910",
+  "Tarafsız/Haber":                         "#5d6d7e",
   "Diğer":                                  "#636e72",
 };
 
@@ -46,6 +49,9 @@ export const PARTY_SHORT: Record<string, string> = {
   "İYİ Parti":                              "İYİ",
   "Yeni Yol":                               "YY",
   "Bağımsız":                               "Bağ.",
+  "Muhalif":                                "Muh",
+  "İktidar Yanlısı":                        "İkt",
+  "Tarafsız/Haber":                         "Tar",
   "Diğer":                                  "Diğer",
 };
 

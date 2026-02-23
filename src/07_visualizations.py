@@ -15,6 +15,8 @@ Figures produced:
   G_LDA     — LDA topic similarity dendrogram + heatmap
   G_NET     — PageRank × Betweenness scatter (log scale, bubble chart)
   G_TEMPORAL— Bluesky-wide 7-day temporal trend from weekly search
+  G_KW_SRC  — Search keyword source distribution (seed / mv / tfidf)
+  G_PROTEST — İmamoğlu protest daily trend (volume + rolling average)
 """
 
 import os
@@ -118,6 +120,7 @@ FIGURES_DIR    = "outputs/figures"
 SENTIMENT_CSV  = "outputs/sentiment_results.csv"
 POSTS_JSONL    = "outputs/all_posts_raw.jsonl"
 KEYWORDS_JSON  = "outputs/political_keywords.json"
+SEARCH_KW_CSV  = "outputs/search_keywords.csv"
 EDGES_CSV      = "outputs/network_edges.csv"
 STATS_JSON     = "outputs/weekly_distribution_stats.json"
 METRICS_JSON   = "outputs/network_metrics.json"
@@ -125,6 +128,7 @@ NODE_CSV       = "outputs/network_node_metrics.csv"
 SIM_CSV        = "outputs/party_topic_similarity.csv"
 STAT_JSON      = "outputs/statistical_test_results.json"
 TEMPORAL_JSON  = "outputs/temporal_analysis.json"
+PROTEST_TIMELINE_JSON = "outputs/protest_timeline.json"
 
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -856,6 +860,95 @@ def g_temporal_trend() -> None:
     save_fig(fig, "G_TEMPORAL_trend")
 
 
+# ─── G_KW_SRC: Search Keyword Source Mix ─────────────────────────────────────
+
+def g_keyword_source_mix() -> None:
+    """
+    Visualise how search keywords were built:
+    seed vs milletvekili-derived TF-IDF vs global TF-IDF.
+    """
+    df = pd.read_csv(SEARCH_KW_CSV, encoding="utf-8-sig")
+    if df.empty or "source" not in df.columns:
+        print("  G_KW_SRC: no keyword-source data.")
+        return
+
+    counts = df["source"].fillna("unknown").value_counts()
+    order = [s for s in ("seed", "milletvekili_tfidf", "global_tfidf", "unknown") if s in counts.index]
+    if not order:
+        return
+
+    color_map = {
+        "seed": "#2E86DE",
+        "milletvekili_tfidf": "#E67E22",
+        "global_tfidf": "#27AE60",
+        "unknown": "#7F8C8D",
+    }
+
+    vals = [int(counts[s]) for s in order]
+    colors = [color_map.get(s, "#95A5A6") for s in order]
+
+    fig, ax = plt.subplots(figsize=(10, 4.6))
+    bars = ax.bar(order, vals, color=colors, edgecolor="white", width=0.62)
+    for b, v in zip(bars, vals):
+        ax.text(b.get_x() + b.get_width() / 2, b.get_height() + max(vals) * 0.02,
+                f"{v}", ha="center", va="bottom", fontsize=9)
+
+    ax.set_ylabel("Keyword Count")
+    ax.set_xlabel("Keyword Source")
+    ax.set_title("Search Keyword Composition", pad=8)
+    ax.spines[["top", "right"]].set_visible(False)
+    save_fig(fig, "G_keyword_source_mix")
+
+
+# ─── G_PROTEST: İmamoğlu Protest Timeline ────────────────────────────────────
+
+def g_protest_timeline() -> None:
+    with open(PROTEST_TIMELINE_JSON, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    daily = data.get("daily_volume", {})
+    rolling = data.get("rolling_3day", {})
+    if not daily:
+        print("  G_PROTEST: no daily protest data.")
+        return
+
+    dates = sorted(daily.keys())
+    xs = pd.to_datetime(dates)
+    daily_vals = [daily[d] for d in dates]
+    rolling_vals = [rolling.get(d, daily[d]) for d in dates]
+
+    fig, ax = plt.subplots(figsize=(13, 5))
+    ax.bar(xs, daily_vals, color="#FAD7A0", edgecolor="#E67E22", linewidth=0.8, label="Daily volume")
+    ax.plot(xs, rolling_vals, color="#D35400", linewidth=2.2, marker="o", markersize=3.8,
+            label="3-day rolling avg")
+
+    peak = data.get("peak_date", {})
+    peak_date = peak.get("date")
+    if peak_date in daily:
+        px = pd.to_datetime(peak_date)
+        py = daily.get(peak_date, 0)
+        ax.scatter([px], [py], color="#C0392B", s=45, zorder=4)
+        ax.text(px, py * 1.03, f"Peak: {peak_date}\n{py} posts",
+                fontsize=8, color="#C0392B", ha="center", va="bottom")
+
+    for date_str, info in (data.get("event_coverage", {}) or {}).items():
+        try:
+            ev_x = pd.to_datetime(date_str)
+            ax.axvline(ev_x, color="#7F8C8D", linestyle="--", linewidth=0.8, alpha=0.6)
+            label = str(info.get("type", "event")).upper()
+            ax.text(ev_x, ax.get_ylim()[1] * 0.9, label, fontsize=6.5, rotation=90,
+                    color="#555555", ha="right", va="center")
+        except Exception:
+            pass
+
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Post Count")
+    ax.set_title("İmamoğlu Protest Trend (Turkish Political Posts)", pad=8)
+    ax.legend(loc="upper left", fontsize=8)
+    fig.autofmt_xdate()
+    save_fig(fig, "G_protest_timeline")
+
+
 # ─── Dispatch Table ────────────────────────────────────────────────────────────
 
 FIGURE_FUNCS = [
@@ -871,6 +964,8 @@ FIGURE_FUNCS = [
     ("G_LDA",      g_lda_topic_similarity,         [SIM_CSV]),
     ("G_NET",      g_network_scatter,              [NODE_CSV]),
     ("G_TEMPORAL", g_temporal_trend,               [TEMPORAL_JSON]),
+    ("G_KW_SRC",   g_keyword_source_mix,           [SEARCH_KW_CSV]),
+    ("G_PROTEST",  g_protest_timeline,             [PROTEST_TIMELINE_JSON]),
 ]
 
 

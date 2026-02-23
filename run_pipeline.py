@@ -15,6 +15,7 @@ Steps:
     02  Post Collection
     03  Keyword Extraction + LDA
     04  Weekly Bluesky Search + Temporal Analysis
+    04b İmamoğlu Protest Search + Timeline
     05  Sentiment & Hate Speech Analysis
     05b Ideology Classifier
     05c Statistical Tests
@@ -105,7 +106,9 @@ STEPS: list[dict] = [
         "label":    "Keyword Extraction + LDA",
         "script":   "src/03_keyword_extraction.py",
         "requires": ["outputs/all_posts_raw.jsonl"],
-        "produces": ["outputs/political_keywords.json"],
+        "produces": ["outputs/political_keywords.json",
+                     "outputs/search_keywords.json",
+                     "outputs/search_keywords.csv"],
         "optional": False,
     },
     {
@@ -118,10 +121,19 @@ STEPS: list[dict] = [
         "optional": False,
     },
     {
+        "id":       "04b",
+        "label":    "İmamoğlu Protest Search + Timeline",
+        "script":   "src/04b_protest_search.py",
+        "requires": ["outputs/verified_accounts.csv"],
+        "produces": ["outputs/protest_posts.jsonl",
+                     "outputs/protest_timeline.json"],
+        "optional": False,
+    },
+    {
         "id":       "05",
         "label":    "Sentiment & Hate Speech Analysis",
         "script":   "src/05_sentiment_analysis.py",
-        "requires": ["outputs/all_posts_raw.jsonl"],
+        "requires": ["outputs/protest_posts.jsonl"],
         "produces": ["outputs/sentiment_results.csv"],
         "optional": True,   # requires TurkishBERTweet + torch
         "note":     "Requires: git clone https://github.com/ViralLab/TurkishBERTweet.git",
@@ -148,7 +160,8 @@ STEPS: list[dict] = [
         "script":   "src/06_network_analysis.py",
         "requires": ["outputs/all_posts_raw.jsonl", "outputs/verified_accounts.csv"],
         "produces": ["outputs/network_edges.csv", "outputs/network_metrics.json",
-                     "outputs/network_node_metrics.csv", "outputs/network_summary.json"],
+                     "outputs/network_node_metrics.csv", "outputs/network_summary.json",
+                     "outputs/network_party_flow.csv", "outputs/network_community_summary.csv"],
         "optional": False,
     },
     {

@@ -12,12 +12,76 @@
     "1": ""
   },
   "assortativity_party": 0.1429,
+  "degree_centralization": 0.0758,
   "avg_clustering": 0.0,
   "reciprocity": 0.0,
+  "largest_scc": 1,
+  "largest_wcc": 5,
+  "top_5_scc_sizes": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "top_5_wcc_sizes": [
+    5,
+    2,
+    2,
+    2,
+    2
+  ],
   "intra_party_edges": 2,
   "inter_party_edges": 6,
   "intra_party_ratio": 0.25,
   "bridge_node_count": 3,
+  "bridge_nodes_top_20": [
+    "bskrmn.bsky.social",
+    "cevheriguven.bsky.social",
+    "saymaz-ismail.bsky.social"
+  ],
+  "top_10_kcore_nodes": [
+    {
+      "handle": "cevheriguven.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "saymaz-ismail.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "eczburhan.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "aliikoc.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "nureddinnebati.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "irfanaktan.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "bskrmn.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "kamilaydin.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "muzeyyensevkin.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "onurrhan.bsky.social",
+      "core_number": 1
+    }
+  ],
   "top_5_pagerank": [
     {
       "handle": "cevheriguven.bsky.social",

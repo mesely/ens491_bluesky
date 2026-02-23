@@ -3,6 +3,7 @@
   "total_edges": 8,
   "num_communities": 5,
   "modularity": 0.6875,
+  "degree_centralization": 0.0758,
   "intra_party_ratio": 0.25,
   "top_20_by_in_degree": [
     {
@@ -164,6 +165,60 @@
     {
       "handle": "irfanaktan.bsky.social",
       "betweenness": 0.0
+    }
+  ],
+  "top_20_core_number": [
+    {
+      "handle": "cevheriguven.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "saymaz-ismail.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "eczburhan.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "aliikoc.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "nureddinnebati.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "irfanaktan.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "bskrmn.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "kamilaydin.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "muzeyyensevkin.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "onurrhan.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "ozgurertem.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "samiltayyar27.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "umitk.bsky.social",
+      "core_number": 1
     }
   ]
 }

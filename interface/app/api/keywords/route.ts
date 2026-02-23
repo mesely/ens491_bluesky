@@ -5,6 +5,7 @@ import readline from "readline";
 
 const OUTPUTS     = path.join(process.cwd(), "..", "outputs");
 const KW_PATH     = path.join(OUTPUTS, "political_keywords.json");
+const SEARCH_KW_PATH = path.join(OUTPUTS, "search_keywords.json");
 const WEEKLY_PATH = path.join(OUTPUTS, "weekly_search_results.jsonl");
 const PROTEST_PATH = path.join(OUTPUTS, "protest_posts.jsonl");
 
@@ -78,7 +79,8 @@ export async function GET(req: NextRequest) {
   }
 
   // General feed: combine political_keywords.json with real counts
-  if (!fs.existsSync(KW_PATH)) {
+  const basePath = fs.existsSync(SEARCH_KW_PATH) ? SEARCH_KW_PATH : KW_PATH;
+  if (!fs.existsSync(basePath)) {
     // Fall back to protest + merged counts
     const result = Array.from(merged.entries())
       .sort((a, b) => b[1] - a[1])
@@ -87,25 +89,36 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ keywords: result });
   }
 
-  const data = JSON.parse(fs.readFileSync(KW_PATH, "utf-8"));
+  const data = JSON.parse(fs.readFileSync(basePath, "utf-8"));
   const baseKws: string[] = data.keywords || [];
 
-  // Pin protest keywords first, then fill from base list
-  const pinned = PROTEST_PINNED.filter((kw) => merged.get(kw) || 0 > 0);
+  // Pin protest keywords first, then fill from base list.
+  const pinned = PROTEST_PINNED.filter((kw) => (merged.get(kw) || 0) > 0);
   const remaining = baseKws
     .filter((kw) => !PROTEST_PINNED.includes(kw))
-    .slice(0, 20 - pinned.length);
+    .slice(0, Math.max(0, 30 - pinned.length));
 
-  const result = [
-    ...pinned.map((kw, i) => ({
+  const ordered = [
+    ...pinned.map((kw) => ({
       keyword: kw,
-      count: merged.get(kw) || Math.max(200, 1500 - i * 60),
+      count: merged.get(kw) || 0,
     })),
-    ...remaining.map((kw: string, i: number) => ({
+    ...remaining.map((kw: string) => ({
       keyword: kw,
-      count: merged.get(kw) || Math.max(50, 1200 - i * 55 + (kw.length * 5)),
+      count: merged.get(kw) || 0,
     })),
   ];
+
+  // Add counted keywords that are not in the curated base list.
+  const inOrdered = new Set(ordered.map((r) => r.keyword.toLowerCase()));
+  const extras = Array.from(merged.entries())
+    .filter(([kw]) => !inOrdered.has(kw.toLowerCase()))
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 20)
+    .map(([keyword, count]) => ({ keyword, count }));
+  const result = [...ordered, ...extras]
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 30);
 
   if (feed !== "protest") {
     cache = { data: result, time: Date.now() };

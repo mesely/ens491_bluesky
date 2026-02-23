@@ -14,6 +14,7 @@ import os
 import re
 import sys
 import json
+import csv
 from collections import defaultdict
 from pathlib import Path
 
@@ -21,6 +22,8 @@ import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from political_filters import is_political_text, is_turkish_text, normalize_text
+from agenda_keywords import AGENDA_2023_2026_KEYWORDS
 
 
 # ─── Prerequisites ────────────────────────────────────────────────────────────
@@ -36,12 +39,15 @@ def require(path: str) -> None:
 
 POSTS_PATH      = "outputs/all_posts_raw.jsonl"
 OUTPUT_KEYWORDS = "outputs/political_keywords.json"
+OUTPUT_SEARCH_KEYWORDS_JSON = "outputs/search_keywords.json"
+OUTPUT_SEARCH_KEYWORDS_CSV  = "outputs/search_keywords.csv"
 OUTPUT_LDA      = "outputs/lda_topics.json"
 OUTPUT_SIM      = "outputs/party_topic_similarity.csv"
 FIGURES_DIR     = "outputs/figures"
 
-TOP_N_TFIDF = 300
-TOP_N_FINAL = 200
+TOP_N_TFIDF = 1200
+TOP_N_FINAL = 800
+TOP_N_MV    = 150
 MIN_DOCS_FOR_LDA = 50   # party needs at least this many posts for LDA
 
 # ─── Stopwords ────────────────────────────────────────────────────────────────
@@ -99,7 +105,18 @@ SEED_POLITICAL_KEYWORDS = [
     "polis müdahalesi", "biber gazı", "tazyikli su", "siyasi operasyon",
     "yargı bağımsızlığı", "hukuk dışı", "siyasi yargı", "tahliye",
     "venedik komisyonu", "ab demokrasi",
-]
+    # Additional high-value policy terms
+    "erken seçim", "yerel seçim", "genel seçim", "adaylık", "aday", "sandık",
+    "yüksek seçim kurulu", "ysk", "seçim güvenliği", "ittifak", "koalisyon",
+    "dış politika", "güvenlik politikası", "terörle mücadele", "sınır güvenliği",
+    "ekonomi yönetimi", "gelir adaleti", "kamuda tasarruf", "meclis araştırması",
+    "soru önergesi", "kanun teklifi", "genel kurul", "komisyon raporu",
+    "anayasa mahkemesi", "aysm", "hsk", "adalet bakanlığı", "içişleri bakanlığı",
+    "diplomasi", "nato", "ab üyeliği", "israil", "filistin", "ukrayna", "suriye",
+    "şehit", "gazze", "deprem bölgesi", "kentsel dönüşüm", "hane halkı",
+    "asgari ücret artışı", "emekli maaşı", "işçi hakları", "çiftçi", "tarım politikası",
+    "sanayi politikası", "enerji krizi", "elektrik zammı", "doğalgaz", "benzine zam",
+] + AGENDA_2023_2026_KEYWORDS
 
 
 # ─── Text Utilities ───────────────────────────────────────────────────────────
@@ -135,7 +152,7 @@ def run_tfidf(texts: list[str], top_n: int) -> list[str]:
         ngram_range=(1, 2),
         max_features=5000,
         stop_words=list(STOPWORDS),
-        min_df=3,
+        min_df=2,
         sublinear_tf=True,
     )
     X        = vec.fit_transform(texts)
@@ -143,6 +160,32 @@ def run_tfidf(texts: list[str], top_n: int) -> list[str]:
     features = vec.get_feature_names_out()
     ranked   = sorted(zip(features, scores), key=lambda t: t[1], reverse=True)
     return [term for term, _ in ranked[:top_n]]
+
+
+def _mv_flag(v) -> bool:
+    return str(v).strip().lower() == "true"
+
+
+def build_mv_keywords(posts: list[dict], top_n: int = TOP_N_MV) -> list[str]:
+    """
+    Build extra keywords from milletvekili posts only.
+    """
+    mv_texts: list[str] = []
+    for p in posts:
+        if not _mv_flag(p.get("isMilletvekili", False)):
+            continue
+        text = p.get("text", "") or ""
+        if not is_turkish_text(text):
+            continue
+        if not is_political_text(text):
+            continue
+        cleaned = clean_text(text)
+        if len(cleaned.split()) >= 3:
+            mv_texts.append(cleaned)
+
+    if len(mv_texts) < 20:
+        return []
+    return run_tfidf(mv_texts, top_n=top_n)
 
 
 def build_party_keywords(posts: list[dict], final_kws: list[str]) -> dict[str, list[str]]:
@@ -277,6 +320,12 @@ def main():
     posts = load_posts(POSTS_PATH)
     print(f"Loaded {len(posts)} posts.")
 
+    posts = [
+        p for p in posts
+        if is_turkish_text(p.get("text", "")) and is_political_text(p.get("text", ""))
+    ]
+    print(f"Political+Turkish posts kept: {len(posts)}")
+
     texts = [clean_text(p.get("text", "")) for p in posts]
     texts = [t for t in texts if len(t.split()) >= 3]
     print(f"Usable texts after filtering: {len(texts)}")
@@ -285,11 +334,18 @@ def main():
     print("Running TF-IDF …")
     tfidf_kws = run_tfidf(texts, TOP_N_TFIDF)
     print(f"TF-IDF extracted: {len(tfidf_kws)} terms")
+    mv_kws = build_mv_keywords(posts, top_n=TOP_N_MV)
+    print(f"Milletvekili-derived keywords: {len(mv_kws)} terms")
 
-    seed_set = set(SEED_POLITICAL_KEYWORDS)
-    merged   = list(SEED_POLITICAL_KEYWORDS)
-    for kw in tfidf_kws:
+    seed_unique = list(dict.fromkeys(SEED_POLITICAL_KEYWORDS))
+    seed_set = set(seed_unique)
+    mv_set = set(mv_kws)
+    merged   = list(seed_unique)
+    for kw in mv_kws:
         if kw not in seed_set:
+            merged.append(kw)
+    for kw in tfidf_kws:
+        if kw not in seed_set and kw not in mv_set:
             merged.append(kw)
         if len(merged) >= TOP_N_FINAL:
             break
@@ -303,9 +359,41 @@ def main():
             "keywords":       final_keywords,
             "by_party":       party_kws,
             "seed_keywords":  SEED_POLITICAL_KEYWORDS,
+            "mv_keywords":    mv_kws,
             "tfidf_keywords": tfidf_kws[:100],
         }, f, ensure_ascii=False, indent=2)
     print(f"Saved → {OUTPUT_KEYWORDS}")
+
+    # Export the exact search keyword universe for downstream steps and UI.
+    search_payload = {
+        "keywords": final_keywords,
+        "seed_keywords": SEED_POLITICAL_KEYWORDS,
+        "mv_keywords": mv_kws,
+        "tfidf_keywords": tfidf_kws,
+        "meta": {
+            "total_keywords": len(final_keywords),
+            "source": "seed + milletvekili_tfidf + global_tfidf",
+        },
+    }
+    with open(OUTPUT_SEARCH_KEYWORDS_JSON, "w", encoding="utf-8") as f:
+        json.dump(search_payload, f, ensure_ascii=False, indent=2)
+    print(f"Saved → {OUTPUT_SEARCH_KEYWORDS_JSON}")
+
+    with open(OUTPUT_SEARCH_KEYWORDS_CSV, "w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.DictWriter(f, fieldnames=["keyword", "source"])
+        writer.writeheader()
+        seed_norm = {normalize_text(k) for k in SEED_POLITICAL_KEYWORDS}
+        mv_norm = {normalize_text(k) for k in mv_kws}
+        for kw in final_keywords:
+            nkw = normalize_text(kw)
+            if nkw in seed_norm:
+                source = "seed"
+            elif nkw in mv_norm:
+                source = "milletvekili_tfidf"
+            else:
+                source = "global_tfidf"
+            writer.writerow({"keyword": kw, "source": source})
+    print(f"Saved → {OUTPUT_SEARCH_KEYWORDS_CSV}")
 
     # ── LDA topic modeling ────────────────────────────────────────────
     print("\nRunning LDA topic modeling per party …")

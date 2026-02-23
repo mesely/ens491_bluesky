@@ -414,10 +414,10 @@ function RightSidebar({
 
 /* ─── Filter pills row ───────────────────────────────────────────── */
 const DAYS_OPTS = [
-  { label: "Tüm Tarihler", value: "0" },
-  { label: "Son 1 Gün", value: "1" },
-  { label: "Son 7 Gün", value: "7" },
-  { label: "Son 30 Gün", value: "30" },
+  { label: "Tümü", value: "0" },
+  { label: "1 Gün", value: "1" },
+  { label: "7 Gün", value: "7" },
+  { label: "30 Gün", value: "30" },
 ];
 const PARTY_OPTS = [
   { label: "Tüm Partiler", value: "" },
@@ -460,7 +460,7 @@ function PillSelect({ value, onChange, options }: {
       style={{
         fontSize: 14, background: "var(--bsky-input)", color: "var(--bsky-text)",
         border: "1px solid var(--bsky-border)", borderRadius: 20,
-        padding: "6px 28px 6px 14px", cursor: "pointer", outline: "none",
+        padding: "6px 14px 6px 14px", cursor: "pointer", outline: "none",
         appearance: "none", WebkitAppearance: "none",
         backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E\")",
         backgroundRepeat: "no-repeat", backgroundPosition: "right 10px center",
@@ -536,13 +536,26 @@ function CenterFeed({
         ))}
       </div>
 
-      {/* Filter row — single line */}
+      {/* Filter row */}
       <div style={{
-        padding: "10px 16px", borderBottom: "1px solid var(--bsky-border)",
-        display: "flex", flexWrap: "nowrap", gap: 6, alignItems: "center",
-        overflowX: "auto",
+        padding: "12px 16px", borderBottom: "1px solid var(--bsky-border)",
+        display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center",
       }}>
-        <PillSelect value={days} onChange={setDays} options={DAYS_OPTS} />
+        {/* Time pills */}
+        <div style={{ display: "flex", gap: 4 }}>
+          {DAYS_OPTS.map((o) => (
+            <button key={o.value} onClick={() => setDays(o.value)}
+              style={{
+                fontSize: 13, fontWeight: 500, padding: "5px 12px", borderRadius: 20,
+                border: `1px solid ${days === o.value ? "var(--bsky-blue)" : "var(--bsky-border)"}`,
+                background: days === o.value ? "var(--bsky-blue)" : "var(--bsky-input)",
+                color: days === o.value ? "#fff" : "var(--bsky-dim)",
+                cursor: "pointer", transition: "all 0.12s",
+              }}>
+              {o.label}
+            </button>
+          ))}
+        </div>
 
         <PillSelect value={party} onChange={setParty} options={PARTY_OPTS} />
         <PillSelect value={sentiment} onChange={setSentiment} options={SENT_OPTS} />

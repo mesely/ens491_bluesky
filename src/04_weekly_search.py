@@ -1,6 +1,7 @@
 """
-PHASE 2 — Bluesky-wide Weekly Search + Temporal Trend Analysis
-Searches Bluesky for the past 7 days using extracted political keywords.
+PHASE 2 — Bluesky-wide Political Search + Temporal Trend Analysis
+Searches Bluesky in aggressive multi-window mode using a broad Turkish
+political agenda keyword set.
 Appends temporal analysis (rolling volume, autocorrelation, peak detection).
 
 Outputs:
@@ -21,6 +22,13 @@ import numpy as np
 import pandas as pd
 import requests
 from dotenv import load_dotenv
+from political_filters import (
+    is_milletvekili_flag,
+    is_political_text,
+    is_turkish_text,
+    should_exclude_actor,
+)
+from agenda_keywords import AGENDA_2023_2026_KEYWORDS
 
 load_dotenv()
 
@@ -37,6 +45,7 @@ def require(path: str) -> None:
 # ─── Paths & Config ───────────────────────────────────────────────────────────
 
 KEYWORDS_PATH   = "outputs/political_keywords.json"
+SEARCH_KEYWORDS_PATH = "outputs/search_keywords.json"
 ACCOUNTS_PATH   = "outputs/verified_accounts.csv"
 RESULTS_PATH    = "outputs/weekly_search_results.jsonl"
 STATS_PATH      = "outputs/weekly_distribution_stats.json"
@@ -44,8 +53,11 @@ TEMPORAL_PATH   = "outputs/temporal_analysis.json"
 
 AUTH_URL        = "https://bsky.social/xrpc/com.atproto.server.createSession"
 SEARCH_URL      = "https://bsky.social/xrpc/app.bsky.feed.searchPosts"
-MAX_PER_KEYWORD = 500
-TOP_KEYWORDS    = 50
+MAX_PER_KEYWORD = int(os.getenv("BSKY_MAX_PER_KEYWORD", "3500"))
+MAX_PER_WINDOW  = int(os.getenv("BSKY_MAX_PER_WINDOW", "350"))
+TOP_KEYWORDS    = int(os.getenv("BSKY_TOP_KEYWORDS", "500"))
+SEARCH_DAYS_BACK = int(os.getenv("BSKY_SEARCH_DAYS_BACK", "1095"))  # ~3 years
+WINDOW_DAYS = int(os.getenv("BSKY_WINDOW_DAYS", "21"))
 SLEEP_NORMAL    = 0.5
 SLEEP_429       = 30
 
@@ -90,6 +102,66 @@ PROTEST_EXTRA_KEYWORDS = [
 ]
 
 
+def unique_keep_order(items: list[str]) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for it in items:
+        s = (it or "").strip().lower()
+        if not s or s in seen:
+            continue
+        seen.add(s)
+        out.append((it or "").strip())
+    return out
+
+
+def build_milletvekili_keywords(accounts_df: pd.DataFrame, max_keywords: int = 240) -> list[str]:
+    """
+    Build person keywords from verified milletvekili rows.
+    """
+    kws: list[str] = []
+    mv_df = accounts_df[
+        (accounts_df["verified"] == True)
+        & (accounts_df["isMilletvekili"].apply(is_milletvekili_flag))
+    ].copy()
+
+    for _, row in mv_df.iterrows():
+        handle = str(row.get("bsky_handle", "")).strip().lower()
+        if should_exclude_actor(handle):
+            continue
+        name = str(row.get("name", "")).strip().lower()
+        surname = str(row.get("surname", "")).strip().lower()
+        full = f"{name} {surname}".strip()
+        if len(full.split()) >= 2:
+            kws.append(full)
+            kws.append(f"{full} milletvekili")
+
+    return unique_keep_order(kws)[:max_keywords]
+
+
+def build_keyword_universe(base_keywords: list[str], mv_keywords: list[str]) -> list[str]:
+    """
+    Merge all sources into a large, deduplicated keyword universe.
+    """
+    merged = unique_keep_order(
+        base_keywords
+        + AGENDA_2023_2026_KEYWORDS
+        + PROTEST_EXTRA_KEYWORDS
+        + mv_keywords
+    )
+    return merged[:TOP_KEYWORDS]
+
+
+def build_time_windows(until: datetime, days_back: int, window_days: int) -> list[tuple[str, str]]:
+    since = until - timedelta(days=days_back)
+    windows: list[tuple[str, str]] = []
+    cursor = since
+    while cursor < until:
+        nxt = min(cursor + timedelta(days=window_days), until)
+        windows.append((cursor.isoformat(), nxt.isoformat()))
+        cursor = nxt
+    return windows
+
+
 # ─── Search ───────────────────────────────────────────────────────────────────
 
 def search_posts(keyword: str, since: str, until: str, headers: dict) -> list[dict]:
@@ -97,7 +169,7 @@ def search_posts(keyword: str, since: str, until: str, headers: dict) -> list[di
     all_results: list[dict] = []
     cursor: str | None = None
 
-    while len(all_results) < MAX_PER_KEYWORD:
+    while len(all_results) < MAX_PER_WINDOW:
         params: dict = {"q": keyword, "limit": 100, "since": since, "until": until, "lang": "tr"}
         if cursor:
             params["cursor"] = cursor
@@ -127,7 +199,33 @@ def search_posts(keyword: str, since: str, until: str, headers: dict) -> list[di
             break
         time.sleep(SLEEP_NORMAL)
 
-    return all_results[:MAX_PER_KEYWORD]
+    return all_results[:MAX_PER_WINDOW]
+
+
+def search_posts_across_windows(
+    keyword: str,
+    windows: list[tuple[str, str]],
+    headers: dict
+) -> list[dict]:
+    """
+    Multi-window search to boost recall for long-range queries.
+    """
+    results: list[dict] = []
+    seen_uris: set[str] = set()
+
+    for since, until in windows:
+        if len(results) >= MAX_PER_KEYWORD:
+            break
+        chunk = search_posts(keyword, since, until, headers)
+        for p in chunk:
+            uri = p.get("uri", "")
+            if not uri or uri in seen_uris:
+                continue
+            seen_uris.add(uri)
+            results.append(p)
+            if len(results) >= MAX_PER_KEYWORD:
+                break
+    return results
 
 
 def extract_search_record(post: dict, keyword: str, handle_to_actor: dict) -> dict:
@@ -158,6 +256,15 @@ def extract_search_record(post: dict, keyword: str, handle_to_actor: dict) -> di
         "isMilletvekili":   actor.get("isMilletvekili", False),
         "is_tracked_actor": bool(actor),
     }
+
+
+def is_valid_political_record(rec: dict) -> bool:
+    text = rec.get("text", "") or ""
+    if not is_turkish_text(text):
+        return False
+    if not is_political_text(text, extra_terms=[rec.get("keyword", "")]):
+        return False
+    return True
 
 
 # ─── Distribution Stats ───────────────────────────────────────────────────────
@@ -282,40 +389,47 @@ def temporal_analysis(records: list[dict]) -> dict:
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
 def main():
-    require(KEYWORDS_PATH)
     require(ACCOUNTS_PATH)
+    if not Path(SEARCH_KEYWORDS_PATH).exists():
+        require(KEYWORDS_PATH)
     os.makedirs("outputs", exist_ok=True)
 
-    # Load keywords and actor lookup
-    with open(KEYWORDS_PATH, "r", encoding="utf-8") as f:
+    accounts_df     = pd.read_csv(ACCOUNTS_PATH, encoding="utf-8-sig")
+    filtered_accounts = accounts_df[
+        ~accounts_df["bsky_handle"].astype(str).str.strip().str.lower().apply(should_exclude_actor)
+    ].copy()
+
+    # Load keywords
+    kw_path = SEARCH_KEYWORDS_PATH if Path(SEARCH_KEYWORDS_PATH).exists() else KEYWORDS_PATH
+    with open(kw_path, "r", encoding="utf-8") as f:
         kw_data = json.load(f)
-    keywords = kw_data["keywords"][:TOP_KEYWORDS]
-    # Merge protest extra keywords (deduplicated)
-    kw_set = set(keywords)
-    for pk in PROTEST_EXTRA_KEYWORDS:
-        if pk not in kw_set:
-            keywords.append(pk)
-            kw_set.add(pk)
-    print(f"Using {len(keywords)} keywords for search (incl. {len(PROTEST_EXTRA_KEYWORDS)} protest extras).")
+    base_keywords = (kw_data.get("keywords") or [])[:TOP_KEYWORDS]
+    mv_keywords = build_milletvekili_keywords(filtered_accounts)
+    keywords = build_keyword_universe(base_keywords, mv_keywords)
+    print(
+        f"Using {len(keywords)} keywords for search "
+        f"(base={len(base_keywords)}, agenda={len(AGENDA_2023_2026_KEYWORDS)}, "
+        f"protest={len(PROTEST_EXTRA_KEYWORDS)}, mv={len(mv_keywords)})."
+    )
 
     # Authenticate
     token   = get_access_token()
     headers = {"Authorization": f"Bearer {token}"}
 
-    import pandas as _pd
-    accounts_df     = _pd.read_csv(ACCOUNTS_PATH, encoding="utf-8-sig")
     handle_to_actor = {
         str(row["bsky_handle"]).strip(): row.to_dict()
-        for _, row in accounts_df.iterrows()
-        if _pd.notna(row.get("bsky_handle"))
+        for _, row in filtered_accounts.iterrows()
+        if pd.notna(row.get("bsky_handle"))
     }
     print(f"Known actors in lookup: {len(handle_to_actor)}")
 
-    # Time window: last 7 days UTC
+    # Time windows: last N days (default 1095) split into multi-week chunks
     now   = datetime.now(timezone.utc)
-    since = (now - timedelta(days=7)).isoformat()
-    until = now.isoformat()
-    print(f"Search window: {since[:10]} → {until[:10]}")
+    windows = build_time_windows(now, SEARCH_DAYS_BACK, WINDOW_DAYS)
+    print(
+        f"Search window: {windows[0][0][:10]} → {windows[-1][1][:10]} "
+        f"({len(windows)} windows, {WINDOW_DAYS}-day chunks)"
+    )
 
     # Resume support — load already-fetched records
     seen_uris: set[str]       = set()
@@ -342,11 +456,13 @@ def main():
                 continue
 
             print(f"  [{i}/{len(keywords)}] Searching: '{kw}' …")
-            posts = search_posts(kw, since, until, headers)
+            posts = search_posts_across_windows(kw, windows, headers)
 
             new_count = 0
             for post in posts:
                 rec = extract_search_record(post, kw, handle_to_actor)
+                if not is_valid_political_record(rec):
+                    continue
                 if rec["uri"] in seen_uris:
                     continue
                 seen_uris.add(rec["uri"])

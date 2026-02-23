@@ -10,6 +10,12 @@ import time
 import requests
 import pandas as pd
 from tqdm import tqdm
+from political_filters import (
+    is_milletvekili_flag,
+    is_political_text,
+    is_turkish_text,
+    should_exclude_actor,
+)
 
 # Paths
 ACCOUNTS_PATH = "outputs/verified_accounts.csv"
@@ -22,7 +28,7 @@ SLEEP_RATE_LIMIT  = 30    # seconds on 429
 CHECKPOINT_EVERY  = 500   # flush file every N posts
 
 # Minimum ratio of political posts to flag an account as likely valid
-POLITICAL_CONTENT_THRESHOLD = 0.05   # 5% of posts must mention politics
+POLITICAL_CONTENT_THRESHOLD = 0.15   # stricter for quality
 
 # Keywords that indicate a post is political
 POLITICAL_SIGNAL_WORDS = {
@@ -46,7 +52,7 @@ def political_score(posts: list[dict]) -> float:
     political_count = 0
     for post in posts:
         text = (post.get("text") or "").lower()
-        if any(kw in text for kw in POLITICAL_SIGNAL_WORDS):
+        if is_political_text(text) or any(kw in text for kw in POLITICAL_SIGNAL_WORDS):
             political_count += 1
     return political_count / len(posts)
 
@@ -149,7 +155,12 @@ def main():
 
     accounts = pd.read_csv(ACCOUNTS_PATH, encoding="utf-8-sig")
     # Only process accounts that were successfully verified
-    verified = accounts[accounts["verified"] == True].to_dict("records")
+    verified_df = accounts[accounts["verified"] == True].copy()
+    verified_df = verified_df.drop_duplicates(subset=["bsky_handle"], keep="first")
+    verified_df = verified_df[
+        ~verified_df["bsky_handle"].astype(str).str.strip().str.lower().apply(should_exclude_actor)
+    ]
+    verified = verified_df.to_dict("records")
     print(f"Verified accounts to process: {len(verified)}")
 
     # Track already-seen URIs to avoid duplicates across accounts
@@ -176,15 +187,37 @@ def main():
             continue
 
         items = fetch_author_feed(handle)
+        is_mv = is_milletvekili_flag(actor_row.get("isMilletvekili", False))
 
         batch = []
+        raw_texts = []
         for item in items:
             post_rec = extract_post_record(item, actor_row)
+            raw_texts.append(post_rec.get("text", ""))
+
+            # Keep only Turkish + political posts in the final dataset.
+            if not is_turkish_text(post_rec.get("text", "")):
+                continue
+            if not is_political_text(post_rec.get("text", "")):
+                continue
+
             uri      = post_rec["uri"]
             if uri in seen_uris:
                 continue
             seen_uris.add(uri)
             batch.append(post_rec)
+
+        raw_political_ratio = (
+            sum(1 for t in raw_texts if is_political_text(t)) / len(raw_texts)
+            if raw_texts else 0.0
+        )
+
+        if is_mv and raw_political_ratio < POLITICAL_CONTENT_THRESHOLD:
+            tqdm.write(
+                f"  {handle}: milletvekili hesabı politik değil görünüyor "
+                f"(raw_political_score={raw_political_ratio:.1%}) — kayıtlar atlandı."
+            )
+            continue
 
         # Write batch to file
         for rec in batch:
@@ -202,7 +235,7 @@ def main():
         ) else ""
         tqdm.write(
             f"  {handle}: {len(batch)} new posts | "
-            f"political_score={score:.1%}{flag}"
+            f"political_score={score:.1%} raw_political_score={raw_political_ratio:.1%}{flag}"
             f" (total so far: {total_new})"
         )
 

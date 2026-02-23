@@ -9,6 +9,7 @@ import time
 import requests
 import pandas as pd
 from dotenv import load_dotenv
+from political_filters import is_milletvekili_flag, should_exclude_actor
 
 load_dotenv()
 
@@ -57,6 +58,19 @@ def clean_handle(raw) -> str | None:
     return None if s.lower() == "nan" else s
 
 
+def dedupe_candidates(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Keep one row per handle. Prefer milletvekili rows when duplicates exist.
+    """
+    if df.empty:
+        return df
+    tmp = df.copy()
+    tmp["_mv"] = tmp["isMilletvekili"].apply(is_milletvekili_flag)
+    tmp = tmp.sort_values(by=["_mv"], ascending=False)
+    tmp = tmp.drop_duplicates(subset=["bsky_handle"], keep="first")
+    return tmp.drop(columns=["_mv"])
+
+
 def main():
     os.makedirs("outputs", exist_ok=True)
 
@@ -67,6 +81,10 @@ def main():
 
     # Only attempt verification for rows that have a handle
     candidates = df[df["bsky_handle"].notna()].copy()
+    candidates = candidates[
+        ~candidates["bsky_handle"].astype(str).str.strip().str.lower().apply(should_exclude_actor)
+    ].copy()
+    candidates = dedupe_candidates(candidates)
     print(f"Total rows: {len(df)} | Rows with handle: {len(candidates)}")
 
     # Result containers

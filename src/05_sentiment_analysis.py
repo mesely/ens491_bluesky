@@ -1,6 +1,6 @@
 """
 PHASE 3 — Sentiment & Hate Speech Analysis (TurkishBERTweet)
-Runs two LoRA-adapted models over all collected posts:
+Runs two LoRA-adapted models over İmamoğlu protest-related posts:
   - VRLLab/TurkishBERTweet-Lora-SA  → negative / neutral / positive
   - VRLLab/TurkishBERTweet-Lora-HS  → hate speech Yes / No
 
@@ -34,8 +34,8 @@ from peft import PeftModel, PeftConfig
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
 # Paths
-ACTOR_POSTS_PATH   = "outputs/all_posts_raw.jsonl"
 WEEKLY_POSTS_PATH  = "outputs/weekly_search_results.jsonl"
+PROTEST_POSTS_PATH = "outputs/protest_posts.jsonl"
 OUTPUT_CSV         = "outputs/sentiment_results.csv"
 OUTPUT_STATS       = "outputs/sentiment_stats.json"
 
@@ -213,21 +213,29 @@ def compute_stats(df: pd.DataFrame) -> dict:
 
 def main():
     os.makedirs("outputs", exist_ok=True)
+    print(f"Running sentiment on device: {DEVICE} | batch_size={BATCH_SIZE}")
 
-    # Load all posts from both sources
+    # Load protest-related posts only
     records: list[dict] = []
-    if os.path.exists(ACTOR_POSTS_PATH):
-        actor_recs = load_jsonl(ACTOR_POSTS_PATH, "actor_post")
-        records.extend(actor_recs)
-        print(f"Actor posts loaded: {len(actor_recs)}")
+
+    # Weekly data: only records tagged as protest feed.
     if os.path.exists(WEEKLY_POSTS_PATH):
-        weekly_recs = load_jsonl(WEEKLY_POSTS_PATH, "weekly_search")
+        weekly_recs = [
+            r for r in load_jsonl(WEEKLY_POSTS_PATH, "weekly_search")
+            if str(r.get("feed_category", "")).strip().lower() == "protest"
+        ]
         records.extend(weekly_recs)
-        print(f"Weekly search posts loaded: {len(weekly_recs)}")
+        print(f"Weekly protest posts loaded: {len(weekly_recs)}")
+
+    # Dedicated protest search data
+    if os.path.exists(PROTEST_POSTS_PATH):
+        protest_recs = load_jsonl(PROTEST_POSTS_PATH, "protest_search")
+        records.extend(protest_recs)
+        print(f"Protest posts loaded: {len(protest_recs)}")
 
     if not records:
         raise FileNotFoundError(
-            "No input posts found. Run 02_fetch_posts.py and 04_weekly_search.py first."
+            "No protest input posts found. Run 04_weekly_search.py and 04b_protest_search.py first."
         )
 
     # Deduplicate by URI

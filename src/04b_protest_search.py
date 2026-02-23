@@ -25,6 +25,11 @@ import numpy as np
 import pandas as pd
 import requests
 from dotenv import load_dotenv
+from political_filters import (
+    is_political_text,
+    is_turkish_text,
+    should_exclude_actor,
+)
 
 load_dotenv()
 
@@ -41,12 +46,13 @@ def require(path: str) -> None:
 # ─── Paths & Config ────────────────────────────────────────────────────────────
 
 ACCOUNTS_PATH  = "outputs/verified_accounts.csv"
+SEARCH_KEYWORDS_PATH = "outputs/search_keywords.json"
 RESULTS_PATH   = "outputs/protest_posts.jsonl"
 TIMELINE_PATH  = "outputs/protest_timeline.json"
 
 AUTH_URL       = "https://bsky.social/xrpc/com.atproto.server.createSession"
 SEARCH_URL     = "https://bsky.social/xrpc/app.bsky.feed.searchPosts"
-MAX_PER_KEYWORD = 500
+MAX_PER_KEYWORD = 2000
 SLEEP_NORMAL   = 0.5
 SLEEP_429      = 30
 
@@ -118,6 +124,42 @@ PROTEST_KEYWORDS = [
     "avrupa konseyi türkiye",
     "venedik komisyonu",
 ]
+
+
+def unique_keep_order(items: list[str]) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for it in items:
+        s = (it or "").strip().lower()
+        if not s or s in seen:
+            continue
+        seen.add(s)
+        out.append((it or "").strip())
+    return out
+
+
+def extend_protest_keywords_from_search() -> list[str]:
+    """
+    Pull additional protest-relevant entries from outputs/search_keywords.json.
+    """
+    if not Path(SEARCH_KEYWORDS_PATH).exists():
+        return PROTEST_KEYWORDS
+
+    try:
+        with open(SEARCH_KEYWORDS_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception:
+        return PROTEST_KEYWORDS
+
+    extra: list[str] = []
+    for kw in data.get("keywords", []):
+        kw_l = str(kw).lower()
+        if any(token in kw_l for token in (
+            "imamo", "saraçhane", "protest", "gözalt", "tutuk", "diploma",
+            "ibb", "belediye", "yargı", "operasyon", "chp"
+        )):
+            extra.append(str(kw))
+    return unique_keep_order(PROTEST_KEYWORDS + extra)[:260]
 
 # ─── Physical World Events (for temporal correlation) ─────────────────────────
 # Format: "YYYY-MM-DD": {"event": "...", "type": "arrest|protest|police|legal|political"}
@@ -260,6 +302,15 @@ def extract_protest_record(post: dict, keyword: str, handle_to_actor: dict) -> d
     }
 
 
+def is_valid_political_record(rec: dict) -> bool:
+    text = rec.get("text", "") or ""
+    if not is_turkish_text(text):
+        return False
+    if not is_political_text(text, extra_terms=[rec.get("keyword", "")]):
+        return False
+    return True
+
+
 # ─── Timeline Analysis ─────────────────────────────────────────────────────────
 
 def build_timeline(records: list[dict]) -> dict:
@@ -347,8 +398,14 @@ def main():
     token   = get_access_token()
     headers = {"Authorization": f"Bearer {token}"}
 
+    protest_keywords = extend_protest_keywords_from_search()
+    print(f"Loaded protest keyword set: {len(protest_keywords)}")
+
     import pandas as _pd
     accounts_df     = _pd.read_csv(ACCOUNTS_PATH, encoding="utf-8-sig")
+    accounts_df = accounts_df[
+        ~accounts_df["bsky_handle"].astype(str).str.strip().str.lower().apply(should_exclude_actor)
+    ].copy()
     handle_to_actor = {
         str(row["bsky_handle"]).strip(): row.to_dict()
         for _, row in accounts_df.iterrows()
@@ -359,7 +416,7 @@ def main():
     now   = datetime.now(timezone.utc)
     until = now.isoformat()
     print(f"Protest search window: {PROTEST_SINCE[:10]} → {until[:10]}")
-    print(f"Keywords to search: {len(PROTEST_KEYWORDS)}")
+    print(f"Keywords to search: {len(protest_keywords)}")
 
     # Resume support
     seen_uris: set[str]     = set()
@@ -380,17 +437,19 @@ def main():
     already_searched: set[str] = {rec["keyword"] for rec in all_records}
 
     with open(RESULTS_PATH, "a", encoding="utf-8") as out:
-        for i, kw in enumerate(PROTEST_KEYWORDS, 1):
+        for i, kw in enumerate(protest_keywords, 1):
             if kw in already_searched:
-                print(f"  [{i}/{len(PROTEST_KEYWORDS)}] '{kw}' — already done, skipping.")
+                print(f"  [{i}/{len(protest_keywords)}] '{kw}' — already done, skipping.")
                 continue
 
-            print(f"  [{i}/{len(PROTEST_KEYWORDS)}] Searching: '{kw}' …")
+            print(f"  [{i}/{len(protest_keywords)}] Searching: '{kw}' …")
             posts = search_posts(kw, PROTEST_SINCE, until, headers)
 
             new_count = 0
             for post in posts:
                 rec = extract_protest_record(post, kw, handle_to_actor)
+                if not is_valid_political_record(rec):
+                    continue
                 if rec["uri"] in seen_uris:
                     continue
                 seen_uris.add(rec["uri"])

@@ -1,183 +1,172 @@
 ﻿id,name,surname,party,alliance,political_stance,isMilletvekili,bsky_handle,did,verified,displayName
-1,Ömer,Çelik,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,omercelik.com,did:plc:ylyyndvxtragkzvg2jj7n7ol,True,Omer Celik
 7,Müzeyyen,Şevkin,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,muzeyyensevkin.bsky.social,did:plc:r4iaimw2orq4wx4el2hsofaw,True,Dr. Müzeyyen Şevkin
-8,Burhanettin,Bulut,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,eczburhan.bsky.social,did:plc:4ka3xo4jxm7xvuiea3inueox,True,Burhanettin Bulut
-10,Ayhan,Barut,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,ayhanbarut.bsky.social,did:plc:ygtz4vqruwcddvgd6cc6o5jf,True,Ayhan Barut
-20,Abdurrahman,Tutdere,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,avtutdere.bsky.social,did:plc:birblrylmmkszhk2wnbjkfmq,True,Av. Abdurrahman Tutdere
-21,Ali,Özkaya,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,ali58ali.bsky.social,did:plc:tklmasdrcsxevduncnneclky,True,Ali Özkaya
-23,Hasan,Arslan,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,nhba.bsky.social,did:plc:l5sgqhie6oh4v3442om76s3l,True,HASAN ARSLAN
-26,Hakan Şeref,Olgun,İYİ Parti,Millet İttifakı,Merkez Sağ Milliyetçi Muhalif,True,hakanseref.bsky.social,did:plc:sk6rzpkki4rvu3kjx6g3wpap,True,Hakan Şeref OLGUN
-27,Sırrı,Sakık,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,ssakik.bsky.social,did:plc:7zh64kjdaqwaoj7qt2zr2urf,True,Sırrı Sakık
-58,İdris,Şahin,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,idrissahin.bsky.social,did:plc:yb4olyjnh2jwfyo5sfsj2bnn,True,🇹🇷 İdris Şahin
-70,Aylin,Yaman,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,draylinyaman.bsky.social,did:plc:jetls6t6m5ufktajhvi5a43x,True,Aylin Yaman
-73,Yaşar,Yıldırım,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi İktidar,True,yasaryildirimfk.bsky.social,did:plc:hcnhjm2plmhyjo6ojjdbgulg,True,Yaşar Yıldırım
-75,Mustafa,Köse,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,kosemustafa.bsky.social,did:plc:nd56ojfvsaqg3w4s6zfx6356,True,Mustafa Köse
-77,Kemal,Çelik,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,mustafakemalcelik.bsky.social,did:plc:oun5p6fnu6bkpaaab3kl2y4o,True,Mustafa Kemal Çelik
-78,Atay,Uslu,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,atayuslu.bsky.social,did:plc:f74z6xoy2ezmda4pfr7agqm2,True,Atay USLU
-79,İbrahim Ethem,Taş,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,ethemtas.bsky.social,did:plc:vbhyhlfwspffkrhs3idrezew,True,Av. İbrahim Ethem Taş
-85,Mustafa,Erdem,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,erdemkusdil.bsky.social,did:plc:rsc2cmakwfer6crbgqwbwfuw,True,Mustafa Erdem Kusdil
-88,Uğur,Poyraz,İYİ Parti,Millet İttifakı,Merkez Sağ Milliyetçi Muhalif,True,ugur-poyraz.bsky.social,did:plc:petefein6bgiw53jnwzmdowh,True,UĞUR POYRAZ
-89,Aykut,Kaya,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,aykut-kaya.bsky.social,did:plc:jrgjc3mebdmduinwkuun2k2u,True,Aykut Kaya
-93,Faruk,Çelik,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,farukcelik30.bsky.social,did:plc:fh3m2sgcy3bn5czjfmjtph2r,True,Faruk ÇELİK
-97,Süleyman,Bülbül,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,avsbulbul.bsky.social,did:plc:drb5rmz4lluqqcxwloozasbh,True,Süleyman Bülbül 
-101,Ömer,Özmen,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,omerozmen.bsky.social,did:plc:ixtlrl4rac7fv5qmaie652ek,True,Ömer Özmen
-102,Ömer,Karakaş,İYİ Parti,Millet İttifakı,Merkez Sağ Milliyetçi Muhalif,True,xkaw.bsky.social,did:plc:xl3dwdcxm4qhwqjepbbhq34o,True,Ömer Karakaş
-103,İsmail,Ok,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,ismailok01.bsky.social,did:plc:s7fnigzmhwnksdms72vv6hy6,True,İsmail ok
-108,Serkan,Sarı,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,zerqan.bsky.social,did:plc:zm5flkc3ihl6dwmzkmeyjt45,True,Serkan Sarı 
-113,Aysu,Bankoğlu,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,aysubankoglu.bsky.social,did:plc:b5aoytnqumy4fr2x76uo5muj,True,Aysu Bankoğlu
-132,Mustafa,Oğuz,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,mustafaoguz33.bsky.social,did:plc:bwr7sc6vgskz2vawy5hrtlp3,True,Mustafa Oğuz
-136,Ahmet,Kılıç,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,ahmetkllc.bsky.social,did:plc:hkpq6236hq54lrndnnhwi7zy,True,Ahmet kılıç
-139,Kayıhan,Pala,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,kayihanpala.bsky.social,did:plc:guzee4lyx7zrxfcz3nyqesoy,True,"Kayıhan Pala, Prof.Dr. - MD"
-149,Hasan,Öztürk,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,mvhasanozturk.bsky.social,did:plc:6mm5kbwmzb2eb5vbpawxsfv5,True,Hasan Öztürk
-151,Orhan,Sarıbal,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,orhansaribal.bsky.social,did:plc:7yevgqie5rs2nbnv7sve4eft,True,Orhan Sarıbal
-155,Özgür,Ceylan,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,ozgurceylanchp.bsky.social,did:plc:644vsvtpzbvuilmoqgcfb3mh,True,Özgür CEYLAN
-171,Berdan,Öztürk,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,berdanozturk.bsky.social,did:plc:outdczticlxxwkgo5s2ntru6,True,Berdan Öztürk
-172,Halide,Türkoğlu,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,halide84.bsky.social,did:plc:yd4v34up4jpswkuxqdgnrtf6,True,Halide Türkoğlu
-174,Adalet,Kaya,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,adaletkaya.bsky.social,did:plc:ueodhkm4wkdyfkv2mo62zepo,True,Adalet Kaya
-184,Ercan,Öztürk,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,kercanozturk.bsky.social,did:plc:pmc4idmcdbobkcxjg2hewm67,True,Ercan Öztürk
-199,Mehmet Emin,Öz,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,mehmeteminozs17.bsky.social,did:plc:ufpbh6rjv5y6fvotxvmmuljx,True,Mehmet Emin Özaslan
-201,Kamil,Aydın,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi İktidar,True,kamilaydin.bsky.social,did:plc:gauac6quhqgwkcm3zxebsfow,True,Kamil Aydın
-202,Meral,Danış Beştaş,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,avmeraldanisbestas.bsky.social,did:plc:rbcbueq63ak5gevv4g4blop2,True,Meral Danış Beştaş
-206,Fatih,Dönmez,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,zigguheat.bsky.social,did:plc:pnjdl4nhsrehyjwr6rh7kbip,True,Fatih dönmez
-209,Abdulhamit,Gül,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,abdulhamitgulen.bsky.social,did:plc:dsa2mv4o2geekkfqwxz3p6cc,True,Abdülhamit 
-231,Onur,Düşünmez,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,demonur.bsky.social,did:plc:cbxbodpotrdjkxdsjinxchbh,True,Av. Onur Düşünmez
-263,Oğuz Kaan,Salıcı,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,oguzkaans.bsky.social,did:plc:rx3uj5nzvo3ucc7nc6mx5stb,True,Oğuz Kaan Salıcı
-269,Elif,Esen,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,elifesen.bsky.social,did:plc:nthplu4pp4y3kgkdmii5k3x5,True,Elif Esen
-270,Hasan,Karal,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,karahilal53.bsky.social,did:plc:q7hfugaunvliy35omdcvteb5,True,Hasan KARAL
-271,Cemal,Enginyurt,Bağımsız,,Bağımsız / Belirtilmemiş,True,cenginyurt52.bsky.social,did:plc:mcesusgjmfs65xefa22hnhe2,True,Cemal Enginyurt
-274,Suat,Özçağdaş,Bağımsız,,Bağımsız / Belirtilmemiş,True,suatozcagdas.bsky.social,did:plc:5s5gfrz7g4a7pbjfc635ycaw,True,Suat Özçağdaş
-276,Burak,Akburak,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,akburak.bsky.social,did:plc:tj6g5uwumwwylfvjak2kt67j,True,
-280,Sırrı Süreyya,Önder,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,sirrisureyyaondr34.bsky.social,did:plc:wvhrd7fes75yd7zsjwy5ppzw,True,Sırrı Süreyya Önder
-301,Mustafa,Kaya,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,mikaya.bsky.social,did:plc:u6etqi34bcbja6jdgnvuf6mf,True,Mustafa Kaya
-311,Numan,Kurtulmuş,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,numankurtulmus.bsky.social,did:plc:w4meypx2rqk6y5vlwp5y2g2b,True,Numan Kurtulmuş
-340,Ersin,Beyaz,İYİ Parti,Millet İttifakı,Merkez Sağ Milliyetçi Muhalif,True,ersinbeyaz.bsky.social,did:plc:6glm757vzckop7mxd474lwhu,True,Ersin Beyaz | İstanbul Milletvekili
-347,Yüksel,Taşkın,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,yukseltaskin.bsky.social,did:plc:q4rsfmjya5kgeqi6rtrg3gv2,True,Yüksel Taşkın
-354,Mehmet,Kasapoğlu,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,kasapoglu.bsky.social,did:plc:76uf5ufhgvfnnvuzfa5qtny4,True,Dr. Mehmet Kasapoğlu
-360,Burcugül,Çubuk,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,burcugulc.bsky.social,did:plc:qlpl5jwoshwdoar24sxshtxu,True,Burcugül Çubuk
-361,Gökçe,Gökçen,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,gokcegokcen.bsky.social,did:plc:2kglze33eeioofzrsvc5lyhb,True,Gökçe Gökçen
-364,Mahir,Polat,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,mhrplt.bsky.social,did:plc:qbmmhr3f2slivlo64p4ex5zs,True,Dr. Mahir Polat
-366,Deniz,Yücel,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,besserdeniz.bsky.social,did:plc:z34kef3euxljrq6bitivqmuh,True,Deniz Yücel
-379,Mehmet,Şahin,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,mhmtshn.bsky.social,did:plc:xlgifkvcm5jnxzkf4azjmslg,True,Mehmet Sahin
-383,Cem,Şahin,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,cemsahin10.bsky.social,did:plc:3d5ogg44qz34cyntlclrshix,True,Cem Şahin
-400,Aşkın,Genç,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,chpgencistanbul.bsky.social,did:plc:aoj5ctst2zxetu4hd73eiy4u,True,CHP İstanbul Gençlik Kolları
-401,Mahmut,Arıkan,Saadet Partisi,,Bağımsız / Belirtilmemiş,True,mahmutarikansp.bsky.social,did:plc:icyxsfkr5kk7wug5l3534fjt,True,Mahmut Arıkan
-402,İsmail,Özdemir,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi İktidar,True,ismailozdemir16.bsky.social,did:plc:g5562ubzmd6s5surhzixprj4,True,İsmail Özdemir
-414,Mustafa,Demir,Bağımsız,,Bağımsız / Belirtilmemiş,True,md236523.bsky.social,did:plc:doq7lpookdoggkoi7bu6oo2d,True,Mustafa Demir 
-424,Nail,Çiler,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,nailciler.bsky.social,did:plc:5o6d7yn4wgk35t47jgjvekb2,True,Nail Çiler
-426,Lütfü,Türkkan,İYİ Parti,Millet İttifakı,Merkez Sağ Milliyetçi Muhalif,True,lutfuturkkan.bsky.social,did:plc:fs2fwag6i3ltsxofbtilpbft,True,Lütfü Türkkan
-427,Ömer Faruk,Gergerlioğlu,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,gergerliogluof.bsky.social,did:plc:vaum6msqlzkyp5g66jsl2dmx,True,Ömer Faruk Gergerlioğlu
-438,Barış,Bektaş,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,barisbektaschp.bsky.social,did:plc:nqufb4fe53c7m34zsxheuxap,True,Av. Barış Bektaş
-439,Hasan,Ekici,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,hasanekici.bsky.social,did:plc:b35hanmwhinj3mdb3etl72dx,True,Hasan Ekici
-440,Mustafa,Kalaycı,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi İktidar,True,kalalayka.bsky.social,did:plc:nfptwfimwpr6monf76h67sdx,True,Mustafa Kalaycı
 446,Mehmet,Demir,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,mehmettdemirr.bsky.social,did:plc:7yxvadfrks3dmjbipag657ir,True,Mehmet Demir
+438,Barış,Bektaş,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,barisbektaschp.bsky.social,did:plc:nqufb4fe53c7m34zsxheuxap,True,Av. Barış Bektaş
+427,Ömer Faruk,Gergerlioğlu,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,gergerliogluof.bsky.social,did:plc:vaum6msqlzkyp5g66jsl2dmx,True,Ömer Faruk Gergerlioğlu
+426,Lütfü,Türkkan,İYİ Parti,Millet İttifakı,Merkez Sağ Milliyetçi Muhalif,True,lutfuturkkan.bsky.social,did:plc:fs2fwag6i3ltsxofbtilpbft,True,Lütfü Türkkan
+424,Nail,Çiler,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,nailciler.bsky.social,did:plc:5o6d7yn4wgk35t47jgjvekb2,True,Nail Çiler
+414,Mustafa,Demir,Bağımsız,,Bağımsız / Belirtilmemiş,True,md236523.bsky.social,did:plc:doq7lpookdoggkoi7bu6oo2d,True,Mustafa Demir 
+402,İsmail,Özdemir,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi İktidar,True,ismailozdemir16.bsky.social,did:plc:g5562ubzmd6s5surhzixprj4,True,İsmail Özdemir
+401,Mahmut,Arıkan,Saadet Partisi,,Bağımsız / Belirtilmemiş,True,mahmutarikansp.bsky.social,did:plc:icyxsfkr5kk7wug5l3534fjt,True,Mahmut Arıkan
+400,Aşkın,Genç,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,chpgencistanbul.bsky.social,did:plc:aoj5ctst2zxetu4hd73eiy4u,True,CHP İstanbul Gençlik Kolları
+383,Cem,Şahin,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,cemsahin10.bsky.social,did:plc:3d5ogg44qz34cyntlclrshix,True,Cem Şahin
+379,Mehmet,Şahin,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,mhmtshn.bsky.social,did:plc:xlgifkvcm5jnxzkf4azjmslg,True,Mehmet Sahin
+366,Deniz,Yücel,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,besserdeniz.bsky.social,did:plc:z34kef3euxljrq6bitivqmuh,True,Deniz Yücel
+364,Mahir,Polat,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,mhrplt.bsky.social,did:plc:qbmmhr3f2slivlo64p4ex5zs,True,Dr. Mahir Polat
+361,Gökçe,Gökçen,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,gokcegokcen.bsky.social,did:plc:2kglze33eeioofzrsvc5lyhb,True,Gökçe Gökçen
+360,Burcugül,Çubuk,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,burcugulc.bsky.social,did:plc:qlpl5jwoshwdoar24sxshtxu,True,Burcugül Çubuk
+354,Mehmet,Kasapoğlu,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,kasapoglu.bsky.social,did:plc:76uf5ufhgvfnnvuzfa5qtny4,True,Dr. Mehmet Kasapoğlu
+347,Yüksel,Taşkın,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,yukseltaskin.bsky.social,did:plc:q4rsfmjya5kgeqi6rtrg3gv2,True,Yüksel Taşkın
+340,Ersin,Beyaz,İYİ Parti,Millet İttifakı,Merkez Sağ Milliyetçi Muhalif,True,ersinbeyaz.bsky.social,did:plc:6glm757vzckop7mxd474lwhu,True,Ersin Beyaz | İstanbul Milletvekili
+311,Numan,Kurtulmuş,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,numankurtulmus.bsky.social,did:plc:w4meypx2rqk6y5vlwp5y2g2b,True,Numan Kurtulmuş
+301,Mustafa,Kaya,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,mikaya.bsky.social,did:plc:u6etqi34bcbja6jdgnvuf6mf,True,Mustafa Kaya
+440,Mustafa,Kalaycı,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi İktidar,True,kalalayka.bsky.social,did:plc:nfptwfimwpr6monf76h67sdx,True,Mustafa Kalaycı
 453,Veli,Ağbaba,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,veliagbabasevenler.bsky.social,did:plc:papdqxjcijfx6fjaa3yvt2pm,True,Veli Ağbaba Gönüllüleri
+276,Burak,Akburak,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,akburak.bsky.social,did:plc:tj6g5uwumwwylfvjak2kt67j,True,
 471,Ali Mahir,Başarır,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,alimahir.bsky.social,did:plc:pvdbimwik462nyozwaxy3ipy,True,Ali Mahir Başarır
-476,Nureddin,Nebati,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,nureddinnebati.bsky.social,did:plc:bw3zfspzvatszzr4eqxsowb5,True,DR.Nureddin Nebati🇹🇷
-482,Ali,Bozan,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,alibozan.bsky.social,did:plc:oa2lh5br7zki2akpn4hoato2,True,Ali Bozan
-491,Sezai,Temelli,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,s-temelli.bsky.social,did:plc:f72bhgitp2jm6pturtqlmtxj,True,Sezai Temelli
-492,Sümeyye,Boz,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,sumeyyeboz.bsky.social,did:plc:ocoazfd62r4k4dnuffoosodh,True,Sümeyye Boz
-493,Mehmet Emin,Şimşek,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,meskiamber.bsky.social,did:plc:cqohagz3ltloyjp3jwg4xxwf,True,Mehmet Emin Şimşek
-495,Emre,Çalışkan,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,caliskanemre.com,did:plc:v4dkiq2e26nlagz3ipppzovp,True,Emre Çalışkan
-502,Mustafa,Hamarat,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,hamaratmustafa.bsky.social,did:plc:3gv4zbrgw4oslpbcp7zlsmgh,True,
-515,Ali,İnci,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,operationalinc1.bsky.social,did:plc:yghze52glhsdovlwh7pzum6k,True,Operational Incident
-517,Murat,Kaya,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,osmanmuratkaya.bsky.social,did:plc:qac6fjwvg2xb3cms6ilijaph,True,Osman Murat Kaya
-520,Ümit,Dikbayır,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,umitdikbayir.bsky.social,did:plc:dtb7kajsnn5i7ih36oah5tsi,True,Ümit Dikbayır
-527,Mehmet,Karaman,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,bskrmn.bsky.social,did:plc:xuywhyo3zxxrvpdnakganvgw,True,Mehmet Karaman
-549,Ömer,Öcalan,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,omerocalan.bsky.social,did:plc:yy4glprzx5pnfaxpfvjzzgbh,True,Ömer ÖCALAN
-552,Mahmut,Tanal,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,mahmuttanall.bsky.social,did:plc:xjrpqxutwhmijyafgwsr4qnu,True,Av. MAHMUT TANAL parodi
-569,Kadim,Durmaz,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,kadimdurmaz.bsky.social,did:plc:6ln4pjbn5p6ikd5arjd6rmou,True,Kadim DURMAZ - Tokat Milletvekili
-570,Yücel,Bulut,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi İktidar,True,yucelbulut.bsky.social,did:plc:lly7aenrrc6pv2fcx7odl7xo,True,Yücel Bulut
-578,İsmail,Güneş,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,ismailgunes44.bsky.social,did:plc:7u2r67kldbkjwtum6flski7x,True,İsmail güneş
-584,Sinan,Çiftyürek,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,canbegyekbun.bsky.social,did:plc:ez2g6nprgm4kjs3lp4qeyjha,True,Sinan Çiftyürek
+8,Burhanettin,Bulut,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,eczburhan.bsky.social,did:plc:4ka3xo4jxm7xvuiea3inueox,True,Burhanettin Bulut
 599,Deniz,Yavuzyılmaz,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,yavuzyilmazd.bsky.social,did:plc:3rafqqqsuylvmvke3o2x3qol,True,Deniz Yavuzyılmaz
-1,Cüneyt,Özdemir,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat,False,cuneytozdemir.bsky.social,did:plc:tc7llu4zi6ibwg2dqazd7t54,True,cuneytozdemir
-7,Can,Ataklı,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,can-atakli.bsky.social,did:plc:hhvgkjvhccegh4w4jiwmlwxc,True,Can Ataklı
-8,İsmail,Saymaz,Cumhuriyet Halk Partisi,Millet İttifakı,Sol,False,saymaz-ismail.bsky.social,did:plc:i6nyk5dree5lrvbo7gw6wmuc,True,İsmail Saymaz
-10,Ahmet,Hakan,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,yldrmhakan.bsky.social,did:plc:leqs4yecyu3de54mkaukuq55,True,Ahmet Hakan Yıldırım
-20,Sezen,Aksu,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,sezenaksuresmi.bsky.social,did:plc:7vnkfzeg554lkpllt2uy4d3f,True,Sezen AKSU
-21,Haluk,Levent,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat,False,halukleventacil.bsky.social,did:plc:ucvnis3ymhzr7bdfxylvhzt7,True,Haluk Levent
-23,Selahattin,Demirtaş,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Sol-Kürt Hareketi,False,selahattindemirtas.bsky.social,did:plc:qlq7ay6kybwkgy5b7nry2v73,True,Selahattin Demirtaş
-26,Ahmet,Altan,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,ahmetaltan.bsky.social,did:plc:twz2resf7qxggdwkz7rvbahe,True,Ahmet Altan
-27,Mehmet,Altan,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,mehmetaltan.bsky.social,did:plc:jm6zmkueuiykjty6mymf5z6q,True,Mehmet Altan
-58,Gülben,Ergen,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,gulbenergen.bsky.social,did:plc:ifnipmmlm3plfpxaknwmwufp,True,
-70,Ahmet,Çakar,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,ahmetcakar1.bsky.social,did:plc:e3mcpnzxvtuhax2yn5guyxdp,True,Ahmet Çakar
-73,Acun,Ilıcalı,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,acunilicali.bsky.social,did:plc:cun743k2iffgrk5mvyrfexrz,True,Acun Ilıcalı
-75,Mansur,Yavaş,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat,False,mansuryavas06.bsky.social,did:plc:wy4xmhf4l4bvumlqn4htjma5,True,Mansur Yavaş
-77,Melih,Gökçek,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,06melihchina.bsky.social,did:plc:tzcbu43jmhmrshwinhfzvqbk,True,İbrahim Melih Gökçek
-78,Aydın,Doğan,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,doganaydin.bsky.social,did:plc:ulu3tt7bswncbkjt6xttt7jf,True,Doğan Aydın
-79,Ali,Koç,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi,False,aliikoc.bsky.social,did:plc:jiunpi6xaymhrzz24shwsgxb,True,ALİ KOÇ
-85,Ali,Babacan,Demokrasi ve Atılım Partisi,,Liberal,False,babacanali.bsky.social,did:plc:7bt6bo266hduoia7g7rn4ena,True,Ali Babacan
-88,Fatih,Erbakan,Yeniden Refah Partisi,,İslamcı,False,furkanehlivan.bsky.social,did:plc:bh3jc3cvbuktv7snsj3lhhrd,True,Fatih Erbakan
-89,Gültekin,Uysal,Demokrat Parti,Millet İttifakı,Merkez Sağ,False,gultekinuysal.bsky.social,did:plc:ckabkwksrw2hejki5znasfd3,True,Gültekin Uysal
-93,Hande,Fırat,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,handefrt.bsky.social,did:plc:fi5u6sjsun4zmrcp5ock5jh4,True,Hande Fırat
-97,Uğur,Koç,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat,False,ugurkoc.bsky.social,did:plc:cg5h7psibaapodvusqriqlqi,True,Uğur Koç
-101,Sırrı,Sakık,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Hareketi,False,ssakik.bsky.social,did:plc:7zh64kjdaqwaoj7qt2zr2urf,True,Sırrı Sakık
-102,Ahmet,Türk,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Hareketi,False,ahmetturk.bsky.social,did:plc:kttuippm5qrtxw3x3ubwnmz3,True,Ahmet Türk
-103,Mehmet,Cengiz,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,mehmetakifcengiz.com,did:plc:4mhbobbj6m5jw2pcerznl4pe,True,Mehmet Akif Cengiz
-108,Mahfi,Eğilmez,Cumhuriyet Halk Partisi,Millet İttifakı,Merkez,False,mahfiegilmezz.bsky.social,did:plc:vl3rh45tg56j5rtwuy2vkisb,True,Mahfi Eğilmez
-113,Ece,Üner,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,eceuner.bsky.social,did:plc:6ic5uctiitembdgxutu6gb5q,True,Ece Üner
-132,Serdar,Ortaç,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,byserdarortac.bsky.social,did:plc:2aok6v5pnsrvgirnbdgne2cq,True,Serdar Ortaç
-136,Mustafa,Ceceli,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,mustafaceceli.bsky.social,did:plc:mn3tvzddqgrbvzppojs4nu73,True,Mustafa Ceceli
-139,Kıraç,Kıraç,Cumhuriyet Halk Partisi,Millet İttifakı,Sol,False,ayikamazsin.bsky.social,did:plc:hrs7vc227nwnrdko42mqvy7c,True,Kıraç
-149,Nedim,Şener,Cumhuriyet Halk Partisi,Millet İttifakı,Muhalif,False,nedimsener.bsky.social,did:plc:aclqtihujobby4b5d3luagqw,True,Nedim Şener
-151,Şamil,Tayyar,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,samiltayyar27.bsky.social,did:plc:zf62hillzomsnpv3otdvjzvf,True,Tamil Şayyar
-155,Hikmet,Çetin,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,hikmetctn.bsky.social,did:plc:ltlg5ha5mifnrjcoiygajw3x,True,Hikmet ÇETİN
-171,Canan,Karatay,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,profdrcanankaratay.bsky.social,did:plc:bdhp2ksdjdeaunrlkta3l6vb,True,Prof. Dr. Canan Efendigil Karatay
-172,Mehmet,Öz,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,memmetmehmet.bsky.social,did:plc:geap45rwsdy37v54upa5yhbg,True,Mehmet öz
-174,Sinan,Ateş,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi,False,sinanates.bsky.social,did:plc:icjfikm7ezbry7sapl373pxv,True,Sinan Ateş
-184,Mehmet,Şimşek,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Liberal Muhafazakar,False,memetsimsekk.bsky.social,did:plc:3iiiivwwgd4vrxapwsdvydve,True,Mehmet Şimşek ( Bakan olan )
-199,Serdar,Turgut,Cumhuriyet Halk Partisi,Millet İttifakı,Sol,False,serdarturgut.bsky.social,did:plc:sx2v2apueq3lx5lhmns6iqco,True,Serdar Turgut
-201,Cevheri,Güven,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,cevheriguven.bsky.social,did:plc:g6qsrvgptvjegy7v7w67g43u,True,Cevheri Güven
-202,Hakan,Şükür,Bağımsız,,FETÖ,False,hakansukur.bsky.social,did:plc:5wv6r26xciedtkm27yunop7s,True,Hakan Şükür
-206,Basel,Basel,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,kanirbasel.bsky.social,did:plc:oap3kde56yahbfz5hueqnx3d,True,basel
-209,Alaattin,Çakıcı,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi,False,alattincakici.bsky.social,did:plc:ppmni6eylyvdw35blvfe6dlz,True,Alaattin Çakıcı
-231,Bergüzar,Korel,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,berguzarkorel.bsky.social,did:plc:mtfnbwrgxhaiyjjysspjqfla,True,Bergüzar Korel
-263,Fuat,Uğur,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,fuatugur.bsky.social,did:plc:gqqtr32zgongku72eb63e3x4,True,Fuat Uğur
-269,Semiha,Şahin,Cumhuriyet Halk Partisi,Millet İttifakı,Muhalif,False,semihasahin.bsky.social,did:plc:s7gsp23gthb6ycnver4mfcco,True,Semiha Şahin
-270,Melis,Alphan,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,melisalphan.bsky.social,did:plc:tg2icjatnykykyfqtmcxmbtk,True,Melis Alphan
-271,Arda,Turan,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,ardaturan0.bsky.social,did:plc:2wfkgjrhzdhyznjsdwvo76f3,True,Arda Turan
-274,Sergen,Yalçın,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,sergenyalcin.bsky.social,did:plc:levqbrhosus7qdhxmka7djvl,True,Sergen Yalçın
-276,Aykut,Kocaman,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,kocamanlyricsbot.bsky.social,did:plc:n42byjwaw4hkvnt2asc7gbpa,True,Aykut Kocaman Lyrics bot
-280,Mehmet,Demirkol,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,mehmetdemirkolb.bsky.social,did:plc:anmkdhdznyge3xkrzz6xst7z,True,Mehmet Demirkol
-301,Sinan,Meydan,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,sinanmeydan.bsky.social,did:plc:sj6skf7szteue4wps6x26p6z,True,Sinan Meydan
-311,Özlem,Albayrak,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,ozlemalbayrak.bsky.social,did:plc:btdtngpubh4oga7l5efrcbji,True,Özlem Albayrak
-340,Duman,Grubu,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,ibbchpgrubu.bsky.social,did:plc:el63grln7enuj37tou6ag2qq,True,İBB Meclis Grubu
-347,Eren,Keskin,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Sol,False,handle.invalid,,False,
-354,Ahmet,Türk,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Hareketi,False,ahmetturk.bsky.social,did:plc:kttuippm5qrtxw3x3ubwnmz3,True,Ahmet Türk
-360,Numan,Kurtulmuş,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,numankurtulmus.bsky.social,did:plc:w4meypx2rqk6y5vlwp5y2g2b,True,Numan Kurtulmuş
-361,Ömer,Çelik,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,omercelik.com,did:plc:ylyyndvxtragkzvg2jj7n7ol,True,Omer Celik
-364,Kemal,Özkan,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi,False,ozkansaglam.bsky.social,did:plc:pry3rnthdoe2jiswtwbz5j56,True,Özkan Sağlam
-366,İsmail,Özdemir,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi,False,ismailozdemir16.bsky.social,did:plc:g5562ubzmd6s5surhzixprj4,True,İsmail Özdemir
-379,Muazzez,Ersoy,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,muazzezersoy.bsky.social,did:plc:tlg3py4dodlywp6zvanwhyd5,True,
+584,Sinan,Çiftyürek,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,canbegyekbun.bsky.social,did:plc:ez2g6nprgm4kjs3lp4qeyjha,True,Sinan Çiftyürek
+578,İsmail,Güneş,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,ismailgunes44.bsky.social,did:plc:7u2r67kldbkjwtum6flski7x,True,İsmail güneş
+570,Yücel,Bulut,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi İktidar,True,yucelbulut.bsky.social,did:plc:lly7aenrrc6pv2fcx7odl7xo,True,Yücel Bulut
+569,Kadim,Durmaz,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,kadimdurmaz.bsky.social,did:plc:6ln4pjbn5p6ikd5arjd6rmou,True,Kadim DURMAZ - Tokat Milletvekili
+552,Mahmut,Tanal,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,mahmuttanall.bsky.social,did:plc:xjrpqxutwhmijyafgwsr4qnu,True,Av. MAHMUT TANAL parodi
+549,Ömer,Öcalan,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,omerocalan.bsky.social,did:plc:yy4glprzx5pnfaxpfvjzzgbh,True,Ömer ÖCALAN
+527,Mehmet,Karaman,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,bskrmn.bsky.social,did:plc:xuywhyo3zxxrvpdnakganvgw,True,Mehmet Karaman
+520,Ümit,Dikbayır,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,umitdikbayir.bsky.social,did:plc:dtb7kajsnn5i7ih36oah5tsi,True,Ümit Dikbayır
+517,Murat,Kaya,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,osmanmuratkaya.bsky.social,did:plc:qac6fjwvg2xb3cms6ilijaph,True,Osman Murat Kaya
+515,Ali,İnci,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,operationalinc1.bsky.social,did:plc:yghze52glhsdovlwh7pzum6k,True,Operational Incident
+502,Mustafa,Hamarat,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,hamaratmustafa.bsky.social,did:plc:3gv4zbrgw4oslpbcp7zlsmgh,True,
+495,Emre,Çalışkan,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,caliskanemre.com,did:plc:v4dkiq2e26nlagz3ipppzovp,True,Emre Çalışkan
+493,Mehmet Emin,Şimşek,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,meskiamber.bsky.social,did:plc:cqohagz3ltloyjp3jwg4xxwf,True,Mehmet Emin Şimşek
+492,Sümeyye,Boz,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,sumeyyeboz.bsky.social,did:plc:ocoazfd62r4k4dnuffoosodh,True,Sümeyye Boz
+491,Sezai,Temelli,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,s-temelli.bsky.social,did:plc:f72bhgitp2jm6pturtqlmtxj,True,Sezai Temelli
+482,Ali,Bozan,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,alibozan.bsky.social,did:plc:oa2lh5br7zki2akpn4hoato2,True,Ali Bozan
+476,Nureddin,Nebati,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,nureddinnebati.bsky.social,did:plc:bw3zfspzvatszzr4eqxsowb5,True,DR.Nureddin Nebati🇹🇷
+280,Sırrı Süreyya,Önder,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,sirrisureyyaondr34.bsky.social,did:plc:wvhrd7fes75yd7zsjwy5ppzw,True,Sırrı Süreyya Önder
+439,Hasan,Ekici,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,hasanekici.bsky.social,did:plc:b35hanmwhinj3mdb3etl72dx,True,Hasan Ekici
+274,Suat,Özçağdaş,Bağımsız,,Bağımsız / Belirtilmemiş,True,suatozcagdas.bsky.social,did:plc:5s5gfrz7g4a7pbjfc635ycaw,True,Suat Özçağdaş
+77,Kemal,Çelik,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,mustafakemalcelik.bsky.social,did:plc:oun5p6fnu6bkpaaab3kl2y4o,True,Mustafa Kemal Çelik
+102,Ömer,Karakaş,İYİ Parti,Millet İttifakı,Merkez Sağ Milliyetçi Muhalif,True,xkaw.bsky.social,did:plc:xl3dwdcxm4qhwqjepbbhq34o,True,Ömer Karakaş
+101,Ömer,Özmen,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,omerozmen.bsky.social,did:plc:ixtlrl4rac7fv5qmaie652ek,True,Ömer Özmen
+97,Süleyman,Bülbül,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,avsbulbul.bsky.social,did:plc:drb5rmz4lluqqcxwloozasbh,True,Süleyman Bülbül 
+93,Faruk,Çelik,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,farukcelik30.bsky.social,did:plc:fh3m2sgcy3bn5czjfmjtph2r,True,Faruk ÇELİK
+89,Aykut,Kaya,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,aykut-kaya.bsky.social,did:plc:jrgjc3mebdmduinwkuun2k2u,True,Aykut Kaya
+88,Uğur,Poyraz,İYİ Parti,Millet İttifakı,Merkez Sağ Milliyetçi Muhalif,True,ugur-poyraz.bsky.social,did:plc:petefein6bgiw53jnwzmdowh,True,UĞUR POYRAZ
+85,Mustafa,Erdem,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,erdemkusdil.bsky.social,did:plc:rsc2cmakwfer6crbgqwbwfuw,True,Mustafa Erdem Kusdil
+79,İbrahim Ethem,Taş,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,ethemtas.bsky.social,did:plc:vbhyhlfwspffkrhs3idrezew,True,Av. İbrahim Ethem Taş
+78,Atay,Uslu,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,atayuslu.bsky.social,did:plc:f74z6xoy2ezmda4pfr7agqm2,True,Atay USLU
+75,Mustafa,Köse,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,kosemustafa.bsky.social,did:plc:nd56ojfvsaqg3w4s6zfx6356,True,Mustafa Köse
+108,Serkan,Sarı,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,zerqan.bsky.social,did:plc:zm5flkc3ihl6dwmzkmeyjt45,True,Serkan Sarı 
+73,Yaşar,Yıldırım,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi İktidar,True,yasaryildirimfk.bsky.social,did:plc:hcnhjm2plmhyjo6ojjdbgulg,True,Yaşar Yıldırım
+70,Aylin,Yaman,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,draylinyaman.bsky.social,did:plc:jetls6t6m5ufktajhvi5a43x,True,Aylin Yaman
+58,İdris,Şahin,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,idrissahin.bsky.social,did:plc:yb4olyjnh2jwfyo5sfsj2bnn,True,🇹🇷 İdris Şahin
+27,Sırrı,Sakık,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,ssakik.bsky.social,did:plc:7zh64kjdaqwaoj7qt2zr2urf,True,Sırrı Sakık
+26,Hakan Şeref,Olgun,İYİ Parti,Millet İttifakı,Merkez Sağ Milliyetçi Muhalif,True,hakanseref.bsky.social,did:plc:sk6rzpkki4rvu3kjx6g3wpap,True,Hakan Şeref OLGUN
+23,Hasan,Arslan,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,nhba.bsky.social,did:plc:l5sgqhie6oh4v3442om76s3l,True,HASAN ARSLAN
+21,Ali,Özkaya,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,ali58ali.bsky.social,did:plc:tklmasdrcsxevduncnneclky,True,Ali Özkaya
+20,Abdurrahman,Tutdere,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,avtutdere.bsky.social,did:plc:birblrylmmkszhk2wnbjkfmq,True,Av. Abdurrahman Tutdere
+271,Cemal,Enginyurt,Bağımsız,,Bağımsız / Belirtilmemiş,True,cenginyurt52.bsky.social,did:plc:mcesusgjmfs65xefa22hnhe2,True,Cemal Enginyurt
+103,İsmail,Ok,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,ismailok01.bsky.social,did:plc:s7fnigzmhwnksdms72vv6hy6,True,İsmail ok
+10,Ayhan,Barut,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,ayhanbarut.bsky.social,did:plc:ygtz4vqruwcddvgd6cc6o5jf,True,Ayhan Barut
+113,Aysu,Bankoğlu,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,aysubankoglu.bsky.social,did:plc:b5aoytnqumy4fr2x76uo5muj,True,Aysu Bankoğlu
+184,Ercan,Öztürk,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,kercanozturk.bsky.social,did:plc:pmc4idmcdbobkcxjg2hewm67,True,Ercan Öztürk
+269,Elif,Esen,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,elifesen.bsky.social,did:plc:nthplu4pp4y3kgkdmii5k3x5,True,Elif Esen
+263,Oğuz Kaan,Salıcı,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,oguzkaans.bsky.social,did:plc:rx3uj5nzvo3ucc7nc6mx5stb,True,Oğuz Kaan Salıcı
+231,Onur,Düşünmez,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,demonur.bsky.social,did:plc:cbxbodpotrdjkxdsjinxchbh,True,Av. Onur Düşünmez
+209,Abdulhamit,Gül,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,abdulhamitgulen.bsky.social,did:plc:dsa2mv4o2geekkfqwxz3p6cc,True,Abdülhamit 
+206,Fatih,Dönmez,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,zigguheat.bsky.social,did:plc:pnjdl4nhsrehyjwr6rh7kbip,True,Fatih dönmez
+202,Meral,Danış Beştaş,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,avmeraldanisbestas.bsky.social,did:plc:rbcbueq63ak5gevv4g4blop2,True,Meral Danış Beştaş
+201,Kamil,Aydın,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi İktidar,True,kamilaydin.bsky.social,did:plc:gauac6quhqgwkcm3zxebsfow,True,Kamil Aydın
+199,Mehmet Emin,Öz,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,mehmeteminozs17.bsky.social,did:plc:ufpbh6rjv5y6fvotxvmmuljx,True,Mehmet Emin Özaslan
+270,Hasan,Karal,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,karahilal53.bsky.social,did:plc:q7hfugaunvliy35omdcvteb5,True,Hasan KARAL
+174,Adalet,Kaya,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,adaletkaya.bsky.social,did:plc:ueodhkm4wkdyfkv2mo62zepo,True,Adalet Kaya
+171,Berdan,Öztürk,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,berdanozturk.bsky.social,did:plc:outdczticlxxwkgo5s2ntru6,True,Berdan Öztürk
+155,Özgür,Ceylan,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,ozgurceylanchp.bsky.social,did:plc:644vsvtpzbvuilmoqgcfb3mh,True,Özgür CEYLAN
+151,Orhan,Sarıbal,Yeni Yol,Millet İttifakı,Sosyalist Muhalif,True,orhansaribal.bsky.social,did:plc:7yevgqie5rs2nbnv7sve4eft,True,Orhan Sarıbal
+149,Hasan,Öztürk,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,mvhasanozturk.bsky.social,did:plc:6mm5kbwmzb2eb5vbpawxsfv5,True,Hasan Öztürk
+139,Kayıhan,Pala,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat / Kemalist Muhalif,True,kayihanpala.bsky.social,did:plc:guzee4lyx7zrxfcz3nyqesoy,True,"Kayıhan Pala, Prof.Dr. - MD"
+136,Ahmet,Kılıç,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,ahmetkllc.bsky.social,did:plc:hkpq6236hq54lrndnnhwi7zy,True,Ahmet kılıç
+132,Mustafa,Oğuz,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar İktidar,True,mustafaoguz33.bsky.social,did:plc:bwr7sc6vgskz2vawy5hrtlp3,True,Mustafa Oğuz
+172,Halide,Türkoğlu,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Siyaseti Sol Muhalif,True,halide84.bsky.social,did:plc:yd4v34up4jpswkuxqdgnrtf6,True,Halide Türkoğlu
+402,Feryal,Öney,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,oneyferyal.bsky.social,did:plc:kjofjhs7esyzheaiopznhx5n,True,Feryal Öney
 383,Serdar,Ortaç,Bağımsız,,Apolitik,False,byserdarortac.bsky.social,did:plc:2aok6v5pnsrvgirnbdgne2cq,True,Serdar Ortaç
 400,Sıla,Gençoğlu,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,silagencoglu052.bsky.social,did:plc:oy7x7m76ed4j7puxjw74bnty,True,Sıla Gençoğlu
 401,Yıldız,Tilbe,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,yildiztilbe.bsky.social,did:plc:ty7vea6bu6hdf3xwyym7jxxh,True,Yıldız Tilbe
-402,Feryal,Öney,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,oneyferyal.bsky.social,did:plc:kjofjhs7esyzheaiopznhx5n,True,Feryal Öney
-414,Mehmet,Altan,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,mehmetaltan.bsky.social,did:plc:jm6zmkueuiykjty6mymf5z6q,True,Mehmet Altan
-424,Faruk,Çelik,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,farukcelik30.bsky.social,did:plc:fh3m2sgcy3bn5czjfmjtph2r,True,Faruk ÇELİK
-426,Taner,Yıldız,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,ty41.bsky.social,did:plc:w2pg3jxquakgt66uiy5togdj,True,Taner Yıldız
 427,Hüseyin,Çelik,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,huseyin53.bsky.social,did:plc:nrwxi2xfr5i5um24d6bp5nwt,True,Hüseyin Çelik
-438,Müsavat,Dervişoğlu,İYİ Parti,Millet İttifakı,Milliyetçi,False,mdervisoglu.bsky.social,did:plc:f6k52yknkxyccuetgagmtky7,True,Müsavat Dervişoğlu
+414,Mehmet,Altan,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,mehmetaltan.bsky.social,did:plc:jm6zmkueuiykjty6mymf5z6q,True,Mehmet Altan
+426,Taner,Yıldız,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,ty41.bsky.social,did:plc:w2pg3jxquakgt66uiy5togdj,True,Taner Yıldız
+379,Muazzez,Ersoy,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,muazzezersoy.bsky.social,did:plc:tlg3py4dodlywp6zvanwhyd5,True,
+347,Eren,Keskin,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Sol,False,handle.invalid,,False,
+364,Kemal,Özkan,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi,False,ozkansaglam.bsky.social,did:plc:pry3rnthdoe2jiswtwbz5j56,True,Özkan Sağlam
+354,Ahmet,Türk,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Kürt Hareketi,False,ahmetturk.bsky.social,did:plc:kttuippm5qrtxw3x3ubwnmz3,True,Ahmet Türk
+340,Duman,Grubu,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,ibbchpgrubu.bsky.social,did:plc:el63grln7enuj37tou6ag2qq,True,İBB Meclis Grubu
+311,Özlem,Albayrak,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,ozlemalbayrak.bsky.social,did:plc:btdtngpubh4oga7l5efrcbji,True,Özlem Albayrak
+301,Sinan,Meydan,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,sinanmeydan.bsky.social,did:plc:sj6skf7szteue4wps6x26p6z,True,Sinan Meydan
+280,Mehmet,Demirkol,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,mehmetdemirkolb.bsky.social,did:plc:anmkdhdznyge3xkrzz6xst7z,True,Mehmet Demirkol
+276,Aykut,Kocaman,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,kocamanlyricsbot.bsky.social,did:plc:n42byjwaw4hkvnt2asc7gbpa,True,Aykut Kocaman Lyrics bot
 439,Yavuz,Ağıralioğlu,İYİ Parti,Millet İttifakı,Milliyetçi,False,yavuzagiralioglu.bsky.social,did:plc:enpb24tydrmcseea76azjrvu,True,Yavuz Ağıralioğlu 
-440,Durmuş,Yılmaz,Bağımsız,,Bağımsız,False,drmsylmz.bsky.social,did:plc:kbe5lkr62lbdyhrzk467zrlu,True,Durmuş Yılmaz
-446,Nebati,Nureddin,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,nureddinnebati.bsky.social,did:plc:bw3zfspzvatszzr4eqxsowb5,True,DR.Nureddin Nebati🇹🇷
-453,Özgür,Demirtaş,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,profdemlrtas.bsky.social,did:plc:sog4bh23qryacuwbx2ibw4ew,True,Özgür Demirtaş
-471,Soner,Yalçın,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,soner2012.bsky.social,did:plc:cenvuoxbkdpk5zponcwgvep5,True,Soner Yalçın
-476,Cem,Toker,Liberal Demokrat Parti,,Liberal,False,tokcem.bsky.social,did:plc:6ot5xgl5uuyi46ddqhn3uz22,True,CEM TOKER🐬
-482,Mazhar,Bağlı,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,mazharbagli.bsky.social,did:plc:zsf4dh2kirby5jykbeggyhaa,True,Mazhar Bağlı
-491,Barış,Pehlivan,Cumhuriyet Halk Partisi,Millet İttifakı,Muhalif,False,barisphlvn.bsky.social,did:plc:o4mllclxbimsnwjcz6ijsfy5,True,Barış Pehlivan
-492,Barış,Terkoğlu,Cumhuriyet Halk Partisi,Millet İttifakı,Sol,False,terkoglubaris.bsky.social,did:plc:efqbedbgz645hiyqjk44ptnh,True,Barış Terkoğlu
-493,Çağdaş,Cengiz,Cumhuriyet Halk Partisi,Millet İttifakı,Muhalif,False,kccengiz.bsky.social,did:plc:gaif52dtl3fsyef32porhdu7,True,Kadir Çağdaş Cengiz
+438,Müsavat,Dervişoğlu,İYİ Parti,Millet İttifakı,Milliyetçi,False,mdervisoglu.bsky.social,did:plc:f6k52yknkxyccuetgagmtky7,True,Müsavat Dervişoğlu
 495,Deniz,Zeyrek,Cumhuriyet Halk Partisi,Millet İttifakı,Muhalif,False,denizzeyrekk.bsky.social,did:plc:eesgvn2sn7xa6kzifukkdjqf,True,Deniz Zeyrek
-502,Ece,Üner,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,eceuner.bsky.social,did:plc:6ic5uctiitembdgxutu6gb5q,True,Ece Üner
-515,Hakan,Fidan,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,hakanfidan.bsky.social,did:plc:y6jihhg7oyxycteym74xvpub,True,Hakan Fidan (Fan)
-517,Ersin,Tatar,Bağımsız,,Milliyetçi,False,ersintatarr.bsky.social,did:plc:cs3ss2ugrsqkpoziatrsu5nf,True,Ersin Tatar
-520,Rüşen,Çakır,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,rusencakir.bsky.social,did:plc:35m6hvcaaq7hg5ecthfyfmmo,True,Ruşen Çakır
-527,İhsan,Dağı,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,ihsandagi.bsky.social,did:plc:guppolkooviyq75ddtc7tcob,True,İhsan Dağı
-549,Afra,Saraçoğlu,Bağımsız,,Apolitik,False,afrasaracoglubr.bsky.social,did:plc:wpvnzron3fcj5cerszrk2avd,True,Afra Saraçoğlu Brasil 
-552,Pınar,Deniz,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,pdenizbrasil.bsky.social,did:plc:pnkhq4zx3x3wfqvqfpuigh57,True,Pinar Deniz Brasil
-569,Ayça,Ayşin Turan,Bağımsız,,Apolitik,False,portalaycabr.bsky.social,did:plc:cvfaomi5crljobyw6gwynlab,True,Ayça Ayşin Turan Brasil
-570,Miray,Daner,Bağımsız,,Apolitik,False,portalmiraydaner.bsky.social,did:plc:3vwnv7q7mv2tmlvzq2vwkw42,True,Portal Miray Daner
-578,Müjde,Ar,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,mujdegulkaraca.bsky.social,did:plc:zrpe7rcs3oh6qc7off4wuppz,True,Dr. Müjdegül Zayıfoğlu Karaca
+440,Durmuş,Yılmaz,Bağımsız,,Bağımsız,False,drmsylmz.bsky.social,did:plc:kbe5lkr62lbdyhrzk467zrlu,True,Durmuş Yılmaz
 584,Halil,Ergün,Cumhuriyet Halk Partisi,Millet İttifakı,Sol,False,unsalergunchp.bsky.social,did:plc:tn5zf7wee3ieh6s2tld7jduz,True,Ünsal Ergün
+578,Müjde,Ar,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,mujdegulkaraca.bsky.social,did:plc:zrpe7rcs3oh6qc7off4wuppz,True,Dr. Müjdegül Zayıfoğlu Karaca
+570,Miray,Daner,Bağımsız,,Apolitik,False,portalmiraydaner.bsky.social,did:plc:3vwnv7q7mv2tmlvzq2vwkw42,True,Portal Miray Daner
+569,Ayça,Ayşin Turan,Bağımsız,,Apolitik,False,portalaycabr.bsky.social,did:plc:cvfaomi5crljobyw6gwynlab,True,Ayça Ayşin Turan Brasil
+552,Pınar,Deniz,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,pdenizbrasil.bsky.social,did:plc:pnkhq4zx3x3wfqvqfpuigh57,True,Pinar Deniz Brasil
+549,Afra,Saraçoğlu,Bağımsız,,Apolitik,False,afrasaracoglubr.bsky.social,did:plc:wpvnzron3fcj5cerszrk2avd,True,Afra Saraçoğlu Brasil 
+527,İhsan,Dağı,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,ihsandagi.bsky.social,did:plc:guppolkooviyq75ddtc7tcob,True,İhsan Dağı
+520,Rüşen,Çakır,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,rusencakir.bsky.social,did:plc:35m6hvcaaq7hg5ecthfyfmmo,True,Ruşen Çakır
+517,Ersin,Tatar,Bağımsız,,Milliyetçi,False,ersintatarr.bsky.social,did:plc:cs3ss2ugrsqkpoziatrsu5nf,True,Ersin Tatar
+515,Hakan,Fidan,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,hakanfidan.bsky.social,did:plc:y6jihhg7oyxycteym74xvpub,True,Hakan Fidan (Fan)
+502,Ece,Üner,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,eceuner.bsky.social,did:plc:6ic5uctiitembdgxutu6gb5q,True,Ece Üner
+271,Arda,Turan,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,ardaturan0.bsky.social,did:plc:2wfkgjrhzdhyznjsdwvo76f3,True,Arda Turan
+493,Çağdaş,Cengiz,Cumhuriyet Halk Partisi,Millet İttifakı,Muhalif,False,kccengiz.bsky.social,did:plc:gaif52dtl3fsyef32porhdu7,True,Kadir Çağdaş Cengiz
+492,Barış,Terkoğlu,Cumhuriyet Halk Partisi,Millet İttifakı,Sol,False,terkoglubaris.bsky.social,did:plc:efqbedbgz645hiyqjk44ptnh,True,Barış Terkoğlu
+491,Barış,Pehlivan,Cumhuriyet Halk Partisi,Millet İttifakı,Muhalif,False,barisphlvn.bsky.social,did:plc:o4mllclxbimsnwjcz6ijsfy5,True,Barış Pehlivan
+482,Mazhar,Bağlı,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,mazharbagli.bsky.social,did:plc:zsf4dh2kirby5jykbeggyhaa,True,Mazhar Bağlı
+476,Cem,Toker,Liberal Demokrat Parti,,Liberal,False,tokcem.bsky.social,did:plc:6ot5xgl5uuyi46ddqhn3uz22,True,CEM TOKER🐬
+471,Soner,Yalçın,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,soner2012.bsky.social,did:plc:cenvuoxbkdpk5zponcwgvep5,True,Soner Yalçın
+453,Özgür,Demirtaş,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,profdemlrtas.bsky.social,did:plc:sog4bh23qryacuwbx2ibw4ew,True,Özgür Demirtaş
+274,Sergen,Yalçın,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,sergenyalcin.bsky.social,did:plc:levqbrhosus7qdhxmka7djvl,True,Sergen Yalçın
+1,Cüneyt,Özdemir,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat,False,cuneytozdemir.bsky.social,did:plc:tc7llu4zi6ibwg2dqazd7t54,True,cuneytozdemir
+270,Melis,Alphan,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,melisalphan.bsky.social,did:plc:tg2icjatnykykyfqtmcxmbtk,True,Melis Alphan
+93,Hande,Fırat,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,handefrt.bsky.social,did:plc:fi5u6sjsun4zmrcp5ock5jh4,True,Hande Fırat
+89,Gültekin,Uysal,Demokrat Parti,Millet İttifakı,Merkez Sağ,False,gultekinuysal.bsky.social,did:plc:ckabkwksrw2hejki5znasfd3,True,Gültekin Uysal
+88,Fatih,Erbakan,Yeniden Refah Partisi,,İslamcı,False,furkanehlivan.bsky.social,did:plc:bh3jc3cvbuktv7snsj3lhhrd,True,Fatih Erbakan
+85,Ali,Babacan,Demokrasi ve Atılım Partisi,,Liberal,False,babacanali.bsky.social,did:plc:7bt6bo266hduoia7g7rn4ena,True,Ali Babacan
+79,Ali,Koç,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi,False,aliikoc.bsky.social,did:plc:jiunpi6xaymhrzz24shwsgxb,True,ALİ KOÇ
+78,Aydın,Doğan,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,doganaydin.bsky.social,did:plc:ulu3tt7bswncbkjt6xttt7jf,True,Doğan Aydın
+77,Melih,Gökçek,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,06melihchina.bsky.social,did:plc:tzcbu43jmhmrshwinhfzvqbk,True,İbrahim Melih Gökçek
+75,Mansur,Yavaş,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat,False,mansuryavas06.bsky.social,did:plc:wy4xmhf4l4bvumlqn4htjma5,True,Mansur Yavaş
+73,Acun,Ilıcalı,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,acunilicali.bsky.social,did:plc:cun743k2iffgrk5mvyrfexrz,True,Acun Ilıcalı
+70,Ahmet,Çakar,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,ahmetcakar1.bsky.social,did:plc:e3mcpnzxvtuhax2yn5guyxdp,True,Ahmet Çakar
+58,Gülben,Ergen,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,gulbenergen.bsky.social,did:plc:ifnipmmlm3plfpxaknwmwufp,True,
+26,Ahmet,Altan,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,ahmetaltan.bsky.social,did:plc:twz2resf7qxggdwkz7rvbahe,True,Ahmet Altan
+23,Selahattin,Demirtaş,Halkların Eşitlik ve Demokrasi Partisi,Emek ve Özgürlük İttifakı,Sol-Kürt Hareketi,False,selahattindemirtas.bsky.social,did:plc:qlq7ay6kybwkgy5b7nry2v73,True,Selahattin Demirtaş
+21,Haluk,Levent,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat,False,halukleventacil.bsky.social,did:plc:ucvnis3ymhzr7bdfxylvhzt7,True,Haluk Levent
+20,Sezen,Aksu,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,sezenaksuresmi.bsky.social,did:plc:7vnkfzeg554lkpllt2uy4d3f,True,Sezen AKSU
+10,Ahmet,Hakan,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,yldrmhakan.bsky.social,did:plc:leqs4yecyu3de54mkaukuq55,True,Ahmet Hakan Yıldırım
+8,İsmail,Saymaz,Cumhuriyet Halk Partisi,Millet İttifakı,Sol,False,saymaz-ismail.bsky.social,did:plc:i6nyk5dree5lrvbo7gw6wmuc,True,İsmail Saymaz
+7,Can,Ataklı,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,can-atakli.bsky.social,did:plc:hhvgkjvhccegh4w4jiwmlwxc,True,Can Ataklı
+97,Uğur,Koç,Cumhuriyet Halk Partisi,Millet İttifakı,Sosyal Demokrat,False,ugurkoc.bsky.social,did:plc:cg5h7psibaapodvusqriqlqi,True,Uğur Koç
+269,Semiha,Şahin,Cumhuriyet Halk Partisi,Millet İttifakı,Muhalif,False,semihasahin.bsky.social,did:plc:s7gsp23gthb6ycnver4mfcco,True,Semiha Şahin
+103,Mehmet,Cengiz,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,mehmetakifcengiz.com,did:plc:4mhbobbj6m5jw2pcerznl4pe,True,Mehmet Akif Cengiz
+263,Fuat,Uğur,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,fuatugur.bsky.social,did:plc:gqqtr32zgongku72eb63e3x4,True,Fuat Uğur
+231,Bergüzar,Korel,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,berguzarkorel.bsky.social,did:plc:mtfnbwrgxhaiyjjysspjqfla,True,Bergüzar Korel
+209,Alaattin,Çakıcı,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi,False,alattincakici.bsky.social,did:plc:ppmni6eylyvdw35blvfe6dlz,True,Alaattin Çakıcı
+206,Basel,Basel,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,kanirbasel.bsky.social,did:plc:oap3kde56yahbfz5hueqnx3d,True,basel
+202,Hakan,Şükür,Bağımsız,,FETÖ,False,hakansukur.bsky.social,did:plc:5wv6r26xciedtkm27yunop7s,True,Hakan Şükür
+201,Cevheri,Güven,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,cevheriguven.bsky.social,did:plc:g6qsrvgptvjegy7v7w67g43u,True,Cevheri Güven
+199,Serdar,Turgut,Cumhuriyet Halk Partisi,Millet İttifakı,Sol,False,serdarturgut.bsky.social,did:plc:sx2v2apueq3lx5lhmns6iqco,True,Serdar Turgut
+184,Mehmet,Şimşek,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Liberal Muhafazakar,False,memetsimsekk.bsky.social,did:plc:3iiiivwwgd4vrxapwsdvydve,True,Mehmet Şimşek ( Bakan olan )
+174,Sinan,Ateş,Milliyetçi Hareket Partisi,Cumhur İttifakı,Milliyetçi,False,sinanates.bsky.social,did:plc:icjfikm7ezbry7sapl373pxv,True,Sinan Ateş
+172,Mehmet,Öz,Cumhuriyet Halk Partisi,Millet İttifakı,Liberal,False,memmetmehmet.bsky.social,did:plc:geap45rwsdy37v54upa5yhbg,True,Mehmet öz
+171,Canan,Karatay,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,profdrcanankaratay.bsky.social,did:plc:bdhp2ksdjdeaunrlkta3l6vb,True,Prof. Dr. Canan Efendigil Karatay
+155,Hikmet,Çetin,Cumhuriyet Halk Partisi,Millet İttifakı,Kemalist,False,hikmetctn.bsky.social,did:plc:ltlg5ha5mifnrjcoiygajw3x,True,Hikmet ÇETİN
+151,Şamil,Tayyar,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,samiltayyar27.bsky.social,did:plc:zf62hillzomsnpv3otdvjzvf,True,Tamil Şayyar
+149,Nedim,Şener,Cumhuriyet Halk Partisi,Millet İttifakı,Muhalif,False,nedimsener.bsky.social,did:plc:aclqtihujobby4b5d3luagqw,True,Nedim Şener
+139,Kıraç,Kıraç,Cumhuriyet Halk Partisi,Millet İttifakı,Sol,False,ayikamazsin.bsky.social,did:plc:hrs7vc227nwnrdko42mqvy7c,True,Kıraç
+136,Mustafa,Ceceli,Adalet ve Kalkınma Partisi,Cumhur İttifakı,Muhafazakar,False,mustafaceceli.bsky.social,did:plc:mn3tvzddqgrbvzppojs4nu73,True,Mustafa Ceceli
+108,Mahfi,Eğilmez,Cumhuriyet Halk Partisi,Millet İttifakı,Merkez,False,mahfiegilmezz.bsky.social,did:plc:vl3rh45tg56j5rtwuy2vkisb,True,Mahfi Eğilmez
 599,İrfan,Aktan,Cumhuriyet Halk Partisi,Millet İttifakı,Muhalif,False,irfanaktan.bsky.social,did:plc:wrpm3qgzplzufutshjcbdud3,True,İrfan Aktan
