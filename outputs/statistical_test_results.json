@@ -1,0 +1,80 @@
+{
+  "kruskal_wallis_sentiment": {
+    "statistic": 61.9517,
+    "p_value": 0.0,
+    "significant": true,
+    "interpretation": "Parties differ significantly in sentiment (p<0.05)"
+  },
+  "pairwise_mannwhitney": [
+    {
+      "party_a": "Cumhuriyet Halk Partisi",
+      "party_b": "Halkların Eşitlik ve Demokrasi Partisi",
+      "u_stat": 14429.5,
+      "p_raw": 0.0,
+      "effect_size_r": -0.4959,
+      "n_a": 212,
+      "n_b": 91,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Bağımsız",
+      "party_b": "Halkların Eşitlik ve Demokrasi Partisi",
+      "u_stat": 9519.5,
+      "p_raw": 0.0,
+      "effect_size_r": -0.4136,
+      "n_a": 148,
+      "n_b": 91,
+      "p_adjusted_fdr": 0.0,
+      "significant": true
+    },
+    {
+      "party_a": "Cumhuriyet Halk Partisi",
+      "party_b": "Bağımsız",
+      "u_stat": 16858.0,
+      "p_raw": 0.17392,
+      "effect_size_r": -0.0746,
+      "n_a": 212,
+      "n_b": 148,
+      "p_adjusted_fdr": 0.17392,
+      "significant": false
+    }
+  ],
+  "chi2_hatespeech_party": {
+    "chi2": 4.1128,
+    "p_value": 0.127911,
+    "dof": 2,
+    "cramers_v": 0.0955,
+    "n": 451,
+    "interpretation": "Cramér's V=0.095 → weak effect size",
+    "significant": false
+  },
+  "hate_speech_confidence_intervals": {
+    "Bağımsız": {
+      "n": 148,
+      "hate_count": 2,
+      "hate_rate": 0.0135,
+      "ci_95_low": 0.0037,
+      "ci_95_high": 0.0479
+    },
+    "Cumhuriyet Halk Partisi": {
+      "n": 212,
+      "hate_count": 0,
+      "hate_rate": 0.0,
+      "ci_95_low": 0.0,
+      "ci_95_high": 0.0178
+    },
+    "Halkların Eşitlik ve Demokrasi Partisi": {
+      "n": 91,
+      "hate_count": 0,
+      "hate_rate": 0.0,
+      "ci_95_low": 0.0,
+      "ci_95_high": 0.0405
+    }
+  },
+  "correlation_likes_hate": {
+    "pearson_r": 0.1952,
+    "p_value": 3e-05,
+    "significant": true
+  }
+}

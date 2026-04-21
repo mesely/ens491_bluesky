@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BlueSky Türkiye Siyasi Ekosistemi</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  /* Light Theme Colors */
+  --bg: #ffffff;
+  --surface: #f8f9fa;
+  --border: #e9ecef;
+  --border-l: #dee2e6;
+  --text: #212529;
+  --dim: #495057;
+  --muted: #6c757d;
+  --accent: #a0712a; 
+  --accent-d: #7a5217;
+  --white: #111111; 
+  --red: #dc3545;
+  --sans: 'IBM Plex Sans', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-weight:400;line-height:1.6;font-size:22px;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border-l);border-radius:4px;}
+
+#prog{position:fixed;top:0;left:0;height:3px;background:var(--accent);z-index:200;width:0%;transition:width .08s;}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:48px;background:rgba(255,255,255,.97);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;padding:0 40px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.02);
+}
+.brand{font-family:var(--mono);font-size:19px;font-weight:500;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.links{display:flex;}
+.lnk{
+  font-family:var(--mono);font-size:22px;font-weight:500;color:var(--muted);text-decoration:none;
+  padding:0 12px;height:48px;display:flex;align-items:center;
+  border-left:1px solid var(--border);letter-spacing:.05em;transition:color .15s;
+}
+.lnk:hover{color:var(--text);}
+.lnk:last-child{border-right:1px solid var(--border);}
+
+/* sections */
+.pg{min-height:100vh;border-bottom:1px solid var(--border);scroll-margin-top:48px;}
+
+/* cover */
+#s-cover{display:flex;flex-direction:column;justify-content:center;padding:120px 80px 80px;min-height:100vh;background:var(--surface);}
+.c-eye{font-family:var(--mono);font-size:19px;font-weight:500;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;margin-bottom:28px;}
+.c-h1{font-size:clamp(40px,6vw,80px);font-weight:600;color:var(--white);line-height:1.05;letter-spacing:-.03em;margin-bottom:16px;}
+.c-h1 em{color:var(--accent);font-style:normal;}
+.c-desc{font-size:20px;font-weight:400;color:var(--dim);max-width:650px;line-height:1.7;margin-bottom:52px;}
+.c-rule{width:60px;height:2px;background:var(--accent);margin-bottom:36px;}
+.c-stack{display:flex;flex-direction:column;gap:10px;}
+.c-item{font-family:var(--mono);font-size:20px;color:var(--text);letter-spacing:.03em; font-weight: 500;}
+.c-item span{color:var(--muted); font-weight: 400;}
+
+/* full-width page */
+.fp{padding:80px 80px 72px;min-height:100vh;}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--border);margin-top:36px; background:var(--bg);}
+.pc{padding:28px 20px;border-right:1px solid var(--border);background:var(--surface);}
+.pc:last-child{border-right:none;}
+.pn{font-family:var(--mono);font-size:32x;font-weight:500;color:var(--border-l);display:block;margin-bottom:12px;}
+.pt{font-size:20px;font-weight:600;color:var(--white);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+.pb{font-size:20px;color:var(--dim);line-height:1.6;}
+
+/* data table */
+table.dt{width:100%;border-collapse:collapse;margin-top:48px;font-size:21px; background: var(--surface); border: 1px solid var(--border);}
+table.dt th{font-family:var(--mono);font-size:22px;letter-spacing:.12em;color:var(--accent-d);text-transform:uppercase;text-align:left;padding:14px 18px;border-bottom:2px solid var(--border);font-weight:600;}
+table.dt td{padding:14px 18px;border-bottom:1px solid var(--border);color:var(--text);font-weight:400;}
+table.dt tr:last-child td{border-bottom:none;}
+table.dt td:first-child{font-weight:500; color:var(--white);}
+
+/* two-col */
+.tc{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
+.tc.bf{grid-template-columns:58fr 42fr;}
+
+.fp-l{border-right:1px solid var(--border);display:flex;flex-direction:column;padding:80px 48px 64px;background:var(--surface);}
+.fp-r{display:flex;flex-direction:column;padding:80px 48px 64px;}
+
+.slbl{font-family:var(--mono);font-size:22px;font-weight:500;letter-spacing:.15em;color:var(--accent-d);text-transform:uppercase;margin-bottom:12px;}
+.stit{font-size:30x;font-weight:600;color:var(--white);line-height:1.3;letter-spacing:-.01em;margin-bottom:8px;}
+.ssub{font-size:22px;color:var(--muted);font-weight:400;margin-bottom:32px;line-height:1.6;}
+
+/* GÜNCELLENEN GÖRSEL VE AÇIKLAMA ALANLARI */
+.fw{flex:1;border:1px solid var(--border);background:#f1f3f5;display:flex;align-items:center;justify-content:center;min-height:400px; border-radius: 4px; overflow: hidden; padding: 20px;}
+.fw img{width:100%;height:100%;max-height:75vh;object-fit:contain;display:block;}
+.fmiss{display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--dim);}
+.fmiss code{font-family:var(--mono);font-size:19px;background:var(--surface);padding:4px 10px;border:1px solid var(--border);color:var(--accent-d); border-radius: 3px;}
+.fcap{margin-top:16px;font-family:var(--mono);font-size:20px;color:var(--muted);line-height:1.7;text-align:center;}
+
+/* findings */
+.finds{display:flex;flex-direction:column;border-top:1px solid var(--border);}
+.find{padding:20px 0;border-bottom:1px solid var(--border);}
+.find:last-child{border-bottom:none;}
+.ftit{font-size:21px;font-weight:600;color:var(--white);letter-spacing:.03em;text-transform:uppercase;margin-bottom:8px;}
+.fbdy{font-size:22px;font-weight:400;color:var(--dim);line-height:1.7;}
+.fbdy strong{color:var(--text);font-weight:600;}
+.n{font-family:var(--mono);font-size:21px;font-weight:600;color:var(--accent-d);}
+.nr{font-family:var(--mono);font-size:21px;font-weight:600;color:var(--red);}
+
+/* method */
+.meth{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);padding:20px 24px;margin-top:28px;}
+.mtag{font-family:var(--mono);font-size:22px;font-weight:600;letter-spacing:.15em;color:var(--accent-d);text-transform:uppercase;margin-bottom:12px;}
+.mbdy{font-size:21px;font-weight:400;color:var(--dim);line-height:1.7;}
+.mbdy strong{color:var(--text);font-weight:600;}
+.fm{display:block;font-family:var(--mono);font-size:20px;color:var(--accent-d);background:#e9ecef;padding:10px 14px;margin:12px 0;border-left:2px solid var(--border-l); border-radius: 2px;}
+code.i{font-family:var(--mono);font-size:20px;background:var(--surface);border:1px solid var(--border);padding:2px 6px;color:var(--accent-d); border-radius: 3px;}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<nav>
+  <div class="brand">BlueSky / TR Siyasi Ekosistemi</div>
+  <div class="links">
+    <a class="lnk" href="#s-cover">Giriş</a>
+    <a class="lnk" href="#s-pipe">Yöntem</a>
+    <a class="lnk" href="#s1">Aktivite</a>
+    <a class="lnk" href="#s2">Hacim</a>
+    <a class="lnk" href="#s3">İstatistik</a>
+    <a class="lnk" href="#s4">LDA</a>
+    <a class="lnk" href="#s5">Duygu</a>
+    <a class="lnk" href="#s6">Nefret Söylemi</a>
+    <a class="lnk" href="#s7">Çapraz Analiz</a>
+    <a class="lnk" href="#s8">Efor & Yoğunluk</a>
+    <a class="lnk" href="#s9">Power User</a>
+    <a class="lnk" href="#s10">Kelime Bulutu</a>
+    <a class="lnk" href="#s11">İdeoloji / SVM</a>
+  </div>
+</nav>
+
+<section class="pg" id="s-cover">
+  <div id="s-cover">
+    <div class="c-eye">Bitirme Projesi &mdash; Şubat 2026</div>
+    <h1 class="c-h1">BlueSky Türkiye<br><em>Siyasi Ekosistemi</em></h1>
+    <p class="c-desc">Türk siyasi aktörlerinin BlueSky platformundaki söylemsel örüntülerinin, doğal dil işleme ve makine öğrenmesi yöntemleriyle çok boyutlu analizi: ağ yapılanması, gönderi hacmi dinamikleri, duygu kutuplaşması ve ideolojik sınıflandırma.</p>
+    <div class="c-rule"></div>
+    <div class="c-stack">
+      <div class="c-item">Platform &mdash; <span>AT Protocol / app.bsky.social</span></div>
+      <div class="c-item">NLP Modeli &mdash; <span>VRLLab / TurkishBERTweet (LoRA adaptasyonu)</span></div>
+      <div class="c-item">Konu Modellemesi &mdash; <span>LDA + Jensen-Shannon Divergence</span></div>
+      <div class="c-item">İstatistiksel Testler &mdash; <span>Kruskal-Wallis H &middot; Mann-Whitney U &middot; FDR-BH &middot; Wilson CI &middot; Ki-kare</span></div>
+      <div class="c-item">Sınıflandırma &mdash; <span>Linear SVM &middot; Logistic Regression &middot; Random Forest &middot; Complement NB</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="s-pipe">
+  <div class="fp">
+    <div class="slbl">Genel Bakış</div>
+    <div class="stit">Araştırma Süreci (Pipeline) ve Veri Seti</div>
+    <p style="font-size:18px;color:var(--muted);max-width:800px;line-height:1.7;margin-top:12px;">Çalışma beş temel aşama olarak tasarlanmıştır. Her aşamanın çıktısı bir sonrakinin girdisini oluşturmaktadır; veri toplama, metin ön işleme, derin öğrenme tabanlı sınıflandırma, istatistiksel doğrulama ve görsel analiz adımlarını kapsar.</p>
+    <div class="pipe">
+      <div class="pc">
+        <span class="pn">01</span>
+        <div class="pt">Hesap Doğrulama</div>
+        <div class="pb">AT Protocol <code class="i">app.bsky.actor.getProfile</code> kullanılarak siyasi hesaplar doğrulandı. DID ve displayName eşleştirmesi yapıldı. 429 rate-limit (istek sınırı) durumları exponential backoff algoritmasıyla yönetildi.</div>
+      </div>
+      <div class="pc">
+        <span class="pn">02</span>
+        <div class="pt">Gönderi Toplama</div>
+        <div class="pb">İmleç tabanlı (cursor-based) sayfalama ile doğrulanmış hesapların tüm gönderi geçmişi <code class="i">getAuthorFeed</code> uç noktasından çekildi. Yanıt (reply) ve alıntı (quote) bağlantıları ağ analizi için ayrıştırıldı.</div>
+      </div>
+      <div class="pc">
+        <span class="pn">03</span>
+        <div class="pt">NLP Analizi</div>
+        <div class="pb">TF-IDF ile anahtar kelime çıkarımı, LDA konu modellemesi (gensim, C_V tutarlılığı) uygulandı. TurkishBERTweet-LoRA modeli ile duygu (3 sınıf) ve nefret söylemi (2 sınıf) etiketlemesi yapıldı.</div>
+      </div>
+      <div class="pc">
+        <span class="pn">04</span>
+        <div class="pt">İstatistiksel Test</div>
+        <div class="pb">Kruskal-Wallis H (genel test), ikili Mann-Whitney U + FDR-BH düzeltmesi, Ki-kare + Cramer's V, Wilson %95 Güven Aralığı ve Pearson r korelasyon testleri uygulandı.</div>
+      </div>
+      <div class="pc">
+        <span class="pn">05</span>
+        <div class="pt">İdeoloji Sınıflandırma</div>
+        <div class="pb">Kelime ve Karakter TF-IDF, SelectKBest (ki-kare), 5-katlı Stratified CV uygulandı. Modeller Macro-F1 ve MCC metrikleriyle değerlendirildi. Veri dengesizliği RandomOverSampler ile çözüldü.</div>
+      </div>
+    </div>
+    <table class="dt">
+      <thead>
+        <tr><th>Dosya Adı</th><th>Kaynak ve Yöntem</th><th>Veri Boyutu / Kapsam</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>verified_accounts.csv</td><td>AT Protocol API doğrulaması (manuel kürasyon destekli)</td><td>400+ doğrulanmış hesap, 7 siyasi parti</td></tr>
+        <tr><td>all_posts_raw.jsonl</td><td>getAuthorFeed &mdash; İmleç tabanlı tam sayfalama</td><td>10.000+ gönderi, yanıt/alıntı ağ verisi</td></tr>
+        <tr><td>weekly_search_results.jsonl</td><td>searchPosts &mdash; 50 siyasi anahtar kelime, 7 günlük periyot</td><td>Kelime başına maksimum 500 gönderi</td></tr>
+        <tr><td>sentiment_results.csv</td><td>TurkishBERTweet-LoRA-SA + LoRA-HS (Batch Inference)</td><td>3 duygu + 2 nefret sınıfı, softmax olasılık skorları</td></tr>
+        <tr><td>network_edges.csv / node_metrics.csv</td><td>DID-URI çözümleme, PageRank (alpha=0.85), Louvain topluluk tespiti</td><td>Ağırlıklı ve yönlü ağ grafiği</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="pg" id="s1">
+  <div class="tc bf">
+    <div class="fp-l">
+      <div class="slbl">Bölüm 01 &mdash; Platform Adaptasyonu</div>
+      <div class="stit">Parti Bazlı Aktivite ve Hesap Dağılımı</div>
+      <div class="ssub">Doğrulanmış hesap sayısı ve toplam gönderi hacminin partiler arası karşılaştırmalı analizi</div>
+      <div class="fw">
+        <img src="G1_party_post_counts.png" alt="G1" onerror="this.parentElement.innerHTML='<div class=fmiss><code>G1_party_post_counts.png</code></div>'">
+      </div>
+      <div class="fcap">Sol Panel: Toplam gönderi sayısı (Post Count) &mdash; Sağ Panel: Doğrulanmış hesap sayısı<br>Küçük partiler analiz netliği için "Diğer" kategorisi altında birleştirilmiştir.</div>
+    </div>
+    <div class="fp-r">
+      <div class="slbl">Öne Çıkan Bulgular</div>
+      <div class="finds">
+        <div class="find">
+          <div class="ftit">Muhalefetin Platform Dominansı</div>
+          <div class="fbdy">CHP, <strong><span class="n">5.169 gönderi</span></strong> ve <strong><span class="n">166 doğrulanmış hesap</span></strong> ile platformda açık ara en aktif aktördür. Platformu erken benimseyen kitlenin (early adopters) ağırlıklı olarak muhalif siyasilerden oluştuğu görülmektedir.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">İktidar Bloğunun Pasif Varlığı</div>
+          <div class="fbdy">AKP, <strong><span class="n">84 hesap</span></strong> ile platformda bulunma oranında 2. sırada olmasına rağmen, içerik üretiminde (<strong><span class="n">1.022 gönderi</span></strong>) 4. sıraya gerilemektedir. Profiller oluşturulmuş ancak aktif bir iletişim stratejisi izlenmemiştir.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">Bağımsızların Orantısız Eforu</div>
+          <div class="fbdy">Bağımsız siyasetçiler yalnızca <strong><span class="n">14 profile</span></strong> sahip olmalarına karşın <strong><span class="n">1.885 gönderi</span></strong> üretmiştir. Hesap başına düşen ortalama <strong><span class="n">~134 gönderi</span></strong>, ekosistemdeki en yüksek bireysel yoğunluğu ifade etmektedir.</div>
+        </div>
+      </div>
+      <div class="meth">
+        <div class="mtag">Veri Toplama Yöntemi</div>
+        <div class="mbdy">Hesap doğrulaması <code class="i">app.bsky.actor.getProfile</code> üzerinden yapılmış; HTTP 429 hata kodları (rate-limit) 10 saniyelik bekleme süreleri ve maksimum 3 tekrar denemesi (retry) ile aşılmıştır. Gönderi sayıları <code class="i">all_posts_raw.jsonl</code> veri setinden derlenmiştir.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="s2">
+  <div class="tc bf">
+    <div class="fp-l">
+      <div class="slbl">Bölüm 02 &mdash; Zamansal Analiz</div>
+      <div class="stit">Gönderi Hacminin Zamana Göre Evrimi</div>
+      <div class="ssub">3 günlük hareketli ortalama kullanılarak oluşturulmuş günlük gönderi serisi</div>
+      <div class="fw">
+        <img src="G2_weekly_post_volume.png" alt="G2" onerror="this.parentElement.innerHTML='<div class=fmiss><code>G2_weekly_post_volume.png</code></div>'">
+      </div>
+      <div class="fcap">Eğriler: 3-günlük hareketli ortalamaya sahip günlük gönderi sayısını temsil eder.<br>Gölgeli Alanlar: Görsel okunabilirliği artırmak için eklenmiştir (alpha=0.06).</div>
+    </div>
+    <div class="fp-r">
+      <div class="slbl">Öne Çıkan Bulgular</div>
+      <div class="finds">
+        <div class="find">
+          <div class="ftit">Erken Dönem Durgunluğu</div>
+          <div class="fbdy">2023 ortasından 2024 sonbaharına kadar platformda organik bir siyasi tartışma ortamı oluşmamıştır. Aktivite yok denecek kadar az seviyede kalmıştır.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">Görünürlük Kırılması &mdash; Eylül 2024</div>
+          <div class="fbdy">Eylül 2024 itibarıyla düzenli veri akışı başlamıştır. Bu durum, X (Twitter) platformundaki olası yasal kısıtlamalar veya polemikler karşısında siyasetçilerin alternatif platform arayışının bir yansıması olarak yorumlanabilir.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">Mayıs 2025 Zirvesi</div>
+          <div class="fbdy">Günlük ortalama <strong><span class="n">~80 gönderi/gün</span></strong> seviyesine ulaşan bu zirve, CHP öncülüğünde gerçekleşmiş ve AKP kısa süreli yüksek reaksiyon vermiştir. Bu durum spesifik bir iç siyaset krizine veya yoğun bir gündeme işaret etmektedir.</div>
+        </div>
+      </div>
+      <div class="meth">
+        <div class="mtag">Zamansal Analiz Metodolojisi</div>
+        <div class="mbdy"><strong>Hareketli Ortalama:</strong> Kısa vadeli veri gürültüsünü bastırmak için 3-günlük bir pencere tercih edilmiştir <code class="i">rolling(3).mean()</code>.<br><br><strong>Durbin-Watson Testi:</strong> Sosyal kaskad (dalgalanma) etkisini ölçmek için otokorelasyon kontrolü yapılmıştır. (DW &lt; 1.5 değeri pozitif otokorelasyona işaret eder).<br><br><strong>Zirve Tespiti:</strong> Her partinin aktivite zirvesi algoritmik olarak belirlenmiştir.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="s3">
+  <div class="tc bf">
+    <div class="fp-l">
+      <div class="slbl">Bölüm 03 &mdash; İstatistiksel Doğrulama</div>
+      <div class="stit">İkili Duygu (Sentiment) Farklılıkları</div>
+      <div class="ssub">FDR-BH düzeltmeli Mann-Whitney U testleri ve Rank-Biserial Korelasyon etki büyüklüğü</div>
+      <div class="fw">
+        <img src="G_statistical_forest_plot.png" alt="G3" onerror="this.parentElement.innerHTML='<div class=fmiss><code>G_statistical_forest_plot.png</code></div>'">
+      </div>
+      <div class="fcap">Yatay Çubuklar: İstatistiksel olarak anlamlı bulunan parti çiftleri arasındaki etki büyüklüğü (r).<br>Negatif r: Solda yer alan partinin sağdakine kıyasla daha negatif bir dil kullandığını gösterir.<br>Yalnızca FDR-BH sonrası anlamlı olan çiftler (p_adj &lt; 0.05) grafiğe dahil edilmiştir.</div>
+    </div>
+    <div class="fp-r">
+      <div class="slbl">Öne Çıkan Bulgular</div>
+      <div class="finds">
+        <div class="find">
+          <div class="ftit">Bağımsızların Kronik Negatifliği</div>
+          <div class="fbdy">Bağımsız aktörler; AKP, MHP ve CHP ile karşılaştırıldığında sürekli ve en belirgin şekilde daha negatif bir dil kullanmaktadır (<strong><span class="nr">r &approx; &minus;0.30</span></strong>). Kurumsal bir yapıya bağlı olmayan bu hesaplar, radikal eleştirinin merkezinde konumlanmaktadır.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">İktidar &mdash; Muhalefet Tonu Farkı</div>
+          <div class="fbdy">CHP, genel söylem bazında AKP'ye kıyasla anlamlı derecede daha negatif bir tona sahiptir (<strong><span class="nr">r &approx; &minus;0.20</span></strong>). Buna karşın, Yeni Yol Partisi genel ekosistemdeki en pozitif/nötr dile sahip aktör olarak ayrışmaktadır.</div>
+        </div>
+      </div>
+      <div class="meth">
+        <div class="mtag">Üç Aşamalı İstatistiksel Protokol</div>
+        <div class="mbdy"><strong>1. Kruskal-Wallis H:</strong> Verilerin normal dağılmadığı durumlarda kullanılan parametresiz global testtir. "Gruplar arasında anlamlı bir fark var mı?" sorusunu yanıtlar.<br><br><strong>2. Mann-Whitney U:</strong> Gruplar arası ikili karşılaştırma testidir. P-değerleri Çoklu Karşılaştırma Yanılgısını önlemek amacıyla FDR-BH ile düzeltilmiştir.<br><br><strong>3. Rank-Biserial Korelasyon:</strong> P-değerleri tek başına pratik bir anlam ifade etmediği için etki büyüklüğü hesaplanmıştır:<span class="fm">r = 1 &minus; (2U) / (n&#8321; &times; n&#8322;)</span> Değerler &minus;1 ile +1 arasındadır. |r| &ge; 0.3 orta düzeyde, belirgin bir farkı temsil eder.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="s4">
+  <div class="tc bf">
+    <div class="fp-l">
+      <div class="slbl">Bölüm 04 &mdash; Konu Modellemesi</div>
+      <div class="stit">LDA Konu Benzerliği (JSD Matrisi)</div>
+      <div class="ssub">Parti külliyatlarındaki konu dağılımları arasındaki mesafe ve hiyerarşik kümeleme</div>
+      <div class="fw">
+        <img src="G_LDA_topic_similarity.png" alt="G4" onerror="this.parentElement.innerHTML='<div class=fmiss><code>G_LDA_topic_similarity.png</code></div>'">
+      </div>
+      <div class="fcap">Isı Haritası: Jensen-Shannon Divergence değeri (0 = Tamamen aynı söylem, 1 = Tamamen zıt).<br>Dendrogram: Ward bağlantı yöntemiyle oluşturulmuş söylemsel kümeleme ağacı.</div>
+    </div>
+    <div class="fp-r">
+      <div class="slbl">Öne Çıkan Bulgular</div>
+      <div class="finds">
+        <div class="find">
+          <div class="ftit">Sağ Blokta Yüksek Söylemsel Yakınlık</div>
+          <div class="fbdy">AKP ile İYİ Parti arasındaki söylemsel mesafe (<strong><span class="n">JSD: 0.352</span></strong>) dikkat çekici seviyede düşüktür. Politik arenada farklı konumlansalar dahi beka, ekonomi ve güvenlik gibi temel kavramlarda söylemleri büyük oranda ortaklaşmaktadır.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">CHP ve DEM Parti Arasındaki Kopukluk</div>
+          <div class="fbdy">CHP ve DEM Parti arasındaki yüksek JSD değeri (<strong><span class="nr">0.532</span></strong>), bu iki partinin aynı platformda tamamen farklı siyasi ajandaları konuştuğunu kanıtlamaktadır. Muhalefet, söylemsel bir bütünleşme sağlayamamıştır.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">İki Ana Söylemsel Küme</div>
+          <div class="fbdy">Hiyerarşik kümeleme (Dendrogram) sistemi iki ana bloka ayırmıştır: <strong>(1)</strong> AKP, İYİ Parti, Yeni Yol ve <strong>(2)</strong> CHP, DEM Parti. Bu ayrım, siyasi ittifaklardan bağımsız, tamamen "kullanılan dil ve kavramlar" üzerinden oluşmuştur.</div>
+        </div>
+      </div>
+      <div class="meth">
+        <div class="mtag">LDA ve JSD Yöntemi</div>
+        <div class="mbdy"><strong>LDA (Latent Dirichlet Allocation):</strong> Optimum konu sayısı (k), modelin C_V tutarlılık (coherence) skoru maksimize edilerek bulunmuştur.<br><br><strong>Jensen-Shannon Divergence:</strong> İki farklı olasılık dağılımı arasındaki benzerliği ölçer. Kullback-Leibler (KL) ıraksamasının aksine simetriktir ve mesafeyi 0 ile 1 arasına sıkıştırır:<span class="fm">JSD(P&parallel;Q) = (1/2)KL(P&parallel;M) + (1/2)KL(Q&parallel;M)</span><br><strong>Hiyerarşik Kümeleme:</strong> Partiler arası uzaklık matrisi, gruplar içi varyansı minimize eden Ward metodu ile kümelenmiştir.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="s5">
+  <div class="tc bf">
+    <div class="fp-l">
+      <div class="slbl">Bölüm 05 &mdash; Duygu Analizi (Sentiment)</div>
+      <div class="stit">Parti Bazlı Duygu Dağılımı</div>
+      <div class="ssub">Derin öğrenme modelinin ürettiği Negatif / Nötr / Pozitif içerik oranları</div>
+      <div class="fw">
+        <img src="G3_sentiment_heatmap.png" alt="G5" onerror="this.parentElement.innerHTML='<div class=fmiss><code>G3_sentiment_heatmap.png</code></div>'">
+      </div>
+      <div class="fcap">Her Hücre: Partinin toplam içerikleri içinde ilgili duygunun yüzdelik oranını temsil eder.<br>Renk Skalası: Kırmızı (Düşük Oran) &rarr; Yeşil (Yüksek Oran). Yalnızca orijinal gönderiler baz alınmıştır.</div>
+    </div>
+    <div class="fp-r">
+      <div class="slbl">Öne Çıkan Bulgular</div>
+      <div class="finds">
+        <div class="find">
+          <div class="ftit">Sistemik Nötr Ton Baskınlığı</div>
+          <div class="fbdy">Tüm partilerde genel olarak "Nötr" içerikler ağırlıktadır (<strong><span class="n">%45&ndash;%88 arası</span></strong>). Siyasi aktörler platformu çoğunlukla program duyuruları, bilgi aktarımı ve resmi tebrik/taziye mesajları için kullanmaktadır.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">DEM Parti'nin Steril Dili</div>
+          <div class="fbdy">DEM Parti <strong><span class="n">%88</span></strong> gibi ezici bir oranda nötr gönderi üretmektedir. Olası hukuki veya politik baskılar nedeniyle hesapların yüksek bir otokontrol mekanizmasıyla yönetildiği çıkarımı yapılabilir.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">MHP'nin Sert Söylemi</div>
+          <div class="fbdy">MHP hesapları, sistemdeki en yüksek negatif duygu oranına sahiptir (<strong><span class="nr">%31</span></strong>). Bu durum, güvenlikçi politikaların ve muhalefeti doğrudan hedef alan sert retoriğin bir sonucudur.</div>
+        </div>
+      </div>
+      <div class="meth">
+        <div class="mtag">Model: TurkishBERTweet-LoRA-SA</div>
+        <div class="mbdy"><strong>Mimari:</strong> Türkçe Twitter verisi üzerinde eğitilmiş BERTweet tabanlı dil modelidir. LoRA (Low-Rank Adaptation) tekniği ile ince ayar (fine-tuning) yapılarak parametre verimliliği sağlanmıştır.<br><br><strong>Çıkarım (Inference):</strong> Metinler 3 sınıf (negatif, nötr, pozitif) için softmax olasılıklarına dönüştürülmüş ve en yüksek olasılık (argmax) nihai etiket olarak atanmıştır.<br><br><strong>Ön İşleme:</strong> Modele verilmeden önce tüm metinlerdeki URL'ler, kullanıcı etiketlemeleri (mentions) ve özel karakterler temizlenerek normalize edilmiştir.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="s6">
+  <div class="tc bf">
+    <div class="fp-l">
+      <div class="slbl">Bölüm 06 &mdash; Toksik Dil Analizi</div>
+      <div class="stit">Nefret Söylemi Oranları ve Güven Aralıkları</div>
+      <div class="ssub">Partiler bazında nefret söylemi yaygınlığı ve istatistiksel hata payları (%95 CI)</div>
+      <div class="fw">
+        <img src="G4_hate_speech_rate.png" alt="G6" onerror="this.parentElement.innerHTML='<div class=fmiss><code>G4_hate_speech_rate.png</code></div>'">
+      </div>
+      <div class="fcap">Nokta: Modelin tespit ettiği ham nefret söylemi oranı. Yatay Çizgi: %95 Wilson Güven Aralığı.<br>Grafikteki (n) değeri örneklem büyüklüğünü gösterir. Küçük örneklemler daha geniş güven aralıkları üretir.</div>
+    </div>
+    <div class="fp-r">
+      <div class="slbl">Öne Çıkan Bulgular</div>
+      <div class="finds">
+        <div class="find">
+          <div class="ftit">MHP Açık Ara Zirvede</div>
+          <div class="fbdy">MHP hesapları yaklaşık <strong><span class="nr">%5.5</span></strong> ile açık ara en yüksek nefret söylemi oranına sahiptir. MHP'nin güven aralığının alt sınırı bile, diğer büyük partilerin üst sınırından daha yüksektir.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">Hiyerarşik Azalma Serisi</div>
+          <div class="fbdy">Partiler arasında belirgin bir kademeli düşüş gözlemlenmektedir: AKP (<strong><span class="nr">~%1.5</span></strong>), CHP (<strong><span class="n">~%0.4</span></strong>) ve DEM Parti (<strong><span class="n">~%0.1</span></strong>). DEM Parti'nin duygu analizindeki steril yapısı burada da doğrulanmaktadır.</div>
+        </div>
+      </div>
+      <div class="meth">
+        <div class="mtag">Wilson Güven Aralığı Yöntemi</div>
+        <div class="mbdy">Standart Wald Güven Aralığı formülü, oranlar sıfıra yakınlaştığında veya örneklem küçük olduğunda yanıltıcı (negatif) sonuçlar verebilir. Bu tür nadir olay oranları için literatürde şiddetle tavsiye edilen <strong>Wilson Score Interval</strong> kullanılmıştır:<span class="fm">CI = (p + z&sup2;/2n &plusmn; z&radic;(p(1&minus;p)/n + z&sup2;/4n&sup2;)) / (1 + z&sup2;/n)</span>Ayrıca değişkenlerin birbirinden bağımsız olup olmadığını test etmek için <strong>Ki-Kare</strong> uygulanmış ve etkinin gücü Cramer's V ile raporlanmıştır.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="s7">
+  <div class="tc bf">
+    <div class="fp-l">
+      <div class="slbl">Bölüm 07 &mdash; Söylemsel Hedefleme</div>
+      <div class="stit">Partiler Arası Çapraz Duygu Matrisi</div>
+      <div class="ssub">Konuşan partinin (satır), bahsettiği partiye (sütun) yönelik ortalama pozitiflik skoru</div>
+      <div class="fw">
+        <img src="G5_cross_party_sentiment.png" alt="G7" onerror="this.parentElement.innerHTML='<div class=fmiss><code>G5_cross_party_sentiment.png</code></div>'">
+      </div>
+      <div class="fcap">0.0 (Koyu Kırmızı) = Tamamen Negatif Söylem, 0.5 = Nötr, 1.0 (Yeşil) = Tamamen Pozitif Söylem.<br>Hedef partinin tespiti anahtar kelime eşleştirme (Keyword Matching) ile yapılmıştır.</div>
+    </div>
+    <div class="fp-r">
+      <div class="slbl">Öne Çıkan Bulgular</div>
+      <div class="finds">
+        <div class="find">
+          <div class="ftit">Matristeki En Keskin Düşmanlık</div>
+          <div class="fbdy">MHP hesapları, CHP'den bahsederken neredeyse tamamen negatif (<strong><span class="nr">0.08 Skor</span></strong>) bir dil kullanmaktadır. Bu durum tablodaki en düşük (en negatif) kutuplaşma noktasıdır.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">Asimetrik İktidar-Muhalefet İlişkisi</div>
+          <div class="fbdy">CHP'nin AKP hakkındaki içerikleri (<strong><span class="nr">0.24</span></strong>), AKP'nin CHP hakkındaki içeriklerinden (<strong><span class="nr">0.15</span></strong>) nispeten daha az negatiftir. İktidar bloğu, muhalefete daha sert bir tonda seslenmektedir.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">DEM Parti: Ortak Hedef</div>
+          <div class="fbdy">Sistemdeki hemen hemen tüm partiler, DEM Parti'den bahsederken yoğun şekilde negatif bir dil kullanmaktadır. Kürt siyasetine yönelik sert söylem, aksi halde birbirine zıt olan blokları ortak bir dilde buluşturmaktadır.</div>
+        </div>
+      </div>
+      <div class="meth">
+        <div class="mtag">Hedef Tespiti (Mention) Yöntemi</div>
+        <div class="mbdy">Her gönderi metni, önceden tanımlanmış <code class="i">PARTY_KEYWORDS</code> sözlüğü ile taranmıştır. Bir parti ismi geçen gönderiler filtrelenmiş ve modelin "Pozitif" sınıfı için ürettiği softmax olasılıkları, konuşan parti bazında toplanıp ortalaması alınmıştır.<br><br><strong>Araştırma Sınırları:</strong> İsim vermeden yapılan dolaylı göndermeler (örneğin "altılı masa", "zillet") bu matrise dahil edilememiştir.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="s8">
+  <div class="tc bf">
+    <div class="fp-l">
+      <div class="slbl">Bölüm 08 &mdash; Efor Analizi</div>
+      <div class="stit">Hesap Başına Gönderi Yoğunluğu</div>
+      <div class="ssub">Toplam gönderi hacmi ile bireysel çabanın (hesap başına düşen oran) kıyaslanması</div>
+      <div class="fw">
+        <img src="G7_party_activity.png" alt="G8" onerror="this.parentElement.innerHTML='<div class=fmiss><code>G7_party_activity.png</code></div>'">
+      </div>
+      <div class="fcap">Sağ Panel: Gönderi Yoğunluğu = Toplam Gönderi / Benzersiz Hesap Sayısı.<br>Hacim tek başına yanıltıcı olabileceği için bu metrik, grupların iç dinamizmini ölçer.</div>
+    </div>
+    <div class="fp-r">
+      <div class="slbl">Öne Çıkan Bulgular</div>
+      <div class="finds">
+        <div class="find">
+          <div class="ftit">Bağımsızlar ve İYİ Parti Dinamizmi</div>
+          <div class="fbdy">Bağımsızlar (<strong><span class="n">134.6 gönderi/hesap</span></strong>) ve İYİ Parti (<strong><span class="n">121.8 gönderi/hesap</span></strong>) platformda en yoğun mesaiyi harcayan gruplardır. Platformu birincil iletişim araçlarından biri olarak benimsemişlerdir.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">CHP'nin Geniş ama Sığ Ağı</div>
+          <div class="fbdy">CHP, 5.169 gönderi ile toplam hacmin zirvesinde olmasına rağmen, bunu çok sayıda hesaba böldüğünde bireysel efor oranı (<strong><span class="n">31.1 gönderi/hesap</span></strong>) oldukça düşmektedir. Üretim, organik bir itici güçten ziyade kalabalık bir ağ yapısıyla sağlanmaktadır.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">AKP: Kalabalık ancak Üretimsiz</div>
+          <div class="fbdy">AKP geniş bir hesap havuzuna sahip olmasına rağmen, hesap başına düşen oran (<strong><span class="nr">12.2 gönderi</span></strong>) ile platformun en pasif kitlesidir.</div>
+        </div>
+      </div>
+      <div class="meth">
+        <div class="mtag">Gönderi Yoğunluğu Metriği</div>
+        <div class="mbdy">Farklı büyüklükteki parti gruplarını adil şekilde karşılaştırabilmek için mutlak hacim (toplam gönderi) verisi, gruptaki kişi sayısına bölünerek normalize edilmelidir. Yüksek bir yoğunluk değeri, grubun üyelerinin platformu aktif olarak kullandığını kanıtlar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="s9">
+  <div class="tc bf">
+    <div class="fp-l">
+      <div class="slbl">Bölüm 09 &mdash; Bireysel Efor (Power Users)</div>
+      <div class="stit">Platformu Domine Eden Süper Kullanıcılar</div>
+      <div class="ssub">Tüm ekosistemde en yüksek gönderi hacmine sahip ilk 20 aktörün analizi</div>
+      <div class="fw">
+        <img src="G7_top_active_accounts.png" alt="G9" onerror="this.parentElement.innerHTML='<div class=fmiss><code>G7_top_active_accounts.png</code></div>'">
+      </div>
+      <div class="fcap">Çubuklar: Doğrulanmış hesapların platformdaki toplam gönderi sayısını gösterir.<br>Renkler, hesabın bağlı olduğu siyasi partiyi temsil etmektedir.</div>
+    </div>
+    <div class="fp-r">
+      <div class="slbl">Öne Çıkan Bulgular</div>
+      <div class="finds">
+        <div class="find">
+          <div class="ftit">Sistemin Motoru Bireylerdir</div>
+          <div class="fbdy">DEM Parti milletvekili Ömer Faruk Gergerlioğlu, <strong><span class="n">1.555 gönderi</span></strong> ile platformun açık ara en üretken ismidir. DEM Parti'nin tüm BlueSky varlığının <strong><span class="nr">%70'inden fazlası</span></strong> tek başına bu hesaptan çıkmaktadır.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">CHP'yi Sürükleyen İsimler</div>
+          <div class="fbdy">Müzeyyen Şevkin (<strong><span class="n">1.259</span></strong>) ve Suat Özçağdaş (<strong><span class="n">1.233</span></strong>) gibi isimler, yüzlerce hesaba sahip muhalefet bloğunun içerik üretimini adeta tek başlarına yukarı çekmektedir.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">Bağımsız Gazetecilik Ağı</div>
+          <div class="fbdy">Ruşen Çakır (<strong><span class="n">764</span></strong>) gibi gazetecilerin ve medya figürlerinin varlığı, platformun siyasetçiler için interaktif bir tartışma ortamından ziyade, alternatif bir "haber bülteni dağıtım mecrası" olarak konumlandığını göstermektedir.</div>
+        </div>
+      </div>
+      <div class="meth">
+        <div class="mtag">Güç Yasası (Power Law) Dağılımı</div>
+        <div class="mbdy">Sosyal ağlardaki içerik üretimi istatistiksel olarak genellikle <strong>uzun kuyruklu (long-tail)</strong> bir dağılım sergiler. Kullanıcıların çok küçük bir yüzdesi (süper kullanıcılar), platformdaki toplam içeriğin ezici çoğunluğunu üretir. BlueSky verisinde gözlemlediğimiz bu durum, genel sosyal ağ teorileriyle tam bir uyum içindedir.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="s10">
+  <div class="tc bf">
+    <div class="fp-l">
+      <div class="slbl">Bölüm 10 &mdash; Söylemsel Temalar</div>
+      <div class="stit">Parti Söylemlerinin Kelime Bulutları</div>
+      <div class="ssub">Her partinin dilindeki en ayırt edici (TF-IDF skorlu) kelimelerin görselleştirilmesi</div>
+      <div class="fw">
+        <img src="G8_wordclouds.png" alt="G10" onerror="this.parentElement.innerHTML='<div class=fmiss><code>G8_wordclouds.png</code></div>'">
+      </div>
+      <div class="fcap">Görseller, partilerin içeriklerinde diğerlerine kıyasla en çok kullandığı 60 kelimeyi gösterir.<br>Kelime boyutları rölatif TF-IDF ağırlığı ile ölçeklendirilmiştir. Etkisiz kelimeler (stopwords) temizlenmiştir.</div>
+    </div>
+    <div class="fp-r">
+      <div class="slbl">Öne Çıkan Bulgular</div>
+      <div class="finds">
+        <div class="find">
+          <div class="ftit">Platformun Bir Araç Olarak Kullanımı</div>
+          <div class="fbdy">Tüm partilerin verisinde "youtube", "com", "watch" gibi teknik URL terimlerinin baskın olması, siyasetçilerin bu mecrada özgün yazılı metinler oluşturmaktan ziyade <strong>başka platformlardaki içeriklerinin bağlantılarını paylaştıklarını</strong> kanıtlamaktadır.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">DEM Parti'nin Kişi Odaklı Dili</div>
+          <div class="fbdy">Önceki Power User analizini destekler şekilde, DEM Parti'nin kelime bulutu neredeyse tamamen "gergerlioglu" kelimesinden oluşmaktadır. Parti söylemi, tek bir vekilin basın yayın faaliyetine indirgenmiştir.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">Morfolojik Parçalanma (NLP Sınırı)</div>
+          <div class="fbdy">Görsellerde "nin", "ye", "na" gibi eklerin görünmesi, Türkçenin sondan eklemeli (agglutinative) yapısının kelime bazlı modellemede yarattığı tipik bir zorluktur. Kök bulma (lemmatization) işlemi kelime anlamlarını bozabileceği için uygulanmamış, bu durum modelin bir sınırlılığı olarak kabul edilmiştir.</div>
+        </div>
+      </div>
+      <div class="meth">
+        <div class="mtag">TF-IDF Ağırlıklandırma Yöntemi</div>
+        <div class="mbdy">Metin madenciliğinde bir kelimenin önemini hesaplamak için frekans tek başına yetersizdir. Bunun yerine TF-IDF algoritması kullanılmıştır:<span class="fm">TF-IDF(t, d) = tf(t,d) &times; log(N / df(t))</span>Bu formül, her partinin kendi içinde sık kullandığı ancak genel ekosistemde nadir geçen (ayırt edici) kelimeleri öne çıkarır. Frekans anomalilerini yumuşatmak için logaritmik ölçekleme uygulanmıştır.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pg" id="s11">
+  <div class="tc bf">
+    <div class="fp-l">
+      <div class="slbl">Bölüm 11 &mdash; İdeoloji Sınıflandırması</div>
+      <div class="stit">Makine Öğrenmesi ile Siyasi Söylem Ayrımı</div>
+      <div class="ssub">Linear SVM Modeli Karmaşıklık Matrisi (Normalize Edilmiş)</div>
+      <div class="fw">
+        <img src="ideology_confusion_matrix.png" alt="G11" onerror="this.parentElement.innerHTML='<div class=fmiss><code>ideology_confusion_matrix.png</code></div>'">
+      </div>
+      <div class="fcap">Diyagonal Hat: Modelin doğru tahmin oranlarını gösterir (Ne kadar koyu, o kadar başarılı).<br>Diyagonal Dışı Hücreler: Karıştırılan söylemleri gösterir (Örn: MHP metnini AKP sanmak).<br>Çapraz Geçerleme: 5-katlı StratifiedKFold metodu kullanılmıştır.</div>
+    </div>
+    <div class="fp-r">
+      <div class="slbl">Öne Çıkan Bulgular</div>
+      <div class="finds">
+        <div class="find">
+          <div class="ftit">DEM Parti'nin Özgün Söylemi</div>
+          <div class="fbdy">Model, DEM Parti gönderilerini <strong><span class="n">%88</span></strong> gibi yüksek bir isabet oranıyla doğru tahmin etmiştir. Bu durum partinin platformda diğer hiçbir partiyle kesişmeyen, tamamen izole ve kendine has bir terminoloji kullandığını gösterir.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">CHP'nin Muhalefet Dili Çekim Gücü</div>
+          <div class="fbdy">CHP görece yüksek bir doğrulukla (<strong><span class="n">%76</span></strong>) tespit edilmiş olsa da, küçük muhalefet partilerinin metinlerinin <strong><span class="nr">%33&ndash;%42'si</span></strong> model tarafından yanlışlıkla CHP olarak sınıflandırılmıştır. CHP, muhalefet dilinin "ortak paydası" konumundadır.</div>
+        </div>
+        <div class="find">
+          <div class="ftit">İç İçe Geçen İdeolojiler: MHP ve AKP</div>
+          <div class="fbdy">MHP gönderileri yalnızca <strong><span class="nr">%49</span></strong> oranında doğru tahmin edilebilmiştir. İşin ilginç yanı, MHP metinlerinin <strong><span class="nr">%18'inin</span></strong> AKP söylemiyle karıştırılmasıdır. Algoritmik düzeyde Cumhur İttifakı'nın siyasi dili birbirine entegre olmuştur.</div>
+        </div>
+      </div>
+      <div class="meth">
+        <div class="mtag">Sınıflandırma Mimarisi ve Metrikler</div>
+        <div class="mbdy"><strong>Özellik Mühendisliği:</strong> Kelime tabanlı (1-3 gram) ve karakter tabanlı (2-5 gram) TF-IDF matrisleri birleştirilmiş, <code class="i">SelectKBest</code> algoritması ile en etkili özellikler seçilmiştir.<br><br><strong>Model:</strong> Seyrek (sparse) ve yüksek boyutlu metin verilerinde en başarılı sonuçları veren <strong>Linear SVM</strong> kullanılmıştır. Dengesiz parti verisi (örn. bağımsızların çok, AKP'nin az olması) sentetik veri üretme tekniği (RandomOverSampler) ile çözülmüştür.<br><br><strong>Değerlendirme:</strong> Dengesiz veri setlerinde yanıltıcı olan Accuracy yerine, sınıfları eşit ağırlıklandıran Macro-F1 ve MCC metrikleri baz alınmıştır.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+window.addEventListener('scroll',function(){
+  var s=window.scrollY, m=document.documentElement.scrollHeight-window.innerHeight;
+  document.getElementById('prog').style.width=(s/m*100)+'%';
+});
+</script>
+</body>
+</html>

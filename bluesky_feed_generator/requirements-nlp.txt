@@ -1,0 +1,9 @@
+atproto==0.0.55
+peewee
+transformers==4.40.0
+sentence-transformers
+scikit-learn
+numpy
+python-dotenv
+langdetect
+psycopg2-binary

@@ -1,0 +1,129 @@
+{
+  "n_nodes": 13,
+  "n_edges": 8,
+  "density": 0.051282,
+  "modularity": 0.6875,
+  "n_communities": 5,
+  "community_labels": {
+    "0": "Yeni Yol",
+    "2": "Cumhuriyet Halk Partisi",
+    "3": "",
+    "4": "Adalet ve Kalkınma Partisi",
+    "1": ""
+  },
+  "assortativity_party": 0.1429,
+  "degree_centralization": 0.0758,
+  "avg_clustering": 0.0,
+  "reciprocity": 0.0,
+  "largest_scc": 1,
+  "largest_wcc": 5,
+  "top_5_scc_sizes": [
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "top_5_wcc_sizes": [
+    5,
+    2,
+    2,
+    2,
+    2
+  ],
+  "intra_party_edges": 2,
+  "inter_party_edges": 6,
+  "intra_party_ratio": 0.25,
+  "bridge_node_count": 3,
+  "bridge_nodes_top_20": [
+    "bskrmn.bsky.social",
+    "cevheriguven.bsky.social",
+    "saymaz-ismail.bsky.social"
+  ],
+  "top_10_kcore_nodes": [
+    {
+      "handle": "cevheriguven.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "saymaz-ismail.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "eczburhan.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "aliikoc.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "nureddinnebati.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "irfanaktan.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "bskrmn.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "kamilaydin.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "muzeyyensevkin.bsky.social",
+      "core_number": 1
+    },
+    {
+      "handle": "onurrhan.bsky.social",
+      "core_number": 1
+    }
+  ],
+  "top_5_pagerank": [
+    {
+      "handle": "cevheriguven.bsky.social",
+      "pagerank": 0.120053
+    },
+    {
+      "handle": "saymaz-ismail.bsky.social",
+      "pagerank": 0.120053
+    },
+    {
+      "handle": "eczburhan.bsky.social",
+      "pagerank": 0.097625
+    },
+    {
+      "handle": "aliikoc.bsky.social",
+      "pagerank": 0.097625
+    },
+    {
+      "handle": "nureddinnebati.bsky.social",
+      "pagerank": 0.097625
+    }
+  ],
+  "top_5_betweenness": [
+    {
+      "handle": "bskrmn.bsky.social",
+      "betweenness": 0.060606
+    },
+    {
+      "handle": "cevheriguven.bsky.social",
+      "betweenness": 0.045455
+    },
+    {
+      "handle": "saymaz-ismail.bsky.social",
+      "betweenness": 0.045455
+    },
+    {
+      "handle": "kamilaydin.bsky.social",
+      "betweenness": 0.0
+    },
+    {
+      "handle": "muzeyyensevkin.bsky.social",
+      "betweenness": 0.0
+    }
+  ]
+}

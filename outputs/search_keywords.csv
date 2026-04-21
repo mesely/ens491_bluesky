@@ -1,0 +1,801 @@
+﻿keyword,source
+meclis,seed
+tbmm,seed
+milletvekili,seed
+seçim,seed
+oy,seed
+iktidar,seed
+muhalefet,seed
+hükümet,seed
+cumhurbaşkanı,seed
+başbakan,seed
+bakan,seed
+kanun,seed
+yasa,seed
+komisyon,seed
+anayasa,seed
+demokrasi,seed
+özgürlük,seed
+adalet,seed
+yargı,seed
+mahkeme,seed
+cumhurbaşkanlığı,seed
+belediye,seed
+vali,seed
+kaymakam,seed
+parti,seed
+genel kurul,seed
+seçmen,seed
+referandum,seed
+akp,seed
+chp,seed
+mhp,seed
+hdp,seed
+dem parti,seed
+iyi parti,seed
+yeni yol,seed
+cumhur ittifakı,seed
+millet ittifakı,seed
+saadet,seed
+yeniden refah,seed
+hüda par,seed
+yeşil sol,seed
+tgna,seed
+enflasyon,seed
+döviz,seed
+dolar,seed
+euro,seed
+ekonomi,seed
+faiz,seed
+bütçe,seed
+vergi,seed
+zam,seed
+işsizlik,seed
+asgari ücret,seed
+emekli,seed
+esnaf,seed
+kira,seed
+konut,seed
+fiyat,seed
+alım gücü,seed
+gelir,seed
+borç,seed
+kredi,seed
+merkez bankası,seed
+hazine,seed
+ihracat,seed
+ithalat,seed
+büyüme,seed
+deprem,seed
+afet,seed
+sığınmacı,seed
+göç,seed
+eğitim,seed
+sağlık,seed
+çevre,seed
+iklim,seed
+emniyet,seed
+terör,seed
+kürt,seed
+laiklik,seed
+kadın,seed
+şiddet,seed
+çocuk,seed
+aile,seed
+din,seed
+üniversite,seed
+öğrenci,seed
+öğretmen,seed
+doktor,seed
+hastane,seed
+gözaltı,seed
+tutuklama,seed
+baskı,seed
+sansür,seed
+medya,seed
+sosyal medya,seed
+protesto,seed
+eylem,seed
+yürüyüş,seed
+grev,seed
+işçi,seed
+sendika,seed
+basın özgürlüğü,seed
+ifade özgürlüğü,seed
+insan hakları,seed
+erdoğan,seed
+özel,seed
+kılıçdaroğlu,seed
+akşener,seed
+bahçeli,seed
+demirtaş,seed
+imamoğlu,seed
+yavaş,seed
+şimşek,seed
+kurum,seed
+yerlikaya,seed
+ekrem imamoğlu,seed
+diploma iptali,seed
+saraçhane,seed
+kent uzlaşısı,seed
+marmara üniversitesi,seed
+istanbul üniversitesi protesto,seed
+boğaziçi protesto,seed
+cumhurbaşkanı adayı,seed
+31 mart,seed
+ibb,seed
+istanbul büyükşehir belediyesi,seed
+polis müdahalesi,seed
+biber gazı,seed
+tazyikli su,seed
+siyasi operasyon,seed
+yargı bağımsızlığı,seed
+hukuk dışı,seed
+siyasi yargı,seed
+tahliye,seed
+venedik komisyonu,seed
+ab demokrasi,seed
+erken seçim,seed
+yerel seçim,seed
+genel seçim,seed
+adaylık,seed
+aday,seed
+sandık,seed
+yüksek seçim kurulu,seed
+ysk,seed
+seçim güvenliği,seed
+ittifak,seed
+koalisyon,seed
+dış politika,seed
+güvenlik politikası,seed
+terörle mücadele,seed
+sınır güvenliği,seed
+ekonomi yönetimi,seed
+gelir adaleti,seed
+kamuda tasarruf,seed
+meclis araştırması,seed
+soru önergesi,seed
+kanun teklifi,seed
+komisyon raporu,seed
+anayasa mahkemesi,seed
+aysm,seed
+hsk,seed
+adalet bakanlığı,seed
+içişleri bakanlığı,seed
+diplomasi,seed
+nato,seed
+ab üyeliği,seed
+israil,seed
+filistin,seed
+ukrayna,seed
+suriye,seed
+şehit,seed
+gazze,seed
+deprem bölgesi,seed
+kentsel dönüşüm,seed
+hane halkı,seed
+asgari ücret artışı,seed
+emekli maaşı,seed
+işçi hakları,seed
+çiftçi,seed
+tarım politikası,seed
+sanayi politikası,seed
+enerji krizi,seed
+elektrik zammı,seed
+doğalgaz,seed
+benzine zam,seed
+2023 seçimleri,seed
+2024 yerel seçim,seed
+sandık güvenliği,seed
+oy sayımı,seed
+itiraz süreci,seed
+seçim tekrarı,seed
+cumhurbaşkanlığı seçimi,seed
+milletvekili seçimi,seed
+belediye seçimi,seed
+ankara büyükşehir,seed
+istanbul büyükşehir,seed
+araştırma önergesi,seed
+torba yasa,seed
+anayasa değişikliği,seed
+yeni anayasa,seed
+sivil anayasa,seed
+anayasanın ilk 4 maddesi,seed
+ilk dört madde,seed
+türkiye yüzyılı,seed
+vesayetçi anayasa,seed
+güçlendirilmiş parlamenter sistem,seed
+cumhurbaşkanlığı hükümet sistemi,seed
+ak parti,seed
+tip,seed
+deva,seed
+gelecek partisi,seed
+saadet partisi,seed
+demokrat parti,seed
+anahtar parti,seed
+recep tayyip erdoğan,seed
+özgür özel,seed
+müsavat dervişoğlu,seed
+tuncer bakırhan,seed
+tülay hatimoğulları,seed
+mansur yavaş,seed
+ali yerlikaya,seed
+mehmet şimşek,seed
+hakan fidan,seed
+numan kurtulmuş,seed
+akın gürlek,seed
+can atalay,seed
+ümit özdağ,seed
+fatih erbakan,seed
+çözüm süreci,seed
+terörsüz türkiye,seed
+kayyum,seed
+dokunulmazlık,seed
+açılım süreci,seed
+demokratikleşme,seed
+siyasi dava,seed
+iddianame,seed
+hak ihlali,seed
+hsk seçimleri,seed
+ağır ceza,seed
+savcılık,seed
+hukuk devleti,seed
+adalet reformu,seed
+imamoğlu davası,seed
+sinan ateş davası,seed
+gezi davası,seed
+aym kararı,seed
+miting,seed
+boykot,seed
+üniversite protestosu,seed
+öğrenci eylemi,seed
+toplantı ve gösteri,seed
+hayat pahalılığı,seed
+memur zammı,seed
+vergi paketi,seed
+kira artışı,seed
+konut krizi,seed
+genç işsizliği,seed
+faiz kararı,seed
+kur korumalı mevduat,seed
+bütçe açığı,seed
+tasarruf paketi,seed
+gelir dağılımı,seed
+dar gelirli,seed
+çiftçi destek,seed
+enerji zammı,seed
+suriye politikası,seed
+ırak operasyonu,seed
+avrupa birliği,seed
+ab süreci,seed
+rusya,seed
+mavi vatan,seed
+belediye başkanı tutuklandı,seed
+ibb soruşturması,seed
+terör suçlaması,seed
+milli irade,seed
+eşit yurttaşlık,seed
+sosyal devlet,seed
+kamusal kaynak,seed
+başkanımız,milletvekili_tfidf
+genel,milletvekili_tfidf
+com,milletvekili_tfidf
+www,milletvekili_tfidf
+omerfarukgergerlioglu,milletvekili_tfidf
+omerfarukgergerlioglu com,milletvekili_tfidf
+www omerfarukgergerlioglu,milletvekili_tfidf
+basin,milletvekili_tfidf
+com basin,milletvekili_tfidf
+gergerlioğlu,milletvekili_tfidf
+sayın,milletvekili_tfidf
+özgür,milletvekili_tfidf
+genel başkanımız,milletvekili_tfidf
+detaylar,milletvekili_tfidf
+detaylar www,milletvekili_tfidf
+birlikte,milletvekili_tfidf
+başkanımız sayın,milletvekili_tfidf
+nin,milletvekili_tfidf
+türkiye,milletvekili_tfidf
+sayın özgür,milletvekili_tfidf
+mamoğlu,milletvekili_tfidf
+devam,milletvekili_tfidf
+ekrem,milletvekili_tfidf
+dem,milletvekili_tfidf
+ekrem mamoğlu,milletvekili_tfidf
+ankara,milletvekili_tfidf
+bugün,milletvekili_tfidf
+belediye başkanımız,milletvekili_tfidf
+siyasi,milletvekili_tfidf
+ömer,milletvekili_tfidf
+yok,milletvekili_tfidf
+faruk,milletvekili_tfidf
+ömer faruk,milletvekili_tfidf
+faruk gergerlioğlu,milletvekili_tfidf
+adayımız,milletvekili_tfidf
+cumhurbaşkanı adayımız,milletvekili_tfidf
+kocaeli,milletvekili_tfidf
+in,milletvekili_tfidf
+bsky,milletvekili_tfidf
+bsky social,milletvekili_tfidf
+social,milletvekili_tfidf
+adana,milletvekili_tfidf
+adayımız ekrem,milletvekili_tfidf
+stanbul,milletvekili_tfidf
+yarın,milletvekili_tfidf
+halk,milletvekili_tfidf
+grup,milletvekili_tfidf
+duy,milletvekili_tfidf
+başkanı,milletvekili_tfidf
+na,milletvekili_tfidf
+ın,milletvekili_tfidf
+partimizin,milletvekili_tfidf
+tbmm ankara,milletvekili_tfidf
+teşekkür,milletvekili_tfidf
+hukuk,milletvekili_tfidf
+olsun,milletvekili_tfidf
+sahip,milletvekili_tfidf
+cezaevi,milletvekili_tfidf
+büyükşehir,milletvekili_tfidf
+ziyaret,milletvekili_tfidf
+milletvekili ömer,milletvekili_tfidf
+yol,milletvekili_tfidf
+cumhuriyet,milletvekili_tfidf
+tek,milletvekili_tfidf
+duy bsky,milletvekili_tfidf
+nda,milletvekili_tfidf
+nun,milletvekili_tfidf
+basin gerger,milletvekili_tfidf
+gerger,milletvekili_tfidf
+halkın,milletvekili_tfidf
+büyük,milletvekili_tfidf
+meydanı,milletvekili_tfidf
+ettik,milletvekili_tfidf
+ediyor,milletvekili_tfidf
+nın,milletvekili_tfidf
+ye,milletvekili_tfidf
+haftalık,milletvekili_tfidf
+millet,milletvekili_tfidf
+başkan,milletvekili_tfidf
+te,milletvekili_tfidf
+büyükşehir belediye,milletvekili_tfidf
+ediyoruz,milletvekili_tfidf
+mücadele,milletvekili_tfidf
+kocaeli milletvekili,milletvekili_tfidf
+atatürk,milletvekili_tfidf
+günü,milletvekili_tfidf
+gün,milletvekili_tfidf
+mayıs,milletvekili_tfidf
+salı,milletvekili_tfidf
+toplantısında,milletvekili_tfidf
+li,milletvekili_tfidf
+tbmm grup,milletvekili_tfidf
+yıl,milletvekili_tfidf
+kapalı,milletvekili_tfidf
+edeceğiz,milletvekili_tfidf
+barış,milletvekili_tfidf
+partimizin haftalık,milletvekili_tfidf
+tipi,milletvekili_tfidf
+nde,milletvekili_tfidf
+hak,milletvekili_tfidf
+çarşamba,milletvekili_tfidf
+yi,milletvekili_tfidf
+komisyonu,milletvekili_tfidf
+den,milletvekili_tfidf
+konuşacak,milletvekili_tfidf
+toplantısında konuşacak,milletvekili_tfidf
+grup toplantısında,milletvekili_tfidf
+zmir,milletvekili_tfidf
+iradesine,milletvekili_tfidf
+lçe,milletvekili_tfidf
+silivri,milletvekili_tfidf
+haftalık tbmm,milletvekili_tfidf
+özel yarın,milletvekili_tfidf
+yeni,milletvekili_tfidf
+devam ediyor,milletvekili_tfidf
+kapalı cezaevi,milletvekili_tfidf
+kurulu,milletvekili_tfidf
+mustafa,milletvekili_tfidf
+buluşuyoruz,milletvekili_tfidf
+ak,milletvekili_tfidf
+sn,milletvekili_tfidf
+partisi,milletvekili_tfidf
+saat,milletvekili_tfidf
+yarın partimizin,milletvekili_tfidf
+tv,milletvekili_tfidf
+beraber,milletvekili_tfidf
+akşam,milletvekili_tfidf
+mehmet,milletvekili_tfidf
+kemal,milletvekili_tfidf
+medyascope,global_tfidf
+medyascope tv,global_tfidf
+video,global_tfidf
+video medyascope,global_tfidf
+youtube,global_tfidf
+youtube com,global_tfidf
+com watch,global_tfidf
+watch,global_tfidf
+medyascope medyascope,global_tfidf
+www youtube,global_tfidf
+tr,global_tfidf
+son,global_tfidf
+neden,global_tfidf
+dan,global_tfidf
+tv bsky,global_tfidf
+çakır,global_tfidf
+nasıl,global_tfidf
+tutuklu,global_tfidf
+kez,global_tfidf
+erdoğan ın,global_tfidf
+türk,global_tfidf
+ruşen,global_tfidf
+ruşen çakır,global_tfidf
+ilk,global_tfidf
+yeniden,global_tfidf
+com tr,global_tfidf
+mamoğlu na,global_tfidf
+nisan,global_tfidf
+türkiye nin,global_tfidf
+ndan,global_tfidf
+devlet,global_tfidf
+mamoğlu nun,global_tfidf
+ün,global_tfidf
+devam edeceğiz,global_tfidf
+araya,global_tfidf
+milletin,global_tfidf
+kazanacağız,global_tfidf
+bakanlığı,global_tfidf
+etti,global_tfidf
+ediyorum,global_tfidf
+temmuz,global_tfidf
+milli,global_tfidf
+pazar,global_tfidf
+bin,global_tfidf
+iktidarın,global_tfidf
+gerçekleştirdik,global_tfidf
+yazarlar,global_tfidf
+çözüm,global_tfidf
+kararı,global_tfidf
+ahmet,global_tfidf
+yönelik,global_tfidf
+serbest,global_tfidf
+şekilde,global_tfidf
+zeydan,global_tfidf
+nu,global_tfidf
+milletvekilimiz,global_tfidf
+tr yazarlar,global_tfidf
+gündemi,global_tfidf
+başına,global_tfidf
+şimdi,global_tfidf
+kurtuluş,global_tfidf
+mart,global_tfidf
+bakanı,global_tfidf
+ziyaret ettik,global_tfidf
+kazanacak,global_tfidf
+yine,global_tfidf
+cezaevinde,global_tfidf
+rağmen,global_tfidf
+akın,global_tfidf
+cumartesi,global_tfidf
+başkanımız özgür,global_tfidf
+özel in,global_tfidf
+ta,global_tfidf
+iki,global_tfidf
+meclis te,global_tfidf
+mersin,global_tfidf
+geri,global_tfidf
+sosyal,global_tfidf
+olduğu,global_tfidf
+chp nin,global_tfidf
+yüksek,global_tfidf
+gözaltına,global_tfidf
+kıymetli,global_tfidf
+pa,global_tfidf
+ardından,global_tfidf
+şey,global_tfidf
+basin dem,global_tfidf
+kabul,global_tfidf
+dem pa,global_tfidf
+mustafa kemal,global_tfidf
+sesi,global_tfidf
+verdiği,global_tfidf
+öcalan,global_tfidf
+belediye başkanı,global_tfidf
+ilgili,global_tfidf
+ümit,global_tfidf
+hakan,global_tfidf
+cumhuriyet halk,global_tfidf
+basın,global_tfidf
+parti kocaeli,global_tfidf
+kurtuluş yok,global_tfidf
+yok tek,global_tfidf
+suç,global_tfidf
+asgari,global_tfidf
+haksız,global_tfidf
+başkanlarımız,global_tfidf
+teslim,global_tfidf
+özdağ,global_tfidf
+ktidar,global_tfidf
+diliyorum,global_tfidf
+ederim,global_tfidf
+bb,global_tfidf
+kemal atatürk,global_tfidf
+süreci,global_tfidf
+parti nin,global_tfidf
+adaletin,global_tfidf
+gürlek,global_tfidf
+srail,global_tfidf
+geldik,global_tfidf
+yer,global_tfidf
+dr,global_tfidf
+hakkında,global_tfidf
+teşekkür ederim,global_tfidf
+destek,global_tfidf
+tek başına,global_tfidf
+gergerlioğlu ndan,global_tfidf
+an,global_tfidf
+atatürk ün,global_tfidf
+milyon,global_tfidf
+edecek,global_tfidf
+üzere,global_tfidf
+adım,global_tfidf
+gelen,global_tfidf
+kim,global_tfidf
+güzel,global_tfidf
+tekin,global_tfidf
+ali,global_tfidf
+tarafından,global_tfidf
+nedeniyle,global_tfidf
+belediyesi,global_tfidf
+önemli,global_tfidf
+ilçe,global_tfidf
+cumhuriyet com,global_tfidf
+www cumhuriyet,global_tfidf
+değildir,global_tfidf
+demokratik,global_tfidf
+canlı,global_tfidf
+dönem,global_tfidf
+altında,global_tfidf
+kişi,global_tfidf
+günün,global_tfidf
+partili,global_tfidf
+sürüyor,global_tfidf
+zaman,global_tfidf
+hak hukuk,global_tfidf
+la,global_tfidf
+hukuk adalet,global_tfidf
+no,global_tfidf
+iyi,global_tfidf
+haber,global_tfidf
+şubat,global_tfidf
+gazi,global_tfidf
+ülkemizin,global_tfidf
+başkanlarımıza,global_tfidf
+trump,global_tfidf
+halk partisi,global_tfidf
+com live,global_tfidf
+live,global_tfidf
+karalar,global_tfidf
+nazik,global_tfidf
+darbe,global_tfidf
+gelecek,global_tfidf
+günün gündemi,global_tfidf
+yanında,global_tfidf
+içinde,global_tfidf
+önünde,global_tfidf
+can,global_tfidf
+dayanışma,global_tfidf
+ağır,global_tfidf
+hukuksuz,global_tfidf
+ülkede,global_tfidf
+ni,global_tfidf
+fidan,global_tfidf
+yaptığı,global_tfidf
+devam ediyoruz,global_tfidf
+zeydan karalar,global_tfidf
+kara,global_tfidf
+eski,global_tfidf
+hakları,global_tfidf
+iradesine sahip,global_tfidf
+adana büyükşehir,global_tfidf
+insan,global_tfidf
+alan,global_tfidf
+yerine,global_tfidf
+başta,global_tfidf
+böyle,global_tfidf
+soru,global_tfidf
+com tbmm,global_tfidf
+sandığı,global_tfidf
+kasım,global_tfidf
+ceza,global_tfidf
+un,global_tfidf
+araya geldik,global_tfidf
+meclisi,global_tfidf
+gerçek,global_tfidf
+genç,global_tfidf
+diğer,global_tfidf
+meydanlardayız,global_tfidf
+tipi kapalı,global_tfidf
+üzerine,global_tfidf
+tan,global_tfidf
+ülke,global_tfidf
+olur,global_tfidf
+dair,global_tfidf
+tayyip,global_tfidf
+karar,global_tfidf
+sahip çıkmak,global_tfidf
+çıkmak,global_tfidf
+yayın,global_tfidf
+mamoğlu siyasi,global_tfidf
+verdi,global_tfidf
+olduğunu,global_tfidf
+yapan,global_tfidf
+dilerim,global_tfidf
+hakkı,global_tfidf
+davet,global_tfidf
+bahçeli nin,global_tfidf
+chp li,global_tfidf
+hakkını,global_tfidf
+yana,global_tfidf
+gazeteci,global_tfidf
+lu,global_tfidf
+olmayan,global_tfidf
+bar,global_tfidf
+herkes,global_tfidf
+yalnız,global_tfidf
+ortaya,global_tfidf
+ülkenin,global_tfidf
+arasında,global_tfidf
+ekim,global_tfidf
+bizi,global_tfidf
+kendi,global_tfidf
+no lu,global_tfidf
+başladı,global_tfidf
+murat,global_tfidf
+yazarlar bar,global_tfidf
+tutsak,global_tfidf
+mamoğlu nu,global_tfidf
+seçilen,global_tfidf
+haziran,global_tfidf
+yaşanan,global_tfidf
+ederiz,global_tfidf
+hayırlı,global_tfidf
+güçlü,global_tfidf
+saray,global_tfidf
+yı,global_tfidf
+mralı,global_tfidf
+genel kurulu,global_tfidf
+kaldı,global_tfidf
+hizmet,global_tfidf
+çıkıyor,global_tfidf
+başarılar,global_tfidf
+biri,global_tfidf
+bütün,global_tfidf
+tutuklandı,global_tfidf
+başkanlarımıza özgürlük,global_tfidf
+hangi,global_tfidf
+eylül,global_tfidf
+omuz,global_tfidf
+dedi,global_tfidf
+daki,global_tfidf
+parti milletvekili,global_tfidf
+mecliste,global_tfidf
+asla,global_tfidf
+lçe başkanımız,global_tfidf
+kamu,global_tfidf
+belediye başkanlarımız,global_tfidf
+tutsaklar,global_tfidf
+teşekkür ederiz,global_tfidf
+imza,global_tfidf
+bugünkü,global_tfidf
+çalışmalarımız,global_tfidf
+merkezi,global_tfidf
+gençlik,global_tfidf
+adına,global_tfidf
+açık,global_tfidf
+istiyoruz,global_tfidf
+teşekkür ediyorum,global_tfidf
+ocak,global_tfidf
+olmaya,global_tfidf
+stanbul büyükşehir,global_tfidf
+verilen,global_tfidf
+özgürlüğüne,global_tfidf
+ses,global_tfidf
+tbmm genel,global_tfidf
+ay,global_tfidf
+benim,global_tfidf
+güvenlikli,global_tfidf
+yüksek güvenlikli,global_tfidf
+deyiz,global_tfidf
+selahattin,global_tfidf
+duy akın,global_tfidf
+katıldık,global_tfidf
+milletimizin,global_tfidf
+tayyip erdoğan,global_tfidf
+di,global_tfidf
+demokrasiye,global_tfidf
+bize,global_tfidf
+herkese,global_tfidf
+allah,global_tfidf
+genel başkan,global_tfidf
+ten,global_tfidf
+akp nin,global_tfidf
+adaleti,global_tfidf
+diyor,global_tfidf
+takip,global_tfidf
+deki,global_tfidf
+arkadaşlarımız,global_tfidf
+hukukun,global_tfidf
+veren,global_tfidf
+kaya,global_tfidf
+millet iradesine,global_tfidf
+dün,global_tfidf
+derhal,global_tfidf
+hesap,global_tfidf
+gündür,global_tfidf
+adil,global_tfidf
+üyesi,global_tfidf
+olağanüstü,global_tfidf
+ev,global_tfidf
+siyasi tutsaklar,global_tfidf
+bekliyoruz,global_tfidf
+teklifi,global_tfidf
+hala,global_tfidf
+genel başkanı,global_tfidf
+büyükşehir belediyesi,global_tfidf
+mahkemesi,global_tfidf
+geçmiş,global_tfidf
+khk,global_tfidf
+sabah,global_tfidf
+erken,global_tfidf
+yaşam,global_tfidf
+tekrar,global_tfidf
+ortak,global_tfidf
+başına beraber,global_tfidf
+kutlu,global_tfidf
+le,global_tfidf
+soruşturma,global_tfidf
+ücret,global_tfidf
+kent,global_tfidf
+avrupa,global_tfidf
+etmeye,global_tfidf
+kavuşana,global_tfidf
+sahip çıkıyor,global_tfidf
+milli eğitim,global_tfidf
+ifade,global_tfidf
+üç,global_tfidf
+yanındayız,global_tfidf
+mücadelemizi,global_tfidf
+mücadelemiz,global_tfidf
+önceki,global_tfidf
+merkez,global_tfidf
+başkanlığı,global_tfidf
+kutlu olsun,global_tfidf
+aralık,global_tfidf
+net,global_tfidf
+özgürlüğü,global_tfidf
+adıyaman,global_tfidf
+karşısında,global_tfidf
+başka,global_tfidf
+demokrasinin,global_tfidf
+tepki,global_tfidf
+bana,global_tfidf
+geldi,global_tfidf
+iktidarı,global_tfidf
+gasp,global_tfidf
+geçen,global_tfidf
+yılmaz,global_tfidf
+iş,global_tfidf
+hayatını,global_tfidf
+rahmet,global_tfidf
+toplantısı,global_tfidf
+kültür,global_tfidf
+bırakın,global_tfidf
+canlı yayın,global_tfidf
+ziyaretleri,global_tfidf
+üzerinden,global_tfidf
+siyaset,global_tfidf
+görev,global_tfidf
+atalay,global_tfidf
+il,global_tfidf
+zor,global_tfidf
+olacağız,global_tfidf

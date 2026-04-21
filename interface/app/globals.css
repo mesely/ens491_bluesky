@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+/* ══════════════════════════════════════════════════════════════════
+   SUNUM tab — design tokens (IBM Plex, gold accent)
+   ══════════════════════════════════════════════════════════════════ */
+:root {
+  --bg:       #ffffff;
+  --surface:  #f8f9fa;
+  --border:   #e9ecef;
+  --border-l: #dee2e6;
+  --text:     #111111;
+  --dim:      #495057;
+  --muted:    #6c757d;
+  --accent:   #a0712a;
+  --accent-d: #7a5217;
+  --red:      #dc3545;
+  --sans: var(--font-sans), 'IBM Plex Sans', sans-serif;
+  --mono: var(--font-mono), 'IBM Plex Mono', monospace;
+
+  /* ── Bluesky Feed — light mode ─────────────────────────────────── */
+  --bsky-blue:         #0085ff;
+  --bsky-bg:           #ffffff;
+  --bsky-card:         #ffffff;
+  --bsky-border:       #ffffff;
+  --bsky-text:         #0f1419;
+  --bsky-dim:          #687076;
+  --bsky-input:        #eaecf0;
+  --bsky-hover:        rgba(0,0,0,0.04);
+  --bsky-hover-strong: rgba(0,0,0,0.07);
+  /* Logo: light mode → make it dark/black */
+  --bsky-logo-filter:  brightness(0) saturate(100%);
+}
+
+/* ── Bluesky Feed — dark mode ─────────────────────────────────────── */
+.dark {
+  --bg:       #151d28;
+  --surface:  #151d28;
+  --border:   #151d28;
+  --border-l: #363a4a;
+  --text:     #e8eaf0;
+  --dim:      #b0b8cc;
+  --muted:    #6b7280;
+  --accent:   #c49a45;
+  --accent-d: #d4aa55;
+  --red:      #f87171;
+
+  --bsky-blue:         #1d9bf0;
+  --bsky-bg:           #151d28;
+  --bsky-card:         #16192a;
+  --bsky-border:       #151d28;
+  --bsky-text:         #e7e9ea;
+  --bsky-dim:          #71767b;
+  --bsky-input:        #202327;
+  --bsky-hover:        rgba(255,255,255,0.03);
+  --bsky-hover-strong: rgba(255,255,255,0.06);
+  /* Logo: dark mode → invert to white */
+  --bsky-logo-filter:  brightness(0) saturate(100%) invert(1);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Base reset
+   ══════════════════════════════════════════════════════════════════ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 400;
+  transition: background 0.2s, color 0.2s;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-l); border-radius: 4px; }
+
+/* ── Scroll progress bar ──────────────────────────────────────────── */
+#prog {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--accent); z-index: 200; width: 0%; transition: width 0.08s;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SUNUM tab  —  LARGE FONTS (matching original sunum.html + bigger)
+   ══════════════════════════════════════════════════════════════════ */
+
+.pg { min-height: 100vh; border-bottom: 1px solid var(--border); scroll-margin-top: 84px; }
+
+/* Cover section */
+.c-eye {
+  font-family: var(--mono); font-size: 20px; font-weight: 500;
+  letter-spacing: 0.18em; color: var(--accent); text-transform: uppercase; margin-bottom: 32px;
+}
+.c-h1 {
+  font-size: clamp(52px, 7vw, 96px); font-weight: 600; color: var(--text);
+  line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 20px;
+}
+.c-h1 em { color: var(--accent); font-style: normal; }
+.c-desc {
+  font-size: 24px; color: var(--dim); max-width: 680px; line-height: 1.7; margin-bottom: 56px;
+}
+.c-rule { width: 60px; height: 3px; background: var(--accent); margin-bottom: 40px; }
+.c-item {
+  font-family: var(--mono); font-size: 20px; color: var(--text);
+  letter-spacing: 0.03em; font-weight: 500; margin-bottom: 12px;
+}
+.c-item span { color: var(--muted); font-weight: 400; }
+
+/* Two-column section layout */
+.tc   { display: grid; grid-template-columns: 58fr 42fr; min-height: 100vh; }
+.fp-l { border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 80px 56px 72px; background: var(--surface); }
+.fp-r { display: flex; flex-direction: column; padding: 80px 56px 72px; }
+
+/* Section labels & titles */
+.slbl {
+  font-family: var(--mono); font-size: 18px; font-weight: 500;
+  letter-spacing: 0.15em; color: var(--accent-d); text-transform: uppercase; margin-bottom: 14px;
+}
+.stit {
+  font-size: 38px; font-weight: 600; color: var(--text); line-height: 1.25; margin-bottom: 12px;
+}
+.ssub {
+  font-size: 22px; color: var(--muted); margin-bottom: 32px; line-height: 1.65;
+}
+
+/* Figure frame */
+.fw {
+  flex: 1; border: 1px solid var(--border); background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  min-height: 400px; border-radius: 6px; overflow: hidden; padding: 20px;
+}
+.fw img { width: 100%; height: 100%; max-height: 74vh; object-fit: contain; display: block; cursor: zoom-in; }
+.fcap {
+  margin-top: 16px; font-family: var(--mono); font-size: 16px;
+  color: var(--muted); line-height: 1.7; text-align: center;
+}
+
+/* Findings */
+.finds { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+.find  { padding: 22px 0; border-bottom: 1px solid var(--border); }
+.find:last-child { border-bottom: none; }
+.ftit {
+  font-size: 18px; font-weight: 700; color: var(--text);
+  letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 10px;
+}
+.fbdy { font-size: 22px; color: var(--dim); line-height: 1.72; }
+.fbdy strong { color: var(--text); font-weight: 600; }
+.n  { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--accent-d); }
+.nr { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--red); }
+
+/* Methodology box */
+.meth {
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 4px solid var(--accent); padding: 22px 28px; margin-top: 28px;
+}
+.mtag {
+  font-family: var(--mono); font-size: 16px; font-weight: 700;
+  letter-spacing: 0.15em; color: var(--accent-d); text-transform: uppercase; margin-bottom: 14px;
+}
+.mbdy { font-size: 20px; color: var(--dim); line-height: 1.75; }
+.mbdy strong { color: var(--text); font-weight: 600; }
+.fm {
+  display: block; font-family: var(--mono); font-size: 18px; color: var(--accent-d);
+  background: var(--border); padding: 12px 16px; margin: 14px 0;
+  border-left: 3px solid var(--border-l); border-radius: 3px;
+}
+code.i {
+  font-family: var(--mono); font-size: 16px; background: var(--surface);
+  border: 1px solid var(--border); padding: 2px 7px; color: var(--accent-d); border-radius: 4px;
+}
+
+/* Pipeline grid */
+.pipe { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--border); margin-top: 36px; }
+.pc   { padding: 28px 20px; border-right: 1px solid var(--border); background: var(--surface); }
+.pc:last-child { border-right: none; }
+.pn   { font-family: var(--mono); font-size: 32px; font-weight: 500; color: var(--border-l); display: block; margin-bottom: 12px; }
+.pt   { font-size: 16px; font-weight: 700; color: var(--text); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+.pb   { font-size: 17px; color: var(--dim); line-height: 1.65; }
+
+/* Data table */
+table.dt { width: 100%; border-collapse: collapse; margin-top: 44px; font-size: 17px; background: var(--surface); border: 1px solid var(--border); }
+table.dt th { font-family: var(--mono); font-size: 15px; letter-spacing: 0.12em; color: var(--accent-d); text-transform: uppercase; text-align: left; padding: 14px 18px; border-bottom: 2px solid var(--border); font-weight: 700; }
+table.dt td { padding: 14px 18px; border-bottom: 1px solid var(--border); color: var(--dim); font-size: 16px; }
+table.dt tr:last-child td { border-bottom: none; }
+table.dt td:first-child { font-weight: 600; color: var(--text); font-family: var(--mono); font-size: 14px; }
+
+/* Lightbox */
+.lightbox {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000;
+  display: flex; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out;
+}
+.lightbox img { max-width: 96vw; max-height: 96vh; object-fit: contain; border-radius: 6px; }

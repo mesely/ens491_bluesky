@@ -1,0 +1,71 @@
+{
+  "q1_party_sentiment_ratios": {
+    "": {
+      "negative": 0.156,
+      "neutral": 0.785,
+      "positive": 0.06
+    },
+    "Adalet ve Kalkınma Partisi": {
+      "negative": 0.0,
+      "neutral": 1.0,
+      "positive": 0.0
+    },
+    "Bağımsız": {
+      "negative": 0.061,
+      "neutral": 0.48,
+      "positive": 0.459
+    },
+    "Cumhuriyet Halk Partisi": {
+      "negative": 0.042,
+      "neutral": 0.429,
+      "positive": 0.528
+    },
+    "Halkların Eşitlik ve Demokrasi Partisi": {
+      "negative": 0.066,
+      "neutral": 0.912,
+      "positive": 0.022
+    },
+    "Yeni Yol": {
+      "negative": 0.0,
+      "neutral": 1.0,
+      "positive": 0.0
+    },
+    "İYİ Parti": {
+      "negative": 0.0,
+      "neutral": 0.3,
+      "positive": 0.7
+    }
+  },
+  "q2_most_negative_parties": {
+    "": 5554,
+    "Bağımsız": 9,
+    "Cumhuriyet Halk Partisi": 9,
+    "Halkların Eşitlik ve Demokrasi Partisi": 6
+  },
+  "q3_hate_speech_rate_by_party": {
+    "Bağımsız": 0.014,
+    "": 0.008,
+    "Adalet ve Kalkınma Partisi": 0.0,
+    "Cumhuriyet Halk Partisi": 0.0,
+    "Halkların Eşitlik ve Demokrasi Partisi": 0.0,
+    "Yeni Yol": 0.0,
+    "İYİ Parti": 0.0
+  },
+  "q4_overall_sentiment": {
+    "neutral": 28211,
+    "negative": 5578,
+    "positive": 2313
+  },
+  "q5_mv_vs_nonmv_sentiment": {
+    "False": {
+      "negative": 5560,
+      "neutral": 28035,
+      "positive": 2139
+    },
+    "True": {
+      "negative": 18,
+      "neutral": 176,
+      "positive": 174
+    }
+  }
+}

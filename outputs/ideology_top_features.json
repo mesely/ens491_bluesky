@@ -1,0 +1,427 @@
+{
+  "lr_top_ngrams": {
+    "Adalet ve Kalkınma Partisi": [
+      "selamlar",
+      "in",
+      "erdoğan",
+      "mafya",
+      "boykot",
+      "yasadışı",
+      "hayırlı",
+      "bahçeli",
+      "bi",
+      "ışıltılı",
+      " ki",
+      "zamanı",
+      "on",
+      "işte",
+      "ın",
+      "peker",
+      "adlı",
+      "acaba",
+      "köy",
+      "akşamlar"
+    ],
+    "Bağımsız": [
+      "lgs",
+      "akp",
+      "eğitim",
+      "miraydaner",
+      "derhal",
+      "başkanımız",
+      "afrasaraçoğlu",
+      "devam",
+      "okul",
+      "hesap",
+      "milli eğitim",
+      "bin",
+      "ız",
+      "mülakat",
+      "özgür",
+      "halkın",
+      "cumhuriyet",
+      "kamu",
+      "z ",
+      "diliyorum"
+    ],
+    "Cumhuriyet Halk Partisi": [
+      "adana",
+      "medyascope",
+      "medyascope tv",
+      "tv",
+      "pınardeniz",
+      "dilerim",
+      "adana",
+      " adan",
+      "sc",
+      "günün gündemi",
+      "tbmm ankara",
+      "günün",
+      "dana",
+      "nin",
+      "ch",
+      "und",
+      "video medyascope",
+      "die",
+      "ie",
+      "ei"
+    ],
+    "Halkların Eşitlik ve Demokrasi Partisi": [
+      "duy",
+      "gergerlioğlu",
+      "detaylar",
+      "cezaevi",
+      "kapalı",
+      "ger",
+      "kapalı cezaevi",
+      "tipi",
+      " duy ",
+      "duy ",
+      "uy ",
+      "youtube shorts",
+      "shorts",
+      "barış",
+      "ê ",
+      " duy",
+      "duy",
+      "hdk",
+      "gerge",
+      "rgerl"
+    ],
+    "Milliyetçi Hareket Partisi": [
+      "azgın",
+      "sana",
+      "kürt",
+      "falan",
+      "beni",
+      "enerji",
+      "kurdish",
+      "amk",
+      "aykut",
+      "şampiyon",
+      "burda",
+      " kür",
+      " kü",
+      "ürt",
+      "bi",
+      "hala",
+      " kürt",
+      "kürt",
+      "bozmak",
+      "yıla"
+    ],
+    "Yeni Yol": [
+      "hocam",
+      "adam",
+      "arkadaşlar",
+      "bence",
+      "and",
+      "oy",
+      "pes",
+      "allah",
+      "diye",
+      "ngiltere",
+      "maalesef",
+      "th",
+      "trump",
+      "arada",
+      "kerem",
+      "romanya",
+      "aktifhaber analiz",
+      "aktifhaber",
+      " adam",
+      "the"
+    ],
+    "İYİ Parti": [
+      "sene",
+      "türk",
+      "sayın",
+      "yi geceler",
+      "ne ",
+      "ke",
+      "sene ",
+      " sene",
+      "sene",
+      "yi parti",
+      "yi",
+      "bakın",
+      "pkk",
+      "srail",
+      "rusya",
+      "afyonkarahisar",
+      "başkanı",
+      "ifade",
+      "diliyorum",
+      "değil"
+    ]
+  },
+  "information_gain": {
+    "top_features_by_information_gain": [
+      {
+        "feature": "e ",
+        "mi_score": 1.288992
+      },
+      {
+        "feature": "ar",
+        "mi_score": 1.280345
+      },
+      {
+        "feature": "er",
+        "mi_score": 1.250128
+      },
+      {
+        "feature": "r ",
+        "mi_score": 1.237802
+      },
+      {
+        "feature": "i ",
+        "mi_score": 1.218577
+      },
+      {
+        "feature": "la",
+        "mi_score": 1.190192
+      },
+      {
+        "feature": "de",
+        "mi_score": 1.140828
+      },
+      {
+        "feature": " d",
+        "mi_score": 1.135787
+      },
+      {
+        "feature": " k",
+        "mi_score": 1.097294
+      },
+      {
+        "feature": "ı ",
+        "mi_score": 1.054933
+      },
+      {
+        "feature": " t",
+        "mi_score": 1.046363
+      },
+      {
+        "feature": " g",
+        "mi_score": 1.013059
+      },
+      {
+        "feature": "li",
+        "mi_score": 0.985495
+      },
+      {
+        "feature": "ka",
+        "mi_score": 0.971896
+      },
+      {
+        "feature": "ya",
+        "mi_score": 0.968118
+      },
+      {
+        "feature": "ın",
+        "mi_score": 0.939004
+      },
+      {
+        "feature": "ay",
+        "mi_score": 0.927357
+      },
+      {
+        "feature": "ra",
+        "mi_score": 0.925179
+      },
+      {
+        "feature": "et",
+        "mi_score": 0.913272
+      },
+      {
+        "feature": "il",
+        "mi_score": 0.913155
+      }
+    ]
+  },
+  "catboost_importance": {
+    "_method": "shap_per_class",
+    "Adalet ve Kalkınma Partisi": [
+      {
+        "feature": "log_repost",
+        "shap_importance": 1.642124
+      },
+      {
+        "feature": "log_like",
+        "shap_importance": 1.583303
+      },
+      {
+        "feature": "text_len",
+        "shap_importance": 1.416971
+      },
+      {
+        "feature": "log_reply",
+        "shap_importance": 1.374276
+      },
+      {
+        "feature": "text_clean",
+        "shap_importance": 1.202921
+      },
+      {
+        "feature": "word_count",
+        "shap_importance": 1.05951
+      }
+    ],
+    "Bağımsız": [
+      {
+        "feature": "text_clean",
+        "shap_importance": 0.690112
+      },
+      {
+        "feature": "log_reply",
+        "shap_importance": 0.433725
+      },
+      {
+        "feature": "word_count",
+        "shap_importance": 0.324472
+      },
+      {
+        "feature": "log_like",
+        "shap_importance": 0.295662
+      },
+      {
+        "feature": "log_repost",
+        "shap_importance": 0.245029
+      },
+      {
+        "feature": "text_len",
+        "shap_importance": 0.14464
+      }
+    ],
+    "Cumhuriyet Halk Partisi": [
+      {
+        "feature": "log_repost",
+        "shap_importance": 0.360343
+      },
+      {
+        "feature": "text_clean",
+        "shap_importance": 0.176408
+      },
+      {
+        "feature": "log_like",
+        "shap_importance": 0.1225
+      },
+      {
+        "feature": "log_reply",
+        "shap_importance": 0.087697
+      },
+      {
+        "feature": "text_len",
+        "shap_importance": 0.070189
+      },
+      {
+        "feature": "word_count",
+        "shap_importance": 0.025971
+      }
+    ],
+    "Halkların Eşitlik ve Demokrasi Partisi": [
+      {
+        "feature": "text_clean",
+        "shap_importance": 0.183641
+      },
+      {
+        "feature": "word_count",
+        "shap_importance": 0.150484
+      },
+      {
+        "feature": "log_repost",
+        "shap_importance": 0.135943
+      },
+      {
+        "feature": "log_like",
+        "shap_importance": 0.104346
+      },
+      {
+        "feature": "text_len",
+        "shap_importance": 0.066926
+      },
+      {
+        "feature": "log_reply",
+        "shap_importance": 0.048796
+      }
+    ],
+    "Milliyetçi Hareket Partisi": [
+      {
+        "feature": "text_len",
+        "shap_importance": 0.30214
+      },
+      {
+        "feature": "log_repost",
+        "shap_importance": 0.287485
+      },
+      {
+        "feature": "text_clean",
+        "shap_importance": 0.230169
+      },
+      {
+        "feature": "log_like",
+        "shap_importance": 0.184622
+      },
+      {
+        "feature": "word_count",
+        "shap_importance": 0.162314
+      },
+      {
+        "feature": "log_reply",
+        "shap_importance": 0.110333
+      }
+    ],
+    "Yeni Yol": [
+      {
+        "feature": "log_repost",
+        "shap_importance": 0.142543
+      },
+      {
+        "feature": "log_like",
+        "shap_importance": 0.082274
+      },
+      {
+        "feature": "text_len",
+        "shap_importance": 0.072209
+      },
+      {
+        "feature": "log_reply",
+        "shap_importance": 0.053593
+      },
+      {
+        "feature": "word_count",
+        "shap_importance": 0.052745
+      },
+      {
+        "feature": "text_clean",
+        "shap_importance": 0.028255
+      }
+    ],
+    "İYİ Parti": [
+      {
+        "feature": "text_len",
+        "shap_importance": 0.130956
+      },
+      {
+        "feature": "log_like",
+        "shap_importance": 0.121974
+      },
+      {
+        "feature": "text_clean",
+        "shap_importance": 0.083113
+      },
+      {
+        "feature": "log_repost",
+        "shap_importance": 0.067036
+      },
+      {
+        "feature": "log_reply",
+        "shap_importance": 0.050277
+      },
+      {
+        "feature": "word_count",
+        "shap_importance": 0.021711
+      }
+    ]
+  }
+}

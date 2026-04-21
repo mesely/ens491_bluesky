@@ -1,0 +1,7 @@
+# Feed server dependencies (used by Railway deployment)
+atproto==0.0.55
+flask
+waitress
+peewee
+python-dotenv
+psycopg2-binary
